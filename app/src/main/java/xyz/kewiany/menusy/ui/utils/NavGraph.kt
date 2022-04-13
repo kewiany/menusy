@@ -10,19 +10,24 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeScreen
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 
 
+object Navigation {
+
+    object Destination {
+        const val WELCOME_PATH = "welcome"
+    }
+}
+
 @Composable
-fun MenusyNavGraph(
+fun NavGraph(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MenusyNavigation.Route.WELCOME_ROUTE,
+    startDestination: String = Navigation.Destination.WELCOME_PATH,
     welcomeViewModel: WelcomeViewModel,
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(
-            route = MenusyNavigation.Route.WELCOME_ROUTE
-        ) {
+        composable(Navigation.Destination.WELCOME_PATH) {
             WelcomeDestination(
                 navController = navController,
                 viewModel = welcomeViewModel

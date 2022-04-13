@@ -1,13 +1,13 @@
 package xyz.kewiany.menusy
 
 import androidx.compose.runtime.Composable
-import xyz.kewiany.menusy.ui.utils.MenusyNavGraph
+import xyz.kewiany.menusy.ui.utils.NavGraph
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 
 @Composable
-fun MenusyApp() {
+fun App() {
     val welcomeViewModel = WelcomeViewModel()
-    MenusyNavGraph(
+    NavGraph(
         welcomeViewModel = welcomeViewModel
     )
 }
