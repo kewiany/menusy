@@ -52,6 +52,8 @@ dependencies {
     implementation(Library.AndroidX.composeUiTooling)
     implementation(Library.AndroidX.lifecycle)
     implementation(Library.AndroidX.activityCompose)
+    implementation(Library.AndroidX.navigationRuntime)
+    implementation(Library.AndroidX.navigationCompose)
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.AndroidX.extJunit)
     testImplementation(TestLibrary.AndroidX.espresso)

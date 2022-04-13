@@ -14,6 +14,8 @@ object Library {
         const val composeUiTooling = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
         const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
         const val activityCompose = "androidx.activity:activity-compose:1.3.1"
+        const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:2.4.2"
+        const val navigationCompose = "androidx.navigation:navigation-compose:2.5.0-alpha04"
     }
 }
 
