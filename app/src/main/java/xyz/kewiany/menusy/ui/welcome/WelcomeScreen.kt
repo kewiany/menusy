@@ -14,7 +14,8 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event
 @Composable
 fun WelcomeScreen(
     state: State<WelcomeViewModel.State>,
-    eventHandler: (Event) -> Unit
+    eventHandler: (Event) -> Unit,
+    onNavigationRequested: (String) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -30,6 +31,11 @@ fun WelcomeScreen(
                 eventHandler(Event.ShowProgress(!showProgress))
             }) {
                 Text(text = "Change")
+            }
+            Button(onClick = {
+                onNavigationRequested(showProgress.toString())
+            }) {
+                Text(text = "Menu")
             }
         }
     }

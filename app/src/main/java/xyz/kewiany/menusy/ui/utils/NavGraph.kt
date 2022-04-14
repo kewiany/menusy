@@ -3,9 +3,14 @@ package xyz.kewiany.menusy.ui.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import xyz.kewiany.menusy.ui.menu.MenuScreen
+import xyz.kewiany.menusy.ui.menu.MenuViewModel
+import xyz.kewiany.menusy.ui.utils.Navigation.Arg.VALUE_BOOLEAN
 import xyz.kewiany.menusy.ui.welcome.WelcomeScreen
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 
@@ -13,6 +18,11 @@ object Navigation {
 
     object Destination {
         const val WELCOME_PATH = "welcome"
+        const val MENU_PATH = "$WELCOME_PATH/{$VALUE_BOOLEAN}"
+    }
+
+    object Arg {
+        const val VALUE_BOOLEAN = "ValueBoolean"
     }
 }
 
@@ -21,15 +31,29 @@ fun NavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Navigation.Destination.WELCOME_PATH,
     welcomeViewModel: WelcomeViewModel,
+    menuViewModel: MenuViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(Navigation.Destination.WELCOME_PATH) {
+        composable(
+            route = Navigation.Destination.WELCOME_PATH
+        ) {
             WelcomeDestination(
                 navController = navController,
                 viewModel = welcomeViewModel
+            )
+        }
+        composable(
+            route = Navigation.Destination.MENU_PATH,
+            arguments = listOf(navArgument(VALUE_BOOLEAN) {
+                type = NavType.StringType
+            })
+        ) {
+            MenuDestination(
+                value = it.arguments?.getString(VALUE_BOOLEAN) ?: "",
+                viewModel = menuViewModel
             )
         }
     }
@@ -41,7 +65,22 @@ private fun WelcomeDestination(
     viewModel: WelcomeViewModel
 ) {
     WelcomeScreen(
-        viewModel.state.collectAsState(),
-        viewModel.eventHandler
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler,
+        onNavigationRequested = {
+            navController.navigate("${Navigation.Destination.WELCOME_PATH}/$it")
+        }
+    )
+}
+
+@Composable
+private fun MenuDestination(
+    value: String,
+    viewModel: MenuViewModel
+) {
+    MenuScreen(
+        value = value,
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler
     )
 }
