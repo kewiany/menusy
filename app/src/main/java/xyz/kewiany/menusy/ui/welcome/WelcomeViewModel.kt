@@ -1,22 +1,27 @@
 package xyz.kewiany.menusy.ui.welcome
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event
+import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event.ShowProgress
+import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.State
+import xyz.kewiany.menusy.utils.BaseViewModel
 
-class WelcomeViewModel : ViewModel() {
+class WelcomeViewModel : BaseViewModel<State, Event>(State()) {
 
-    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
+    override fun handleEvent(event: Event) = when (event) {
+        is ShowProgress -> handleShowProgress(event)
+    }
 
-    init {
-        viewModelScope.launch {
-            _isLoading.value = true
-            delay(5000)
-            _isLoading.value = false
+    private fun handleShowProgress(event: ShowProgress) {
+        updateState {
+            it.copy(showProgress = event.show)
         }
+    }
+
+    data class State(
+        val showProgress: Boolean = false
+    )
+
+    sealed class Event {
+        data class ShowProgress(val show: Boolean) : Event()
     }
 }

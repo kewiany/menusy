@@ -9,7 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.ui.welcome.WelcomeScreen
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 
-
 object Navigation {
 
     object Destination {
@@ -42,6 +41,7 @@ private fun WelcomeDestination(
     viewModel: WelcomeViewModel
 ) {
     WelcomeScreen(
-        isLoading = viewModel.isLoading.collectAsState()
+        viewModel.state.collectAsState(),
+        viewModel.eventHandler
     )
 }
