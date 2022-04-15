@@ -12,6 +12,7 @@ import xyz.kewiany.menusy.ui.BottomBar
 import xyz.kewiany.menusy.ui.TopBar
 import xyz.kewiany.menusy.ui.menu.MenuViewModel
 import xyz.kewiany.menusy.ui.order.OrderViewModel
+import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.utils.NavGraph
 import xyz.kewiany.menusy.ui.utils.Navigation
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
@@ -22,6 +23,7 @@ fun App() {
     val welcomeViewModel = WelcomeViewModel()
     val menuViewModel = MenuViewModel()
     val orderViewModel = OrderViewModel()
+    val searchViewModel = SearchViewModel()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: Navigation.Destination.WELCOME_PATH
 
@@ -54,7 +56,8 @@ fun App() {
                 navController = navController,
                 welcomeViewModel = welcomeViewModel,
                 menuViewModel = menuViewModel,
-                orderViewModel = orderViewModel
+                orderViewModel = orderViewModel,
+                searchViewModel = searchViewModel
             )
         }
     )

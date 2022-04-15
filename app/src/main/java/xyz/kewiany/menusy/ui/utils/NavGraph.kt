@@ -12,6 +12,8 @@ import xyz.kewiany.menusy.ui.menu.MenuScreen
 import xyz.kewiany.menusy.ui.menu.MenuViewModel
 import xyz.kewiany.menusy.ui.order.OrderScreen
 import xyz.kewiany.menusy.ui.order.OrderViewModel
+import xyz.kewiany.menusy.ui.search.SearchScreen
+import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.utils.Navigation.Arg.VALUE_BOOLEAN
 import xyz.kewiany.menusy.ui.welcome.WelcomeScreen
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
@@ -22,6 +24,7 @@ object Navigation {
         const val WELCOME_PATH = "welcome"
         const val MENU_PATH = "$WELCOME_PATH/{$VALUE_BOOLEAN}"
         const val ORDER_PATH = "order"
+        const val SEARCH_PATH = "search"
     }
 
     object Arg {
@@ -35,7 +38,8 @@ fun NavGraph(
     startDestination: String = Navigation.Destination.WELCOME_PATH,
     welcomeViewModel: WelcomeViewModel,
     menuViewModel: MenuViewModel,
-    orderViewModel: OrderViewModel
+    orderViewModel: OrderViewModel,
+    searchViewModel: SearchViewModel
 ) {
     NavHost(
         navController = navController,
@@ -65,6 +69,13 @@ fun NavGraph(
         ) {
             OrderDestination(
                 viewModel = orderViewModel
+            )
+        }
+        composable(
+            route = Navigation.Destination.SEARCH_PATH
+        ) {
+            SearchDestination(
+                viewModel = searchViewModel
             )
         }
     }
@@ -104,4 +115,24 @@ private fun OrderDestination(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
     )
+}
+
+@Composable
+private fun SearchDestination(
+    viewModel: SearchViewModel
+) {
+    SearchScreen(
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler
+    )
+}
+
+fun getTitleForRoute(route: String): String {
+    return when (route) {
+        Navigation.Destination.MENU_PATH -> "Menu"
+        Navigation.Destination.WELCOME_PATH -> "Welcome"
+        Navigation.Destination.ORDER_PATH -> "Order"
+        Navigation.Destination.SEARCH_PATH -> "Search"
+        else -> "Unknown route"
+    }
 }

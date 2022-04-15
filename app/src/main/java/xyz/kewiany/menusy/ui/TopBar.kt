@@ -1,11 +1,18 @@
 package xyz.kewiany.menusy.ui
 
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.ui.utils.Navigation
+import xyz.kewiany.menusy.ui.utils.Navigation.Destination.SEARCH_PATH
+import xyz.kewiany.menusy.ui.utils.Navigation.Destination.WELCOME_PATH
+import xyz.kewiany.menusy.ui.utils.getTitleForRoute
 
 @Composable
 fun TopBar(
@@ -13,15 +20,20 @@ fun TopBar(
     currentRoute: String
 ) {
     TopAppBar(
-        title = { Text(getTitleForRoute(currentRoute)) }
+        title = { Text(getTitleForRoute(currentRoute)) },
+        actions = {
+            val showSearch = currentRoute != SEARCH_PATH && currentRoute != WELCOME_PATH
+            if (showSearch) {
+                IconButton(onClick = {
+                    navController.navigate(SEARCH_PATH)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search",
+                        tint = Color.White
+                    )
+                }
+            }
+        }
     )
-}
-
-fun getTitleForRoute(route: String): String {
-    return when (route) {
-        Navigation.Destination.MENU_PATH -> "Menu"
-        Navigation.Destination.WELCOME_PATH -> "Welcome"
-        Navigation.Destination.ORDER_PATH -> "Order"
-        else -> "Unknown route"
-    }
 }
