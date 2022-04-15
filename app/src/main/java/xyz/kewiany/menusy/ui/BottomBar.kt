@@ -22,9 +22,10 @@ fun BottomBar(
 ) {
     val selectedIndex = remember { mutableStateOf(0) }
     BottomNavigation(elevation = 10.dp) {
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Home, "")
-        },
+        BottomNavigationItem(
+            icon = {
+                Icon(imageVector = Icons.Default.Home, "")
+            },
             label = { Text(text = "Menu") },
             selected = (selectedIndex.value == 0),
             onClick = {
@@ -32,9 +33,10 @@ fun BottomBar(
                 selectedIndex.value = 0
             })
 
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Add, "")
-        },
+        BottomNavigationItem(
+            icon = {
+                Icon(imageVector = Icons.Default.Add, "")
+            },
             label = { Text(text = "Order") },
             selected = (selectedIndex.value == 1),
             onClick = {
