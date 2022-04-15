@@ -5,6 +5,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -21,6 +22,20 @@ fun TopBar(
 ) {
     TopAppBar(
         title = { Text(getTitleForRoute(currentRoute)) },
+        navigationIcon = {
+            val showBack = currentRoute == SEARCH_PATH
+            if (showBack) {
+                IconButton(onClick = {
+                    navController.popBackStack()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
+                }
+            }
+        },
         actions = {
             val showSearch = currentRoute != SEARCH_PATH && currentRoute != WELCOME_PATH
             if (showSearch) {
