@@ -15,6 +15,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.ui.utils.Navigation.Destination.MENU_PATH
@@ -42,6 +43,9 @@ fun BottomBar(
                     selected = (selectedIndex.value == 0),
                     onClick = {
                         navController.navigate(MENU_PATH) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
                             launchSingleTop = true
                             restoreState = true
                         }
@@ -56,6 +60,9 @@ fun BottomBar(
                     selected = (selectedIndex.value == 1),
                     onClick = {
                         navController.navigate(ORDER_PATH) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
                             launchSingleTop = true
                             restoreState = true
                         }
