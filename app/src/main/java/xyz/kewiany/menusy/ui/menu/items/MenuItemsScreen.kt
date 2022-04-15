@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.ui.menu
+package xyz.kewiany.menusy.ui.menu.items
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,14 +8,12 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 
 @Composable
-fun MenuScreen(
+fun MenuItemsScreen(
     value: String,
-    state: State<MenuViewModel.State>,
-    eventHandler: (MenuViewModel.Event) -> Unit
+    state: State<MenuItemsViewModel.State>,
+    eventHandler: (MenuItemsViewModel.Event) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = value
-        )
+        Text(text = value)
     }
 }

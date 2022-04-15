@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.ui.utils.Navigation.Destination.MENU_PATH
+import xyz.kewiany.menusy.ui.utils.Navigation.Destination.MENU_ENTRY_PATH
 import xyz.kewiany.menusy.ui.utils.Navigation.Destination.ORDER_PATH
 
 
@@ -42,7 +42,7 @@ fun BottomBar(
                     label = { Text(text = "Menu") },
                     selected = (selectedIndex.value == 0),
                     onClick = {
-                        navController.navigate(MENU_PATH) {
+                        navController.navigate(MENU_ENTRY_PATH) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }

@@ -8,8 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import xyz.kewiany.menusy.ui.menu.MenuScreen
-import xyz.kewiany.menusy.ui.menu.MenuViewModel
+import xyz.kewiany.menusy.ui.menu.MenuEntryScreen
+import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
+import xyz.kewiany.menusy.ui.menu.items.MenuItemsScreen
+import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.order.OrderScreen
 import xyz.kewiany.menusy.ui.order.OrderViewModel
 import xyz.kewiany.menusy.ui.search.SearchScreen
@@ -22,7 +24,8 @@ object Navigation {
 
     object Destination {
         const val WELCOME_PATH = "welcome"
-        const val MENU_PATH = "$WELCOME_PATH/{$VALUE_BOOLEAN}"
+        const val MENU_ENTRY_PATH = "menu_entry"
+        const val MENU_ITEMS_PATH = "$MENU_ENTRY_PATH/{$VALUE_BOOLEAN}"
         const val ORDER_PATH = "order"
         const val SEARCH_PATH = "search"
     }
@@ -37,7 +40,8 @@ fun NavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Navigation.Destination.WELCOME_PATH,
     welcomeViewModel: WelcomeViewModel,
-    menuViewModel: MenuViewModel,
+    menuEntryViewModel: MenuEntryViewModel,
+    menuItemsViewModel: MenuItemsViewModel,
     orderViewModel: OrderViewModel,
     searchViewModel: SearchViewModel
 ) {
@@ -54,14 +58,22 @@ fun NavGraph(
             )
         }
         composable(
-            route = Navigation.Destination.MENU_PATH,
+            route = Navigation.Destination.MENU_ENTRY_PATH
+        ) {
+            MenuEntryDestination(
+                navController = navController,
+                viewModel = menuEntryViewModel
+            )
+        }
+        composable(
+            route = Navigation.Destination.MENU_ITEMS_PATH,
             arguments = listOf(navArgument(VALUE_BOOLEAN) {
                 type = NavType.StringType
             })
         ) {
-            MenuDestination(
+            MenuItemsDestination(
                 value = it.arguments?.getString(VALUE_BOOLEAN) ?: "",
-                viewModel = menuViewModel
+                viewModel = menuItemsViewModel
             )
         }
         composable(
@@ -90,22 +102,37 @@ private fun WelcomeDestination(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler,
         onNavigationRequested = {
-            navController.navigate("${Navigation.Destination.WELCOME_PATH}/$it")
+            navController.navigate(Navigation.Destination.MENU_ENTRY_PATH)
         }
     )
 }
 
 @Composable
-private fun MenuDestination(
-    value: String,
-    viewModel: MenuViewModel
+private fun MenuEntryDestination(
+    navController: NavHostController,
+    viewModel: MenuEntryViewModel
 ) {
-    MenuScreen(
-        value = value,
+    MenuEntryScreen(
         state = viewModel.state.collectAsState(),
-        eventHandler = viewModel.eventHandler
+        eventHandler = viewModel.eventHandler,
+        onNavigationRequested = {
+            navController.navigate("${Navigation.Destination.MENU_ENTRY_PATH}/$it")
+        }
     )
 }
+
+@Composable
+private fun MenuItemsDestination(
+    value: String,
+    viewModel: MenuItemsViewModel
+) {
+    MenuItemsScreen(
+        value = value,
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler,
+    )
+}
+
 
 @Composable
 private fun OrderDestination(
@@ -129,8 +156,9 @@ private fun SearchDestination(
 
 fun getTitleForRoute(route: String): String {
     return when (route) {
-        Navigation.Destination.MENU_PATH -> "Menu"
         Navigation.Destination.WELCOME_PATH -> "Welcome"
+        Navigation.Destination.MENU_ENTRY_PATH -> "Menu entry"
+        Navigation.Destination.MENU_ITEMS_PATH -> "Menu items"
         Navigation.Destination.ORDER_PATH -> "Order"
         Navigation.Destination.SEARCH_PATH -> "Search"
         else -> "Unknown route"

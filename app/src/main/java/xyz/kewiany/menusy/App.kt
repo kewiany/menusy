@@ -10,7 +10,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.ui.BottomBar
 import xyz.kewiany.menusy.ui.TopBar
-import xyz.kewiany.menusy.ui.menu.MenuViewModel
+import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
+import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.order.OrderViewModel
 import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.utils.NavGraph
@@ -21,7 +22,8 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 fun App() {
     val navController: NavHostController = rememberNavController()
     val welcomeViewModel = WelcomeViewModel()
-    val menuViewModel = MenuViewModel()
+    val menuEntryViewModel = MenuEntryViewModel()
+    val menuItemsViewModel = MenuItemsViewModel()
     val orderViewModel = OrderViewModel()
     val searchViewModel = SearchViewModel()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -33,7 +35,7 @@ fun App() {
         Navigation.Destination.WELCOME_PATH -> {
             bottomBarState.value = false
         }
-        Navigation.Destination.MENU_PATH -> {
+        else -> {
             bottomBarState.value = true
         }
     }
@@ -55,7 +57,8 @@ fun App() {
             NavGraph(
                 navController = navController,
                 welcomeViewModel = welcomeViewModel,
-                menuViewModel = menuViewModel,
+                menuEntryViewModel = menuEntryViewModel,
+                menuItemsViewModel = menuItemsViewModel,
                 orderViewModel = orderViewModel,
                 searchViewModel = searchViewModel
             )
