@@ -17,7 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.ui.utils.Navigation.Destination.WELCOME_PATH
+import xyz.kewiany.menusy.ui.utils.Navigation.Destination.MENU_PATH
+import xyz.kewiany.menusy.ui.utils.Navigation.Destination.ORDER_PATH
 
 
 @Composable
@@ -40,7 +41,10 @@ fun BottomBar(
                     label = { Text(text = "Menu") },
                     selected = (selectedIndex.value == 0),
                     onClick = {
-                        navController.navigate(WELCOME_PATH)
+                        navController.navigate(MENU_PATH) {
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                         selectedIndex.value = 0
                     })
 
@@ -51,6 +55,10 @@ fun BottomBar(
                     label = { Text(text = "Order") },
                     selected = (selectedIndex.value == 1),
                     onClick = {
+                        navController.navigate(ORDER_PATH) {
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                         selectedIndex.value = 1
                     })
             }

@@ -10,6 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import xyz.kewiany.menusy.ui.menu.MenuScreen
 import xyz.kewiany.menusy.ui.menu.MenuViewModel
+import xyz.kewiany.menusy.ui.order.OrderScreen
+import xyz.kewiany.menusy.ui.order.OrderViewModel
 import xyz.kewiany.menusy.ui.utils.Navigation.Arg.VALUE_BOOLEAN
 import xyz.kewiany.menusy.ui.welcome.WelcomeScreen
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
@@ -19,6 +21,7 @@ object Navigation {
     object Destination {
         const val WELCOME_PATH = "welcome"
         const val MENU_PATH = "$WELCOME_PATH/{$VALUE_BOOLEAN}"
+        const val ORDER_PATH = "order"
     }
 
     object Arg {
@@ -31,7 +34,8 @@ fun NavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Navigation.Destination.WELCOME_PATH,
     welcomeViewModel: WelcomeViewModel,
-    menuViewModel: MenuViewModel
+    menuViewModel: MenuViewModel,
+    orderViewModel: OrderViewModel
 ) {
     NavHost(
         navController = navController,
@@ -54,6 +58,13 @@ fun NavGraph(
             MenuDestination(
                 value = it.arguments?.getString(VALUE_BOOLEAN) ?: "",
                 viewModel = menuViewModel
+            )
+        }
+        composable(
+            route = Navigation.Destination.ORDER_PATH
+        ) {
+            OrderDestination(
+                viewModel = orderViewModel
             )
         }
     }
@@ -80,6 +91,16 @@ private fun MenuDestination(
 ) {
     MenuScreen(
         value = value,
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler
+    )
+}
+
+@Composable
+private fun OrderDestination(
+    viewModel: OrderViewModel
+) {
+    OrderScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
     )

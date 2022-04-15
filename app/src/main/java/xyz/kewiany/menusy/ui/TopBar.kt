@@ -21,6 +21,7 @@ fun getTitleForRoute(route: String): String {
     return when (route) {
         Navigation.Destination.MENU_PATH -> "Menu"
         Navigation.Destination.WELCOME_PATH -> "Welcome"
+        Navigation.Destination.ORDER_PATH -> "Order"
         else -> "Unknown route"
     }
 }
