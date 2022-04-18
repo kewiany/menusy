@@ -1,6 +1,7 @@
 package xyz.kewiany.menusy.ui.menu
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -16,11 +17,15 @@ fun MenuEntryScreen(
     onNavigationRequested: (String) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        val item = "Food"
-        Button(onClick = {
-            onNavigationRequested(item)
-        }) {
-            Text(text = item)
+        Column {
+            Text(text = state.value.menus.toString())
+
+            val item = "Food"
+            Button(onClick = {
+                onNavigationRequested(item)
+            }) {
+                Text(text = item)
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import xyz.kewiany.menusy.api.MenuService
 import xyz.kewiany.menusy.ui.BottomBar
 import xyz.kewiany.menusy.ui.TopBar
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
@@ -17,12 +18,15 @@ import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.utils.NavGraph
 import xyz.kewiany.menusy.ui.utils.Navigation
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
+import xyz.kewiany.menusy.usecase.GetMenusUseCaseImpl
 
 @Composable
 fun App() {
     val navController: NavHostController = rememberNavController()
     val welcomeViewModel = WelcomeViewModel()
-    val menuEntryViewModel = MenuEntryViewModel()
+    val menuService = MenuService()
+    val getMenusUseCase = GetMenusUseCaseImpl(menuService)
+    val menuEntryViewModel = MenuEntryViewModel(getMenusUseCase)
     val menuItemsViewModel = MenuItemsViewModel()
     val orderViewModel = OrderViewModel()
     val searchViewModel = SearchViewModel()
