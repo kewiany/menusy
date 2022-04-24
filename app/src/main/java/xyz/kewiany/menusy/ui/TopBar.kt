@@ -11,18 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.ui.utils.Screen.SearchScreen
-import xyz.kewiany.menusy.ui.utils.Screen.WelcomeScreen
+import xyz.kewiany.menusy.navigation.NavigationDirections
+import xyz.kewiany.menusy.ui.MainViewModel.Event
 
 @Composable
 fun TopBar(
     navController: NavHostController = rememberNavController(),
+    eventHandler: (Event) -> Unit,
     currentRoute: String
 ) {
     TopAppBar(
         title = { Text(currentRoute) },
         navigationIcon = {
-            val showBack = currentRoute == SearchScreen.route
+            val showBack = currentRoute == NavigationDirections.search.destination
             if (showBack) {
                 IconButton(onClick = {
                     navController.popBackStack()
@@ -36,10 +37,11 @@ fun TopBar(
             }
         },
         actions = {
-            val showSearch = currentRoute != SearchScreen.route && currentRoute != WelcomeScreen.route
+            val showSearch = currentRoute != NavigationDirections.search.destination
+                    && currentRoute != NavigationDirections.welcome.destination
             if (showSearch) {
                 IconButton(onClick = {
-                    navController.navigate(SearchScreen.route)
+                    eventHandler(Event.SearchClicked)
                 }) {
                     Icon(
                         imageVector = Icons.Default.Search,

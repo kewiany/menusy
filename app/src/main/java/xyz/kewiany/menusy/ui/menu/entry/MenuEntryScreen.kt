@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.ui.menu
+package xyz.kewiany.menusy.ui.menu.entry
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
+import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel.Event.MenuClicked
 
 @Composable
 fun MenuEntryScreen(
@@ -17,11 +17,13 @@ fun MenuEntryScreen(
     onNavigationRequested: (String) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
+        val menus = state.value.menus
         Column {
-            Text(text = state.value.menus.toString())
+            Text(text = menus.toString())
 
             val item = "Food"
             Button(onClick = {
+                eventHandler(MenuClicked(menus[0].id))
                 onNavigationRequested(item)
             }) {
                 Text(text = item)

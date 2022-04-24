@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.entity.Menu
+import xyz.kewiany.menusy.navigation.NavigationDirections
+import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel.State
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Error
@@ -12,6 +14,7 @@ import xyz.kewiany.menusy.usecase.GetMenusUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
 
 class MenuEntryViewModel(
+    private val navigator: Navigator,
     private val getMenusUseCase: GetMenusUseCase
 ) : BaseViewModel<State, Event>(State()) {
 
@@ -19,8 +22,8 @@ class MenuEntryViewModel(
         loadMenus()
     }
 
-    override fun handleEvent(event: Event) {
-
+    override fun handleEvent(event: Event) = when (event) {
+        is Event.MenuClicked -> navigator.navigate(NavigationDirections.menuItems(event.id))
     }
 
     private fun loadMenus() = viewModelScope.launch {
@@ -37,5 +40,7 @@ class MenuEntryViewModel(
     }
 
     data class State(val menus: List<Menu> = emptyList())
-    object Event
+    sealed class Event {
+        data class MenuClicked(val id: String) : Event()
+    }
 }

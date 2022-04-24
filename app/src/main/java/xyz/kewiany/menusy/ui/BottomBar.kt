@@ -15,14 +15,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.ui.MainViewModel.Event
 
 
 @Composable
 fun BottomBar(
-    navController: NavHostController = rememberNavController(),
     bottomBarState: MutableState<Boolean>,
     eventHandler: (Event) -> Unit,
 ) {

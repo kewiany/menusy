@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.ui.welcome
 
-import xyz.kewiany.menusy.ui.utils.Navigator
-import xyz.kewiany.menusy.ui.utils.Screen.MenuEntryScreen
+import xyz.kewiany.menusy.navigation.NavigationDirections
+import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event.FoodButtonClicked
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event.ShowProgress
@@ -11,7 +11,7 @@ import xyz.kewiany.menusy.utils.BaseViewModel
 class WelcomeViewModel(private val navigator: Navigator) : BaseViewModel<State, Event>(State()) {
 
     override fun handleEvent(event: Event) = when (event) {
-        FoodButtonClicked -> navigator.navigate(MenuEntryScreen)
+        FoodButtonClicked -> navigator.navigate(NavigationDirections.menuEntry)
         is ShowProgress -> handleShowProgress(event)
     }
 
