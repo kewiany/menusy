@@ -10,20 +10,23 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.api.MenuService
 import xyz.kewiany.menusy.ui.BottomBar
+import xyz.kewiany.menusy.ui.MainViewModel
 import xyz.kewiany.menusy.ui.TopBar
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.order.OrderViewModel
 import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.utils.NavGraph
-import xyz.kewiany.menusy.ui.utils.Navigation
+import xyz.kewiany.menusy.ui.utils.Navigator
+import xyz.kewiany.menusy.ui.utils.Screen
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 import xyz.kewiany.menusy.usecase.GetMenusUseCaseImpl
 
 @Composable
-fun App() {
+fun App(navigator: Navigator) {
     val navController: NavHostController = rememberNavController()
-    val welcomeViewModel = WelcomeViewModel()
+    val mainViewModel = MainViewModel(navigator)
+    val welcomeViewModel = WelcomeViewModel(navigator)
     val menuService = MenuService()
     val getMenusUseCase = GetMenusUseCaseImpl(menuService)
     val menuEntryViewModel = MenuEntryViewModel(getMenusUseCase)
@@ -31,35 +34,34 @@ fun App() {
     val orderViewModel = OrderViewModel()
     val searchViewModel = SearchViewModel()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: Navigation.Destination.WELCOME_PATH
-
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
 
     when (navBackStackEntry?.destination?.route) {
-        Navigation.Destination.WELCOME_PATH -> {
+        Screen.WelcomeScreen.route -> {
             bottomBarState.value = false
         }
         else -> {
             bottomBarState.value = true
         }
     }
-
     Scaffold(
         topBar = {
             TopBar(
                 navController = navController,
-                currentRoute = currentRoute
+                currentRoute = ""
             )
         },
         bottomBar = {
             BottomBar(
                 navController = navController,
-                bottomBarState = bottomBarState
+                bottomBarState = bottomBarState,
+                eventHandler = mainViewModel.eventHandler
             )
         },
         content = {
             NavGraph(
                 navController = navController,
+                navigator = navigator,
                 welcomeViewModel = welcomeViewModel,
                 menuEntryViewModel = menuEntryViewModel,
                 menuItemsViewModel = menuItemsViewModel,

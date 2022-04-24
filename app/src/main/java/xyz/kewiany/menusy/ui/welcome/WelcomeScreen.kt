@@ -15,7 +15,6 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event
 fun WelcomeScreen(
     state: State<WelcomeViewModel.State>,
     eventHandler: (Event) -> Unit,
-    onNavigationRequested: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -33,7 +32,7 @@ fun WelcomeScreen(
                 Text(text = "Change")
             }
             Button(onClick = {
-                onNavigationRequested()
+                eventHandler(Event.FoodButtonClicked)
             }) {
                 Text(text = "Menu")
             }

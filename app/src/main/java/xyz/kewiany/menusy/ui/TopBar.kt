@@ -11,9 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.ui.utils.Navigation.Destination.SEARCH_PATH
-import xyz.kewiany.menusy.ui.utils.Navigation.Destination.WELCOME_PATH
-import xyz.kewiany.menusy.ui.utils.getTitleForRoute
+import xyz.kewiany.menusy.ui.utils.Screen.SearchScreen
+import xyz.kewiany.menusy.ui.utils.Screen.WelcomeScreen
 
 @Composable
 fun TopBar(
@@ -21,9 +20,9 @@ fun TopBar(
     currentRoute: String
 ) {
     TopAppBar(
-        title = { Text(getTitleForRoute(currentRoute)) },
+        title = { Text(currentRoute) },
         navigationIcon = {
-            val showBack = currentRoute == SEARCH_PATH
+            val showBack = currentRoute == SearchScreen.route
             if (showBack) {
                 IconButton(onClick = {
                     navController.popBackStack()
@@ -37,10 +36,10 @@ fun TopBar(
             }
         },
         actions = {
-            val showSearch = currentRoute != SEARCH_PATH && currentRoute != WELCOME_PATH
+            val showSearch = currentRoute != SearchScreen.route && currentRoute != WelcomeScreen.route
             if (showSearch) {
                 IconButton(onClick = {
-                    navController.navigate(SEARCH_PATH)
+                    navController.navigate(SearchScreen.route)
                 }) {
                     Icon(
                         imageVector = Icons.Default.Search,

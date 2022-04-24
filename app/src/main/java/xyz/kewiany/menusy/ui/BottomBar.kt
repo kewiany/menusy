@@ -15,17 +15,16 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.ui.utils.Navigation.Destination.MENU_ENTRY_PATH
-import xyz.kewiany.menusy.ui.utils.Navigation.Destination.ORDER_PATH
+import xyz.kewiany.menusy.ui.MainViewModel.Event
 
 
 @Composable
 fun BottomBar(
     navController: NavHostController = rememberNavController(),
-    bottomBarState: MutableState<Boolean>
+    bottomBarState: MutableState<Boolean>,
+    eventHandler: (Event) -> Unit,
 ) {
     val selectedIndex = remember { mutableStateOf(0) }
 
@@ -42,13 +41,7 @@ fun BottomBar(
                     label = { Text(text = "Menu") },
                     selected = (selectedIndex.value == 0),
                     onClick = {
-                        navController.navigate(MENU_ENTRY_PATH) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        eventHandler(Event.MenuClicked)
                         selectedIndex.value = 0
                     })
 
@@ -59,13 +52,7 @@ fun BottomBar(
                     label = { Text(text = "Order") },
                     selected = (selectedIndex.value == 1),
                     onClick = {
-                        navController.navigate(ORDER_PATH) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        eventHandler(Event.OrderClicked)
                         selectedIndex.value = 1
                     })
             }
