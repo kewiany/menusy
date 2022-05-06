@@ -4,6 +4,12 @@ plugins {
     id(BuildPlugin.kotlinAndroid) version Versions.kotlin apply false
 }
 
+buildscript {
+    dependencies {
+        classpath(BuildPlugin.hiltPlugin)
+    }
+}
+
 tasks.register("clean").configure {
     delete("build")
 }

@@ -2,10 +2,15 @@ object BuildPlugin {
     const val androidApplication = "com.android.application"
     const val androidLibrary = "com.android.library"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
+    const val kotlinKapt = "kotlin-kapt"
+    const val hilt = "dagger.hilt.android.plugin"
+    const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
 }
 
-
 object Library {
+
+    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
 
     object AndroidX {
         const val core = "androidx.core:core-ktx:1.7.0"

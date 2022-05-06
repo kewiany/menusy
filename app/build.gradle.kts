@@ -1,6 +1,8 @@
 plugins {
     id(BuildPlugin.androidApplication)
     id(BuildPlugin.kotlinAndroid)
+    id(BuildPlugin.kotlinKapt)
+    id(BuildPlugin.hilt)
 }
 
 android {
@@ -54,6 +56,8 @@ dependencies {
     implementation(Library.AndroidX.activityCompose)
     implementation(Library.AndroidX.navigationRuntime)
     implementation(Library.AndroidX.navigationCompose)
+    implementation(Library.hilt)
+    kapt(Library.hiltCompiler)
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.AndroidX.extJunit)
     testImplementation(TestLibrary.AndroidX.espresso)

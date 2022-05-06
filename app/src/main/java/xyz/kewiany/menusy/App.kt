@@ -1,5 +1,6 @@
 package xyz.kewiany.menusy
 
+import android.app.Application
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import xyz.kewiany.menusy.api.MenuService
@@ -26,6 +28,9 @@ import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 import xyz.kewiany.menusy.usecase.GetMenusUseCaseImpl
 import xyz.kewiany.menusy.usecase.GetProductsUseCaseImpl
+
+@HiltAndroidApp
+class App : Application()
 
 @Composable
 fun App(
