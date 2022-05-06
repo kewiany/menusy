@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import xyz.kewiany.menusy.api.MenuService
+import xyz.kewiany.menusy.api.ProductService
 import xyz.kewiany.menusy.navigation.NavGraph
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
@@ -24,6 +25,7 @@ import xyz.kewiany.menusy.ui.order.OrderViewModel
 import xyz.kewiany.menusy.ui.search.SearchViewModel
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 import xyz.kewiany.menusy.usecase.GetMenusUseCaseImpl
+import xyz.kewiany.menusy.usecase.GetProductsUseCaseImpl
 
 @Composable
 fun App(
@@ -36,7 +38,9 @@ fun App(
     val menuService = MenuService()
     val getMenusUseCase = GetMenusUseCaseImpl(menuService)
     val menuEntryViewModel = MenuEntryViewModel(navigator, getMenusUseCase)
-    val menuItemsViewModel = MenuItemsViewModel()
+    val productService = ProductService()
+    val getProductsUseCase = GetProductsUseCaseImpl(productService)
+    val menuItemsViewModel = MenuItemsViewModel("0", getProductsUseCase)
     val orderViewModel = OrderViewModel()
     val searchViewModel = SearchViewModel()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }

@@ -49,7 +49,7 @@ fun NavGraph(
             arguments = NavigationDirections.menuItems().arguments
         ) {
             MenuItemsDestination(
-                value = it.arguments?.getString(MENU_ID) ?: "",
+                menuId = it.arguments?.getString(MENU_ID) ?: "",
                 viewModel = menuItemsViewModel
             )
         }
@@ -87,19 +87,16 @@ private fun MenuEntryDestination(
     MenuEntryScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler,
-        onNavigationRequested = {
-//            navController.navigate("${MenuEntryScreen.route}/$it")
-        }
     )
 }
 
 @Composable
 private fun MenuItemsDestination(
-    value: String,
+    menuId: String,
     viewModel: MenuItemsViewModel
 ) {
     MenuItemsScreen(
-        value = value,
+        menuId = menuId,
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler,
     )

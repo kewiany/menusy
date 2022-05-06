@@ -19,10 +19,9 @@ class GetMenusUseCaseImpl(private val menuApi: MenuApi) : GetMenusUseCase {
         try {
             val response = menuApi.getMenus()
             val data = response?.menus
-            delay(3000)
+            delay(1500)
             Success(requireNotNull(data))
         } catch (e: Exception) {
-            println(e)
             Error(Unknown)
         }
     }
