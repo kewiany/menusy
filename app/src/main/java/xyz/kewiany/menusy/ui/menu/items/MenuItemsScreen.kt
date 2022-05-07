@@ -1,14 +1,14 @@
 package xyz.kewiany.menusy.ui.menu.items
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 
 @Composable
@@ -20,21 +20,50 @@ fun MenuItemsScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
             Text(text = "menu id $menuId")
-            val products = state.value.products
-            products.forEach { product ->
-                Row(
-                    modifier = Modifier.clickable {
-                        eventHandler(Event.ProductClicked(product.id))
+            val items = state.value.items
+            items.forEach { item ->
+                when (item) {
+                    is MenuUiItem -> {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Blue)
+                                .padding(20.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = item.id,
+                            )
+                        }
                     }
-                ) {
-                    Text(
-                        text = product.id,
-                        modifier = Modifier.weight(0.2f)
-                    )
-                    Text(
-                        text = product.name,
-                        modifier = Modifier.weight(0.8f)
-                    )
+                    is ProductUiItem -> {
+                        Column(
+                            modifier = Modifier
+                                .clickable { eventHandler(Event.ProductClicked(item.id)) }
+                                .background(Color.Green)
+                                .padding(10.dp)
+                        ) {
+                            Row {
+                                Text(
+                                    text = item.id,
+                                    modifier = Modifier.weight(0.2f)
+                                )
+                                Text(
+                                    text = item.name,
+                                    modifier = Modifier.weight(0.6f)
+                                )
+                                Text(
+                                    text = item.price,
+                                    modifier = Modifier.weight(0.2f)
+                                )
+                            }
+                            Row {
+                                Text(
+                                    text = item.description
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
