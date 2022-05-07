@@ -15,7 +15,7 @@ class GetProductsUseCaseImpl @Inject constructor(private val productApi: Product
 
     override suspend fun invoke(menuId: String): GetProductsResponse = withContext(Dispatchers.IO) {
         try {
-            val response = productApi.getProducts(menuId)
+            val response = productApi.getProducts(menuId, "")
             val data = response?.products
             delay(1500)
             GetProductsResponse.Success(requireNotNull(data))

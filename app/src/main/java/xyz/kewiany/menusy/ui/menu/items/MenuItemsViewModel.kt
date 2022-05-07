@@ -18,7 +18,7 @@ class MenuItemsViewModel @Inject constructor(
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        loadMenu("1")
+        loadMenu("0")
     }
 
     override fun handleEvent(event: Event) = when (event) {
@@ -33,7 +33,7 @@ class MenuItemsViewModel @Inject constructor(
                     response.products
                         .groupBy { it.categoryId }.entries
                         .forEach { (categoryId, products) ->
-                            val category = response.menu.categories?.last { it.id == categoryId }
+                            val category = response.menu.categories?.find { it.id == categoryId }
                             if (category != null) {
                                 items.add(CategoryUiItem(category.id, category.name))
                             }

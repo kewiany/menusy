@@ -11,7 +11,8 @@ class MenuService @Inject constructor() : MenuApi {
             val data = if (menuId == "0") {
                 Menu(
                     "0",
-                    "menu of the day"
+                    "menu of the day",
+                    emptyList()
                 )
             } else {
                 Menu(
