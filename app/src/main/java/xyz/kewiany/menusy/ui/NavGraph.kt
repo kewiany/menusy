@@ -2,6 +2,7 @@ package xyz.kewiany.menusy.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,11 +21,6 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 fun NavGraph(
     navController: NavHostController,
     startDestination: String,
-    welcomeViewModel: WelcomeViewModel,
-    menuEntryViewModel: MenuEntryViewModel,
-    menuItemsViewModel: MenuItemsViewModel,
-    orderViewModel: OrderViewModel,
-    searchViewModel: SearchViewModel
 ) {
     NavHost(
         navController = navController,
@@ -33,16 +29,12 @@ fun NavGraph(
         composable(
             route = NavigationDirections.welcome.destination,
         ) {
-            WelcomeDestination(
-                viewModel = welcomeViewModel
-            )
+            WelcomeDestination()
         }
         composable(
             route = NavigationDirections.menuEntry.destination
         ) {
-            MenuEntryDestination(
-                viewModel = menuEntryViewModel
-            )
+            MenuEntryDestination()
         }
         composable(
             route = "menuEntry/{$MENU_ID}",
@@ -50,30 +42,24 @@ fun NavGraph(
         ) {
             MenuItemsDestination(
                 menuId = it.arguments?.getString(MENU_ID) ?: "",
-                viewModel = menuItemsViewModel
             )
         }
         composable(
             route = NavigationDirections.order.destination
         ) {
-            OrderDestination(
-                viewModel = orderViewModel
-            )
+            OrderDestination()
         }
         composable(
             route = NavigationDirections.search.destination,
         ) {
-            SearchDestination(
-                viewModel = searchViewModel
-            )
+            SearchDestination()
         }
     }
 }
 
 @Composable
-private fun WelcomeDestination(
-    viewModel: WelcomeViewModel
-) {
+private fun WelcomeDestination() {
+    val viewModel: WelcomeViewModel = hiltViewModel()
     WelcomeScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
@@ -81,9 +67,8 @@ private fun WelcomeDestination(
 }
 
 @Composable
-private fun MenuEntryDestination(
-    viewModel: MenuEntryViewModel
-) {
+private fun MenuEntryDestination() {
+    val viewModel: MenuEntryViewModel = hiltViewModel()
     MenuEntryScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler,
@@ -91,10 +76,8 @@ private fun MenuEntryDestination(
 }
 
 @Composable
-private fun MenuItemsDestination(
-    menuId: String,
-    viewModel: MenuItemsViewModel
-) {
+private fun MenuItemsDestination(menuId: String) {
+    val viewModel: MenuItemsViewModel = hiltViewModel()
     MenuItemsScreen(
         menuId = menuId,
         state = viewModel.state.collectAsState(),
@@ -104,9 +87,8 @@ private fun MenuItemsDestination(
 
 
 @Composable
-private fun OrderDestination(
-    viewModel: OrderViewModel
-) {
+private fun OrderDestination() {
+    val viewModel: OrderViewModel = hiltViewModel()
     OrderScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
@@ -114,9 +96,8 @@ private fun OrderDestination(
 }
 
 @Composable
-private fun SearchDestination(
-    viewModel: SearchViewModel
-) {
+private fun SearchDestination() {
+    val viewModel: SearchViewModel = hiltViewModel()
     SearchScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler

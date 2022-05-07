@@ -7,47 +7,30 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import xyz.kewiany.menusy.api.MenuService
-import xyz.kewiany.menusy.api.ProductService
 import xyz.kewiany.menusy.navigation.NavGraph
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.BottomBar
 import xyz.kewiany.menusy.ui.MainViewModel
 import xyz.kewiany.menusy.ui.TopBar
-import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
-import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
-import xyz.kewiany.menusy.ui.order.OrderViewModel
-import xyz.kewiany.menusy.ui.search.SearchViewModel
-import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
-import xyz.kewiany.menusy.usecase.GetMenusUseCaseImpl
-import xyz.kewiany.menusy.usecase.GetProductsUseCaseImpl
 
 @HiltAndroidApp
 class App : Application()
 
 @Composable
 fun App(
-    navigator: Navigator
+    navigator: Navigator,
 ) {
     val navController = rememberNavController()
     val startDestination = NavigationDirections.welcome.destination
-    val mainViewModel = MainViewModel(navigator)
-    val welcomeViewModel = WelcomeViewModel(navigator)
-    val menuService = MenuService()
-    val getMenusUseCase = GetMenusUseCaseImpl(menuService)
-    val menuEntryViewModel = MenuEntryViewModel(navigator, getMenusUseCase)
-    val productService = ProductService()
-    val getProductsUseCase = GetProductsUseCaseImpl(productService)
-    val menuItemsViewModel = MenuItemsViewModel(getProductsUseCase)
-    val orderViewModel = OrderViewModel()
-    val searchViewModel = SearchViewModel()
+    val mainViewModel: MainViewModel = hiltViewModel()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -93,11 +76,6 @@ fun App(
             NavGraph(
                 navController = navController,
                 startDestination = startDestination,
-                welcomeViewModel = welcomeViewModel,
-                menuEntryViewModel = menuEntryViewModel,
-                menuItemsViewModel = menuItemsViewModel,
-                orderViewModel = orderViewModel,
-                searchViewModel = searchViewModel
             )
         }
     )

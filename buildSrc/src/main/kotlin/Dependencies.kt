@@ -21,6 +21,9 @@ object Library {
         const val activityCompose = "androidx.activity:activity-compose:1.3.1"
         const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:2.4.2"
         const val navigationCompose = "androidx.navigation:navigation-compose:2.5.0-alpha04"
+        const val hilt = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+        const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+        const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0-alpha03"
     }
 }
 
