@@ -5,12 +5,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.api.ProductApi
 import xyz.kewiany.menusy.entity.Product
+import javax.inject.Inject
 
 interface GetProductsUseCase {
     suspend operator fun invoke(menuId: String): GetProductsResponse
 }
 
-class GetProductsUseCaseImpl(private val productApi: ProductApi) : GetProductsUseCase {
+class GetProductsUseCaseImpl @Inject constructor(private val productApi: ProductApi) : GetProductsUseCase {
 
     override suspend fun invoke(menuId: String): GetProductsResponse = withContext(Dispatchers.IO) {
         try {

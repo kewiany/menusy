@@ -1,6 +1,7 @@
 package xyz.kewiany.menusy.ui.menu.entry
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.entity.Menu
@@ -12,8 +13,10 @@ import xyz.kewiany.menusy.usecase.GetMenusResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Success
 import xyz.kewiany.menusy.usecase.GetMenusUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
+import javax.inject.Inject
 
-class MenuEntryViewModel(
+@HiltViewModel
+class MenuEntryViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getMenusUseCase: GetMenusUseCase
 ) : BaseViewModel<State, Event>(State()) {

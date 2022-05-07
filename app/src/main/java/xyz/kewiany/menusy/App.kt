@@ -45,7 +45,7 @@ fun App(
     val menuEntryViewModel = MenuEntryViewModel(navigator, getMenusUseCase)
     val productService = ProductService()
     val getProductsUseCase = GetProductsUseCaseImpl(productService)
-    val menuItemsViewModel = MenuItemsViewModel("0", getProductsUseCase)
+    val menuItemsViewModel = MenuItemsViewModel(getProductsUseCase)
     val orderViewModel = OrderViewModel()
     val searchViewModel = SearchViewModel()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }

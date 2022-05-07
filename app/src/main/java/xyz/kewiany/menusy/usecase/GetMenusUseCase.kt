@@ -8,12 +8,13 @@ import xyz.kewiany.menusy.entity.Menu
 import xyz.kewiany.menusy.usecase.GetMenusError.Unknown
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Success
+import javax.inject.Inject
 
 interface GetMenusUseCase {
     suspend operator fun invoke(): GetMenusResponse
 }
 
-class GetMenusUseCaseImpl(private val menuApi: MenuApi) : GetMenusUseCase {
+class GetMenusUseCaseImpl @Inject constructor(private val menuApi: MenuApi) : GetMenusUseCase {
 
     override suspend fun invoke(): GetMenusResponse = withContext(Dispatchers.IO) {
         try {

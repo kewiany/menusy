@@ -1,5 +1,6 @@
 package xyz.kewiany.menusy.ui.welcome
 
+import dagger.hilt.android.lifecycle.HiltViewModel
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event
@@ -7,8 +8,12 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event.FoodButtonClicked
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.Event.ShowProgress
 import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel
+import javax.inject.Inject
 
-class WelcomeViewModel(private val navigator: Navigator) : BaseViewModel<State, Event>(State()) {
+@HiltViewModel
+class WelcomeViewModel @Inject constructor(
+    private val navigator: Navigator
+) : BaseViewModel<State, Event>(State()) {
 
     override fun handleEvent(event: Event) = when (event) {
         FoodButtonClicked -> navigator.navigate(NavigationDirections.menuEntry)

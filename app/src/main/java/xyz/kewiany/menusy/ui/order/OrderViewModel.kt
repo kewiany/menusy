@@ -1,8 +1,10 @@
 package xyz.kewiany.menusy.ui.order
 
+import xyz.kewiany.menusy.ui.order.OrderViewModel.Event
+import xyz.kewiany.menusy.ui.order.OrderViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel
 
-class OrderViewModel : BaseViewModel<OrderViewModel.State, OrderViewModel.Event>(State) {
+class OrderViewModel : BaseViewModel<State, Event>(State) {
 
     override fun handleEvent(event: Event) {
 

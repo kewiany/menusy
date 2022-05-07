@@ -1,8 +1,9 @@
 package xyz.kewiany.menusy.api
 
 import xyz.kewiany.menusy.entity.Menu
+import javax.inject.Inject
 
-class MenuService : MenuApi {
+class MenuService @Inject constructor() : MenuApi {
 
     override suspend fun getMenus(): MenusResponse? {
         return try {
