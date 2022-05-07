@@ -3,8 +3,12 @@ package xyz.kewiany.menusy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.components.ActivityComponent
 import xyz.kewiany.menusy.navigation.Navigator
+import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.theme.AppTheme
 import javax.inject.Inject
 
@@ -12,6 +16,12 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject lateinit var navigator: Navigator
+
+    @EntryPoint
+    @InstallIn(ActivityComponent::class)
+    interface ViewModelFactoryProvider {
+        fun menuItemsViewModelFactory(): MenuItemsViewModel.Factory
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

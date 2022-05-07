@@ -14,11 +14,11 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import xyz.kewiany.menusy.navigation.NavGraph
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.BottomBar
 import xyz.kewiany.menusy.ui.MainViewModel
+import xyz.kewiany.menusy.ui.NavGraph
 import xyz.kewiany.menusy.ui.TopBar
 
 @HiltAndroidApp

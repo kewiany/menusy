@@ -1,11 +1,18 @@
-package xyz.kewiany.menusy.navigation
+package xyz.kewiany.menusy.ui
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import dagger.hilt.android.EntryPointAccessors
+import xyz.kewiany.menusy.MainActivity
+import xyz.kewiany.menusy.navigation.MENU_ID
+import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryScreen
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsScreen
@@ -20,7 +27,7 @@ import xyz.kewiany.menusy.ui.welcome.WelcomeViewModel
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    startDestination: String,
+    startDestination: String
 ) {
     NavHost(
         navController = navController,
@@ -76,8 +83,15 @@ private fun MenuEntryDestination() {
 }
 
 @Composable
-private fun MenuItemsDestination(menuId: String) {
-    val viewModel: MenuItemsViewModel = hiltViewModel()
+private fun MenuItemsDestination(
+    menuId: String,
+) {
+    val factory = EntryPointAccessors.fromActivity(
+        LocalContext.current as Activity,
+        MainActivity.ViewModelFactoryProvider::class.java
+    ).menuItemsViewModelFactory()
+
+    val viewModel = viewModel<MenuItemsViewModel>(factory = MenuItemsViewModel.provideFactory(factory, menuId))
     MenuItemsScreen(
         menuId = menuId,
         state = viewModel.state.collectAsState(),

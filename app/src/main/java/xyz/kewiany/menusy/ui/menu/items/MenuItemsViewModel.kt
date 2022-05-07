@@ -1,7 +1,11 @@
 package xyz.kewiany.menusy.ui.menu.items
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
@@ -10,15 +14,14 @@ import xyz.kewiany.menusy.usecase.GetMenuResponse
 import xyz.kewiany.menusy.usecase.GetMenuUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
 import xyz.kewiany.menusy.utils.UiItem
-import javax.inject.Inject
 
-@HiltViewModel
-class MenuItemsViewModel @Inject constructor(
+class MenuItemsViewModel @AssistedInject constructor(
     private val getMenuUseCase: GetMenuUseCase,
+    @Assisted private val menuId: String,
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        loadMenu("0")
+        loadMenu(menuId)
     }
 
     override fun handleEvent(event: Event) = when (event) {
@@ -58,5 +61,22 @@ class MenuItemsViewModel @Inject constructor(
     data class State(val items: List<UiItem> = emptyList())
     sealed class Event {
         data class ProductClicked(val id: String) : Event()
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(menuId: String): MenuItemsViewModel
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    companion object {
+        fun provideFactory(
+            assistedFactory: Factory,
+            menuId: String
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(menuId) as T
+            }
+        }
     }
 }
