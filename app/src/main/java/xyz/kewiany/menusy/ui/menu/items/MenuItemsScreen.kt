@@ -23,7 +23,7 @@ fun MenuItemsScreen(
             val items = state.value.items
             items.forEach { item ->
                 when (item) {
-                    is MenuUiItem -> {
+                    is CategoryUiItem -> {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()

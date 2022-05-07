@@ -5,5 +5,6 @@ data class Product(
     val name: String,
     val description: String,
     val price: String,
-    val menuId: String
+    val menuId: String,
+    val categoryId: String? = null
 )
