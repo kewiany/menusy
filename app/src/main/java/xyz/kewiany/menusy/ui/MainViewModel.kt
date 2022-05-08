@@ -17,6 +17,7 @@ class MainViewModel @Inject constructor(
         Event.MenuClicked -> navigator.navigate(NavigationDirections.menuEntry)
         Event.OrderClicked -> navigator.navigate(NavigationDirections.order)
         Event.SearchClicked -> navigator.navigate(NavigationDirections.search)
+        Event.ChangeLanguageClicked -> navigator.navigate(NavigationDirections.changeLanguage)
     }
 
     object State
@@ -24,5 +25,6 @@ class MainViewModel @Inject constructor(
         object MenuClicked : Event()
         object OrderClicked : Event()
         object SearchClicked : Event()
+        object ChangeLanguageClicked : Event()
     }
 }

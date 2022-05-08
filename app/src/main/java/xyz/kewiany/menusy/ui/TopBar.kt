@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -49,6 +50,15 @@ fun TopBar(
                         tint = Color.White
                     )
                 }
+            }
+            IconButton(onClick = {
+                eventHandler(Event.ChangeLanguageClicked)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Face,
+                    contentDescription = "Change language",
+                    tint = Color.White
+                )
             }
         }
     )

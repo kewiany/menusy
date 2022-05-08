@@ -35,6 +35,12 @@ object NavigationDirections {
         override val arguments = emptyList<NamedNavArgument>()
         override val destination = "search"
     }
+
+    val changeLanguage = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+        override val destination = "changeLanguage"
+    }
 }
 
 const val MENU_ID = "menuId"

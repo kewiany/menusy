@@ -13,6 +13,8 @@ import dagger.hilt.android.EntryPointAccessors
 import xyz.kewiany.menusy.MainActivity
 import xyz.kewiany.menusy.navigation.MENU_ID
 import xyz.kewiany.menusy.navigation.NavigationDirections
+import xyz.kewiany.menusy.ui.language.ChangeLanguageScreen
+import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryScreen
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsScreen
@@ -60,6 +62,11 @@ fun NavGraph(
             route = NavigationDirections.search.destination,
         ) {
             SearchDestination()
+        }
+        composable(
+            route = NavigationDirections.changeLanguage.destination
+        ) {
+            ChangeLanguageDestination()
         }
     }
 }
@@ -113,6 +120,15 @@ private fun OrderDestination() {
 private fun SearchDestination() {
     val viewModel: SearchViewModel = hiltViewModel()
     SearchScreen(
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler
+    )
+}
+
+@Composable
+private fun ChangeLanguageDestination() {
+    val viewModel: ChangeLanguageViewModel = hiltViewModel()
+    ChangeLanguageScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
     )
