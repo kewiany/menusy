@@ -55,6 +55,12 @@ fun App(
         }.launchIn(this)
     }
 
+    LaunchedEffect(navigator.back) {
+        navigator.back.onEach {
+            navController.popBackStack()
+        }.launchIn(this)
+    }
+
     bottomBarState.value = currentRoute != NavigationDirections.welcome.destination
             && currentRoute != NavigationDirections.search.destination
 

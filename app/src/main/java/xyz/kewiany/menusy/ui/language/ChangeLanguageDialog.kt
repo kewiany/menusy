@@ -13,12 +13,12 @@ import androidx.compose.ui.window.Dialog
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.Event
 
 @Composable
-fun ChangeLanguageScreen(
+fun ChangeLanguageDialog(
     state: State<ChangeLanguageViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
     Dialog(onDismissRequest = {
-
+        eventHandler(Event.OutsideClicked)
     }) {
         Card(
             modifier = Modifier.padding(12.dp),
@@ -36,12 +36,13 @@ fun ChangeLanguageScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     TextButton(onClick = {
-
+                        eventHandler(Event.CancelClicked)
                     }) {
                         Text(text = "Cancel")
                     }
                     Spacer(modifier = Modifier.width(4.dp))
                     TextButton(onClick = {
+                        eventHandler(Event.OKClicked)
                     }) {
                         Text(text = "Ok")
                     }

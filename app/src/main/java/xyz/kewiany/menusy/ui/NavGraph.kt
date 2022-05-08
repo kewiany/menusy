@@ -9,11 +9,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import dagger.hilt.android.EntryPointAccessors
 import xyz.kewiany.menusy.MainActivity
 import xyz.kewiany.menusy.navigation.MENU_ID
 import xyz.kewiany.menusy.navigation.NavigationDirections
-import xyz.kewiany.menusy.ui.language.ChangeLanguageScreen
+import xyz.kewiany.menusy.ui.language.ChangeLanguageDialog
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryScreen
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
@@ -63,7 +64,7 @@ fun NavGraph(
         ) {
             SearchDestination()
         }
-        composable(
+        dialog(
             route = NavigationDirections.changeLanguage.destination
         ) {
             ChangeLanguageDestination()
@@ -128,7 +129,7 @@ private fun SearchDestination() {
 @Composable
 private fun ChangeLanguageDestination() {
     val viewModel: ChangeLanguageViewModel = hiltViewModel()
-    ChangeLanguageScreen(
+    ChangeLanguageDialog(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
     )
