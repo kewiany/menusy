@@ -25,6 +25,9 @@ class MenuItemsViewModel @AssistedInject constructor(
     }
 
     override fun handleEvent(event: Event) = when (event) {
+        is Event.TabClicked -> {
+            updateState { it.copy(currentTab = event.index) }
+        }
         is Event.ProductClicked -> println(event.id)
     }
 
@@ -49,7 +52,12 @@ class MenuItemsViewModel @AssistedInject constructor(
                                 )
                             })
                         }
-                    updateState { it.copy(items = items) }
+                    updateState {
+                        it.copy(
+                            tabs = response.menu.categories?.map { category -> category.name } ?: emptyList(),
+                            items = items
+                        )
+                    }
                 }
                 is GetMenuResponse.Error -> Unit
             }
@@ -58,8 +66,14 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
     }
 
-    data class State(val items: List<UiItem> = emptyList())
+    data class State(
+        val tabs: List<String> = emptyList(),
+        val currentTab: Int = 0,
+        val items: List<UiItem> = emptyList()
+    )
+
     sealed class Event {
+        data class TabClicked(val index: Int) : Event()
         data class ProductClicked(val id: String) : Event()
     }
 

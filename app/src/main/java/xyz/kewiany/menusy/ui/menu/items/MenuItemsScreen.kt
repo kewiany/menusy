@@ -3,6 +3,8 @@ package xyz.kewiany.menusy.ui.menu.items
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ScrollableTabRow
+import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -19,6 +21,13 @@ fun MenuItemsScreen(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
+            val tabs = state.value.tabs
+            if (tabs.isNotEmpty()) {
+                CategoriesScrollableTabRow(
+                    tabs = state.value.tabs,
+                    selectedTabIndex = state.value.currentTab
+                ) { index -> eventHandler(Event.TabClicked(index)) }
+            }
             Text(text = "menu id $menuId")
             val items = state.value.items
             items.forEach { item ->
@@ -66,6 +75,27 @@ fun MenuItemsScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun CategoriesScrollableTabRow(
+    tabs: List<String>,
+    selectedTabIndex: Int,
+    onTabClick: (Int) -> Unit
+) {
+    ScrollableTabRow(
+        selectedTabIndex = selectedTabIndex,
+        contentColor = Color.White,
+        edgePadding = 0.dp,
+    ) {
+        tabs.forEachIndexed { tabIndex, tab ->
+            Tab(
+                selected = selectedTabIndex == tabIndex,
+                onClick = { onTabClick(tabIndex) },
+                text = { Text(text = tab) }
+            )
         }
     }
 }
