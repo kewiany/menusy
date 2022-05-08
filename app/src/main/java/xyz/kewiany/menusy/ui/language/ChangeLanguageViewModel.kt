@@ -1,6 +1,9 @@
 package xyz.kewiany.menusy.ui.language
 
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.Event
@@ -15,11 +18,14 @@ class ChangeLanguageViewModel @Inject constructor(
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        updateState {
-            it.copy(
-                currentLanguage = settingsRepository.getLanguage(),
-                languages = Language.values().toList()
-            )
+        viewModelScope.launch {
+            val currentLanguage = settingsRepository.language.first()
+            updateState {
+                it.copy(
+                    currentLanguage = currentLanguage,
+                    languages = Language.values().toList()
+                )
+            }
         }
     }
 
@@ -34,8 +40,7 @@ class ChangeLanguageViewModel @Inject constructor(
             navigator.back()
         }
         is Event.OKClicked -> {
-            val language = requireNotNull(state.value.currentLanguage)
-            settingsRepository.setLanguage(language)
+            settingsRepository.setLanguage(requireNotNull(state.value.currentLanguage))
             navigator.back()
         }
     }
