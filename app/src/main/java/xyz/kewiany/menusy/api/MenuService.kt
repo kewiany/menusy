@@ -21,7 +21,8 @@ class MenuService @Inject constructor() : MenuApi {
                     listOf(
                         Category("0", "entries"),
                         Category("1", "desserts"),
-                        Category("2", "coffee and tea")
+                        Category("2", "coffee and tea"),
+                        Category("3", "soft drinks")
                     )
                 )
             }

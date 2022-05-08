@@ -68,6 +68,34 @@ class ProductService @Inject constructor() : ProductApi {
                                 price = "14.00",
                                 menuId = "1",
                                 categoryId = "2"
+                            ),
+                            Product(
+                                id = "4",
+                                name = "almond frappe",
+                                description = "black or with milk",
+                                price = "18.00",
+                                menuId = "1",
+                                categoryId = "2"
+                            )
+                        )
+                    }
+                    "3" -> {
+                        listOf(
+                            Product(
+                                id = "5",
+                                name = "toma juice",
+                                description = "apple, orange, grapefruit, tomato",
+                                price = "9.00",
+                                menuId = "1",
+                                categoryId = "3"
+                            ),
+                            Product(
+                                id = "6",
+                                name = "cisowianka",
+                                description = "still, sparkling",
+                                price = "19.00",
+                                menuId = "1",
+                                categoryId = "3"
                             )
                         )
                     }

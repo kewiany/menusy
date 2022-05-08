@@ -3,14 +3,19 @@ package xyz.kewiany.menusy.ui.menu.items
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 
 @Composable
@@ -19,6 +24,8 @@ fun MenuItemsScreen(
     state: State<MenuItemsViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
             val tabs = state.value.tabs
@@ -28,55 +35,86 @@ fun MenuItemsScreen(
                     selectedTabIndex = state.value.currentTab
                 ) { index -> eventHandler(Event.TabClicked(index)) }
             }
-            Text(text = "menu id $menuId")
-            val items = state.value.items
-            items.forEach { item ->
-                when (item) {
-                    is CategoryUiItem -> {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Blue)
-                                .padding(20.dp),
-                            horizontalArrangement = Arrangement.Center
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(1f),
+                state = listState
+            ) {
+                coroutineScope.launch {
+                    listState.animateScrollToItem(state.value.currentCategory)
+                }
+                item {
+                    Text(text = "menu id $menuId")
+                }
+                items(state.value.items) { item ->
+                    when (item) {
+                        is CategoryUiItem -> CategoryItem(item.id)
+                        is ProductUiItem -> ProductItem(
+                            item.id,
+                            item.name,
+                            item.description,
+                            item.price
                         ) {
-                            Text(
-                                text = item.id,
-                            )
-                        }
-                    }
-                    is ProductUiItem -> {
-                        Column(
-                            modifier = Modifier
-                                .clickable { eventHandler(Event.ProductClicked(item.id)) }
-                                .background(Color.Green)
-                                .padding(10.dp)
-                        ) {
-                            Row {
-                                Text(
-                                    text = item.id,
-                                    modifier = Modifier.weight(0.2f)
-                                )
-                                Text(
-                                    text = item.name,
-                                    modifier = Modifier.weight(0.6f)
-                                )
-                                Text(
-                                    text = item.price,
-                                    modifier = Modifier.weight(0.2f)
-                                )
-                            }
-                            Row {
-                                Text(
-                                    text = item.description
-                                )
-                            }
+                            eventHandler(Event.ProductClicked(item.id))
                         }
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun CategoryItem(
+    id: String
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Blue)
+            .padding(20.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = id,
+        )
+    }
+}
+
+@Composable
+private fun ProductItem(
+    id: String,
+    name: String,
+    description: String,
+    price: String,
+    onProductClicked: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .clickable { onProductClicked(id) }
+            .background(Color.Green)
+            .padding(10.dp)
+    ) {
+        Row {
+            Text(
+                text = id,
+                modifier = Modifier.weight(0.2f)
+            )
+            Text(
+                text = name,
+                modifier = Modifier.weight(0.6f)
+            )
+            Text(
+                text = price,
+                modifier = Modifier.weight(0.2f)
+            )
+        }
+        Row {
+            Text(
+                text = description
+            )
+        }
+    }
+
 }
 
 @Composable
