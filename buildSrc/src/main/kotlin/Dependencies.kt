@@ -36,6 +36,8 @@ object TestLibrary {
     }
 
     const val junit = "junit:junit:4.13.2"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2"
+    const val mockk = "io.mockk:mockk:1.12.4"
 }
 
 object DebugLibrary {

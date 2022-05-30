@@ -13,12 +13,14 @@ import xyz.kewiany.menusy.usecase.GetMenusResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Success
 import xyz.kewiany.menusy.usecase.GetMenusUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
+import xyz.kewiany.menusy.utils.DispatcherProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class MenuEntryViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val getMenusUseCase: GetMenusUseCase
+    private val getMenusUseCase: GetMenusUseCase,
+    private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
@@ -29,7 +31,7 @@ class MenuEntryViewModel @Inject constructor(
         is Event.MenuClicked -> navigator.navigate(NavigationDirections.menuItems(event.id))
     }
 
-    private fun loadMenus() = viewModelScope.launch {
+    private fun loadMenus() = viewModelScope.launch(dispatcherProvider.main()) {
         try {
             when (val response = getMenusUseCase()) {
                 is Success -> {

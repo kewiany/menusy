@@ -65,6 +65,8 @@ dependencies {
     implementation(Library.hilt)
     kapt(Library.hiltCompiler)
     testImplementation(TestLibrary.junit)
+    testImplementation(TestLibrary.coroutines)
+    testImplementation(TestLibrary.mockk)
     testImplementation(TestLibrary.AndroidX.extJunit)
     testImplementation(TestLibrary.AndroidX.espresso)
     testImplementation(TestLibrary.AndroidX.composeUi)
