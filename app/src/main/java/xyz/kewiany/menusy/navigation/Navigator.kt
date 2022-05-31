@@ -11,7 +11,7 @@ class Navigator @Inject constructor() {
     private val _back = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     val back = _back.asSharedFlow()
 
-    val _commands = MutableSharedFlow<NavigationCommand>(extraBufferCapacity = 1)
+    private val _commands = MutableSharedFlow<NavigationCommand>(extraBufferCapacity = 1)
     val commands = _commands.asSharedFlow()
 
     fun back() {

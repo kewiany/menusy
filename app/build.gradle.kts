@@ -68,6 +68,7 @@ dependencies {
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.coroutines)
     testImplementation(TestLibrary.mockk)
+    testImplementation(TestLibrary.turbine)
     testImplementation(TestLibrary.AndroidX.extJunit)
     testImplementation(TestLibrary.AndroidX.espresso)
     testImplementation(TestLibrary.AndroidX.composeUi)

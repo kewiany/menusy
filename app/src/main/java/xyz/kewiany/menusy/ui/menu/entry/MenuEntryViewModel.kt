@@ -20,18 +20,20 @@ import javax.inject.Inject
 class MenuEntryViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getMenusUseCase: GetMenusUseCase,
-    private val dispatcherProvider: DispatcherProvider
+    dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        loadMenus()
+        viewModelScope.launch(dispatcherProvider.main()) {
+            loadMenus()
+        }
     }
 
     override fun handleEvent(event: Event) = when (event) {
         is Event.MenuClicked -> navigator.navigate(NavigationDirections.menuItems(event.id))
     }
 
-    private fun loadMenus() = viewModelScope.launch(dispatcherProvider.main()) {
+    private suspend fun loadMenus() {
         try {
             when (val response = getMenusUseCase()) {
                 is Success -> {

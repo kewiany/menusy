@@ -22,11 +22,12 @@ class GetMenuUseCaseImpl @Inject constructor(
     override suspend fun invoke(menuId: String): GetMenuResponse = withContext(Dispatchers.IO) {
         try {
             val menu = menuApi.getMenu(menuId)?.menu
-            val response = if (menu?.categories?.isNotEmpty() == true) {
-                val products = mutableListOf<Product>()
-                menu.categories.forEach { category ->
-                    products.addAll(productsApi.getProducts(menuId, category.id)?.products ?: emptyList())
-                }
+            val products = mutableListOf<Product>()
+            val categories = menu?.categories
+            categories?.forEach { category ->
+                products.addAll(productsApi.getProducts(menuId, category.id)?.products ?: emptyList())
+            }
+            val response = if (categories?.isNotEmpty() == true) {
                 products
             } else {
                 productsApi.getProducts(menuId)?.products ?: emptyList()
