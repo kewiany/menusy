@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.viewmodel
 
 import app.cash.turbine.test
 import io.mockk.coEvery
@@ -8,6 +8,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
+import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.ui.language.Language

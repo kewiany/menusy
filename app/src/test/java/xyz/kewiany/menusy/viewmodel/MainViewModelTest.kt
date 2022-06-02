@@ -1,10 +1,12 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.viewmodel
 
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Test
+import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.MainViewModel

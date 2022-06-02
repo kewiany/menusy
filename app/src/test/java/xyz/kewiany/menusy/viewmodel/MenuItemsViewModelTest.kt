@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.viewmodel
 
 import app.cash.turbine.test
 import io.mockk.coEvery
@@ -6,6 +6,9 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
+import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.createMenu
+import xyz.kewiany.menusy.createProduct
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.menu.items.combineToMenu
 import xyz.kewiany.menusy.ui.menu.items.findCategoryIndex
