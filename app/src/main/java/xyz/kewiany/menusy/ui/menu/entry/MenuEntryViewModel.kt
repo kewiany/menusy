@@ -14,6 +14,7 @@ import xyz.kewiany.menusy.usecase.GetMenusResponse.Success
 import xyz.kewiany.menusy.usecase.GetMenusUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
 import xyz.kewiany.menusy.utils.DispatcherProvider
+import xyz.kewiany.menusy.utils.SingleEvent
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,14 +40,20 @@ class MenuEntryViewModel @Inject constructor(
                 is Success -> {
                     updateState { it.copy(menus = response.menus) }
                 }
-                is Error -> Unit
+                is Error -> {
+                    updateState { it.copy(showError = SingleEvent(Unit)) }
+                }
             }
         } catch (e: CancellationException) {
             println(e)
         }
     }
 
-    data class State(val menus: List<Menu> = emptyList())
+    data class State(
+        val menus: List<Menu> = emptyList(),
+        val showError: SingleEvent<Unit>? = null
+    )
+
     sealed class Event {
         data class MenuClicked(val id: String) : Event()
     }

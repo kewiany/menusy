@@ -16,6 +16,7 @@ import xyz.kewiany.menusy.usecase.GetMenuResponse
 import xyz.kewiany.menusy.usecase.GetMenuUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
 import xyz.kewiany.menusy.utils.DispatcherProvider
+import xyz.kewiany.menusy.utils.SingleEvent
 import xyz.kewiany.menusy.utils.UiItem
 
 class MenuItemsViewModel @AssistedInject constructor(
@@ -54,7 +55,9 @@ class MenuItemsViewModel @AssistedInject constructor(
                         )
                     }
                 }
-                is GetMenuResponse.Error -> Unit
+                is GetMenuResponse.Error -> {
+                    updateState { it.copy(showError = SingleEvent(Unit)) }
+                }
             }
         } catch (e: CancellationException) {
             println(e)
@@ -66,6 +69,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val currentTab: Int = 0,
         val items: List<UiItem> = emptyList(),
         val currentCategory: Int = 0,
+        val showError: SingleEvent<Unit>? = null
     )
 
     sealed class Event {

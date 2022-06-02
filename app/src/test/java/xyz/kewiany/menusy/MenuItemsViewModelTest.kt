@@ -9,6 +9,7 @@ import org.junit.Test
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.menu.items.combineToMenu
 import xyz.kewiany.menusy.ui.menu.items.findCategoryIndex
+import xyz.kewiany.menusy.usecase.GetMenuError
 import xyz.kewiany.menusy.usecase.GetMenuResponse
 import xyz.kewiany.menusy.usecase.GetMenuUseCase
 
@@ -57,24 +58,24 @@ class MenuItemsViewModelTest : BaseTest() {
     }
 
     @Test
-    fun when_tabClicked_then_showTab() = testScope.runTest {
-        val index = 2
-        val viewModel = viewModel()
-        viewModel.state.test {
-            skipItems(2)
-            viewModel.eventHandler(MenuItemsViewModel.Event.TabClicked(index))
-            assert(awaitItem().currentTab == index)
+    fun given_loadMenu_when_getMenuFails_then_showError() = testScope.runTest {
+        coEvery { getMenuUseCase.invoke(menuId) } returns GetMenuResponse.Error(GetMenuError.Unknown)
+        viewModel().state.test {
+            skipItems(1)
+            assert(awaitItem().showError != null)
         }
     }
 
     @Test
-    fun when_tabClicked_then_showCategory() = testScope.runTest {
+    fun when_tabClicked_then_showTab_and_showCategory() = testScope.runTest {
         val index = 2
         val viewModel = viewModel()
         viewModel.state.test {
             skipItems(2)
             viewModel.eventHandler(MenuItemsViewModel.Event.TabClicked(index))
-            assert(awaitItem().currentCategory == findCategoryIndex(uiItems, index.toString()))
+            val state = awaitItem()
+            assert(state.currentTab == index)
+            assert(state.currentCategory == findCategoryIndex(uiItems, index.toString()))
         }
     }
 }

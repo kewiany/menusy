@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
+import xyz.kewiany.menusy.usecase.GetMenusError
 import xyz.kewiany.menusy.usecase.GetMenusResponse
 import xyz.kewiany.menusy.usecase.GetMenusUseCase
 
@@ -40,6 +41,15 @@ class MenuEntryViewModelTest : BaseTest() {
         viewModel.state.test {
             skipItems(1)
             assert(awaitItem().menus == menus)
+        }
+    }
+
+    @Test
+    fun given_loadMenus_when_getMenusFails_then_showError() = testScope.runTest {
+        coEvery { getMenusUseCase.invoke() } returns GetMenusResponse.Error(GetMenusError.Unknown)
+        viewModel.state.test {
+            skipItems(1)
+            assert(awaitItem().showError != null)
         }
     }
 
