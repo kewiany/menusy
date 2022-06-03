@@ -1,6 +1,5 @@
 package xyz.kewiany.menusy.usecase
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.api.MenuApi
 import xyz.kewiany.menusy.api.ProductApi
@@ -8,6 +7,7 @@ import xyz.kewiany.menusy.entity.Menu
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Success
+import xyz.kewiany.menusy.utils.DispatcherProvider
 import javax.inject.Inject
 
 interface GetMenuUseCase {
@@ -16,24 +16,29 @@ interface GetMenuUseCase {
 
 class GetMenuUseCaseImpl @Inject constructor(
     private val menuApi: MenuApi,
-    private val productsApi: ProductApi
+    private val productsApi: ProductApi,
+    private val dispatcherProvider: DispatcherProvider
 ) : GetMenuUseCase {
 
-    override suspend fun invoke(menuId: String): GetMenuResponse = withContext(Dispatchers.IO) {
+    override suspend fun invoke(menuId: String): GetMenuResponse = withContext(dispatcherProvider.io()) {
         try {
-            val menu = menuApi.getMenu(menuId)?.menu
             val products = mutableListOf<Product>()
-            val categories = menu?.categories
-            categories?.forEach { category ->
-                products.addAll(productsApi.getProducts(menuId, category.id)?.products ?: emptyList())
-            }
-            val response = if (categories?.isNotEmpty() == true) {
-                products
+
+            val menu = menuApi.getMenu(menuId)?.menu; requireNotNull(menu)
+            val categories = menu.categories
+
+            val areCategories = categories?.isNotEmpty() == true
+
+            if (areCategories) {
+                categories?.forEach { category ->
+                    products.addAll(productsApi.getProducts(menuId, category.id)?.products ?: emptyList())
+                }
             } else {
-                productsApi.getProducts(menuId)?.products ?: emptyList()
+                products.addAll(productsApi.getProducts(menuId)?.products ?: emptyList())
             }
-            Success(requireNotNull(menu), response)
+            Success(menu, products)
         } catch (e: Exception) {
+            println("kewin $e")
             Error(GetMenuError.Unknown)
         }
     }

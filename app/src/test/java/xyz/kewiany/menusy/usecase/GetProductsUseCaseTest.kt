@@ -3,6 +3,7 @@ package xyz.kewiany.menusy.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
@@ -14,8 +15,7 @@ class GetProductsUseCaseTest : BaseTest() {
 
     private val menuId = "menuId"
     private val products = listOf(
-        createProduct(),
-        createProduct()
+        createProduct(), createProduct()
     )
     private val api = mockk<ProductApi>()
     private val useCase: GetProductsUseCase by lazy { GetProductsUseCaseImpl(api, testDispatcherProvider) }
@@ -32,6 +32,7 @@ class GetProductsUseCaseTest : BaseTest() {
         coEvery { api.getProducts(any(), any()) } returns ProductsResponse(products)
         val response = useCase(menuId)
         assertTrue(response is GetProductsResponse.Success)
-        assertTrue((response as GetProductsResponse.Success).products == products)
+        response as GetProductsResponse.Success
+        assertEquals(products, response.products)
     }
 }

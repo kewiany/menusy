@@ -5,6 +5,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.createMenu
@@ -48,7 +50,7 @@ class MenuItemsViewModelTest : BaseTest() {
     fun given_loadMenu_when_getMenuSuccessful_then_showProducts() = testScope.runTest {
         viewModel().state.test {
             skipItems(1)
-            assert(awaitItem().items == uiItems)
+            assertEquals(uiItems, awaitItem().items)
         }
     }
 
@@ -56,7 +58,8 @@ class MenuItemsViewModelTest : BaseTest() {
     fun given_loadMenu_when_getMenuSuccessful_then_showTabs() = testScope.runTest {
         viewModel().state.test {
             skipItems(1)
-            assert(awaitItem().tabs == (menu.categories?.map { it.name } ?: emptyList<String>()))
+            val expected = (menu.categories?.map { it.name } ?: emptyList())
+            assertEquals(expected, awaitItem().tabs)
         }
     }
 
@@ -65,7 +68,7 @@ class MenuItemsViewModelTest : BaseTest() {
         coEvery { getMenuUseCase.invoke(menuId) } returns GetMenuResponse.Error(GetMenuError.Unknown)
         viewModel().state.test {
             skipItems(1)
-            assert(awaitItem().showError != null)
+            assertNotNull(awaitItem().showError)
         }
     }
 
@@ -77,8 +80,8 @@ class MenuItemsViewModelTest : BaseTest() {
             skipItems(2)
             viewModel.eventHandler(MenuItemsViewModel.Event.TabClicked(index))
             val state = awaitItem()
-            assert(state.currentTab == index)
-            assert(state.currentCategory == findCategoryIndex(uiItems, index.toString()))
+            assertEquals(index, state.currentTab)
+            assertEquals(findCategoryIndex(uiItems, index.toString()), state.currentCategory)
         }
     }
 }

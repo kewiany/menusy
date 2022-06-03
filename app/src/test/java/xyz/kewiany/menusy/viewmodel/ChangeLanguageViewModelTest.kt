@@ -7,6 +7,7 @@ import io.mockk.justRun
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.SettingsRepository
@@ -36,8 +37,8 @@ class ChangeLanguageViewModelTest : BaseTest() {
         viewModel.state.test {
             skipItems(1)
             val state = awaitItem()
-            assert(state.currentLanguage == currentLanguage)
-            assert(state.languages == languages)
+            assertEquals(currentLanguage, state.currentLanguage)
+            assertEquals(languages, state.languages)
         }
     }
 
@@ -47,7 +48,7 @@ class ChangeLanguageViewModelTest : BaseTest() {
         viewModel.state.test {
             skipItems(2)
             viewModel.eventHandler(ChangeLanguageViewModel.Event.LanguageClicked(language))
-            assert(awaitItem().currentLanguage == language)
+            assertEquals(language, awaitItem().currentLanguage)
         }
     }
 

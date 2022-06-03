@@ -5,6 +5,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.createMenu
@@ -42,7 +44,7 @@ class MenuEntryViewModelTest : BaseTest() {
     fun given_loadMenus_when_getMenusSuccessful_then_showMenus() = testScope.runTest {
         viewModel.state.test {
             skipItems(1)
-            assert(awaitItem().menus == menus)
+            assertEquals(menus, awaitItem().menus)
         }
     }
 
@@ -51,7 +53,7 @@ class MenuEntryViewModelTest : BaseTest() {
         coEvery { getMenusUseCase.invoke() } returns GetMenusResponse.Error(GetMenusError.Unknown)
         viewModel.state.test {
             skipItems(1)
-            assert(awaitItem().showError != null)
+            assertNotNull(awaitItem().showError)
         }
     }
 
