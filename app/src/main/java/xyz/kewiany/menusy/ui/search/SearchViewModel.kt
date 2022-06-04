@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import xyz.kewiany.menusy.SearchTextHolder
 import xyz.kewiany.menusy.ui.search.SearchViewModel.Event
 import xyz.kewiany.menusy.ui.search.SearchViewModel.State
@@ -20,10 +21,13 @@ class SearchViewModel @Inject constructor(
 
     init {
         searchTextHolder.searchText
+            .onStart { emit("") }
             .debounce(500L)
             .onEach { text ->
-                results.add(text)
-                updateState { it.copy(results = results.toList()) }
+                if (text.isNotEmpty()) {
+                    results.add(text)
+                    updateState { it.copy(results = results.toList()) }
+                }
             }.launchIn(viewModelScope)
     }
 
