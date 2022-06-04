@@ -23,24 +23,23 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.ui.MainViewModel.Event
 
 @Composable
 fun TopBar(
     navController: NavHostController = rememberNavController(),
     state: State<MainViewModel.State>,
-    eventHandler: (Event) -> Unit,
-    currentRoute: String
+    eventHandler: (Event) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
+    val currentRoute = state.value.currentRoute ?: ""
 
     TopAppBar(
         title = { Text(currentRoute) },
         navigationIcon = {
-            val showBack = currentRoute == NavigationDirections.search.destination
-            if (showBack) {
+            val showBackButton = state.value.showBackButton
+            if (showBackButton) {
                 IconButton(onClick = {
                     navController.popBackStack()
                 }) {
@@ -53,8 +52,8 @@ fun TopBar(
             }
         },
         actions = {
-            val isSearchScreen = currentRoute == NavigationDirections.search.destination
-            if (isSearchScreen) {
+            val showSearchField = state.value.showSearchField
+            if (showSearchField) {
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -96,9 +95,8 @@ fun TopBar(
                     }),
                 )
             }
-            val showSearch = currentRoute != NavigationDirections.search.destination
-                    && currentRoute != NavigationDirections.welcome.destination
-            if (showSearch) {
+            val showSearchButton = state.value.showSearchButton
+            if (showSearchButton) {
                 IconButton(onClick = {
                     eventHandler(Event.SearchClicked)
                 }) {

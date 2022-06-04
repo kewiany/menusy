@@ -2,8 +2,10 @@ package xyz.kewiany.menusy
 
 import android.app.Application
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -28,10 +30,10 @@ fun App(
     val navController = rememberNavController()
     val startDestination = NavigationDirections.welcome.destination
     val mainViewModel: MainViewModel = hiltViewModel()
-    val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
+    val state = mainViewModel.state.collectAsState()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: ""
+    mainViewModel.eventHandler(MainViewModel.Event.SetCurrentRoute(navBackStackEntry?.destination?.route))
 
     LaunchedEffect(navigator.commands) {
         navigator.commands.onEach { command ->
@@ -64,12 +66,11 @@ fun App(
                 navController = navController,
                 state = mainViewModel.state.collectAsState(),
                 eventHandler = mainViewModel.eventHandler,
-                currentRoute = currentRoute
             )
         },
         bottomBar = {
             BottomBar(
-                bottomBarState = bottomBarState,
+                state,
                 eventHandler = mainViewModel.eventHandler
             )
         },

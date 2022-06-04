@@ -29,8 +29,28 @@ class MainViewModel @Inject constructor(
         Event.SearchClicked -> navigator.navigate(NavigationDirections.search)
         Event.ChangeLanguageClicked -> navigator.navigate(NavigationDirections.changeLanguage)
         Event.ClearSearchClicked -> handleClearSearchClicked()
+        is Event.SetCurrentRoute -> handleCurrentRoute(event)
         is Event.SearchTextChanged -> handleSearchTextChanged(event)
         is Event.SearchFocused -> handleSearchFocused(event)
+    }
+
+    private fun handleCurrentRoute(event: Event.SetCurrentRoute) {
+        val currentRoute = event.route
+        val showBackButton = currentRoute == NavigationDirections.search.destination
+        val showBottomBar = currentRoute != NavigationDirections.welcome.destination
+                && currentRoute != NavigationDirections.search.destination
+        val showSearchButton = currentRoute != NavigationDirections.search.destination
+                && currentRoute != NavigationDirections.welcome.destination
+        val showSearchField = currentRoute == NavigationDirections.search.destination
+        updateState {
+            it.copy(
+                currentRoute = currentRoute,
+                showBackButton = showBackButton,
+                showBottomBar = showBottomBar,
+                showSearchButton = showSearchButton,
+                showSearchField = showSearchField
+            )
+        }
     }
 
     private fun handleClearSearchClicked() {
@@ -46,6 +66,11 @@ class MainViewModel @Inject constructor(
     }
 
     data class State(
+        val currentRoute: String? = null,
+        val showBackButton: Boolean = false,
+        val showBottomBar: Boolean = false,
+        val showSearchButton: Boolean = false,
+        val showSearchField: Boolean = false,
         val searchText: String = "",
         val showClearButton: Boolean = false
     )
@@ -56,6 +81,7 @@ class MainViewModel @Inject constructor(
         object SearchClicked : Event()
         object ChangeLanguageClicked : Event()
         object ClearSearchClicked : Event()
+        data class SetCurrentRoute(val route: String?) : Event()
         data class SearchFocused(val isFocused: Boolean) : Event()
         data class SearchTextChanged(val text: String) : Event()
     }

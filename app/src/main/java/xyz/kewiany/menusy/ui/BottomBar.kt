@@ -11,7 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
@@ -20,13 +20,13 @@ import xyz.kewiany.menusy.ui.MainViewModel.Event
 
 @Composable
 fun BottomBar(
-    bottomBarState: MutableState<Boolean>,
+    state: State<MainViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
     val selectedIndex = remember { mutableStateOf(0) }
 
     AnimatedVisibility(
-        visible = bottomBarState.value,
+        visible = state.value.showBottomBar,
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it }),
         content = {
