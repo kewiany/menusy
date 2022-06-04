@@ -2,10 +2,7 @@ package xyz.kewiany.menusy
 
 import android.app.Application
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -61,13 +58,11 @@ fun App(
         }.launchIn(this)
     }
 
-    bottomBarState.value = currentRoute != NavigationDirections.welcome.destination
-            && currentRoute != NavigationDirections.search.destination
-
     Scaffold(
         topBar = {
             TopBar(
                 navController = navController,
+                state = mainViewModel.state.collectAsState(),
                 eventHandler = mainViewModel.eventHandler,
                 currentRoute = currentRoute
             )

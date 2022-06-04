@@ -35,6 +35,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
         freeCompilerArgs = listOf(
             "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=androidx.compose.ui.ExperimentalComposeUiApi",
             "-Xjvm-default=compatibility"
         )
     }
