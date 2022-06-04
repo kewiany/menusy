@@ -1,15 +1,39 @@
 package xyz.kewiany.menusy.ui.search
 
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import xyz.kewiany.menusy.SearchTextHolder
 import xyz.kewiany.menusy.ui.search.SearchViewModel.Event
 import xyz.kewiany.menusy.ui.search.SearchViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel
+import javax.inject.Inject
 
-class SearchViewModel : BaseViewModel<State, Event>(State) {
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    searchTextHolder: SearchTextHolder
+) : BaseViewModel<State, Event>(State()) {
+
+    private val results = mutableListOf<String>()
+
+    init {
+        searchTextHolder.searchText
+            .debounce(500L)
+            .onEach { text ->
+                results.add(text)
+                updateState { it.copy(results = results.toList()) }
+            }.launchIn(viewModelScope)
+    }
 
     override fun handleEvent(event: Event) {
 
     }
 
-    object State
+    data class State(
+        val results: List<String> = emptyList()
+    )
+
     object Event
 }

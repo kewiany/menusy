@@ -13,8 +13,15 @@ fun SearchScreen(
     eventHandler: (SearchViewModel.Event) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = "Search"
-        )
+        val results = state.value.results
+        if (results.isNotEmpty()) {
+            Text(
+                text = state.value.results.toString()
+            )
+        } else {
+            Text(
+                text = "No results"
+            )
+        }
     }
 }
