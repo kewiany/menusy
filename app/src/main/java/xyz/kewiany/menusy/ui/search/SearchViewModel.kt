@@ -11,13 +11,14 @@ import xyz.kewiany.menusy.ui.search.SearchViewModel.Event
 import xyz.kewiany.menusy.ui.search.SearchViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     searchTextHolder: SearchTextHolder
 ) : BaseViewModel<State, Event>(State()) {
 
-    private val results = mutableListOf<String>()
+    private val results = mutableListOf<SearchUiItem>()
 
     init {
         searchTextHolder.searchText
@@ -25,19 +26,25 @@ class SearchViewModel @Inject constructor(
             .debounce(500L)
             .onEach { text ->
                 if (text.isNotEmpty()) {
-                    results.add(text)
+                    results.add(SearchUiItem(Random.nextInt().toString(), text))
                     updateState { it.copy(results = results.toList()) }
                 }
             }.launchIn(viewModelScope)
     }
 
-    override fun handleEvent(event: Event) {
+    override fun handleEvent(event: Event) = when (event) {
+        is Event.SearchItemClicked -> handleSearchItemClicked(event)
+    }
 
+    private fun handleSearchItemClicked(event: Event.SearchItemClicked) {
+        println(event.id)
     }
 
     data class State(
-        val results: List<String> = emptyList()
+        val results: List<SearchUiItem> = emptyList()
     )
 
-    object Event
+    sealed class Event {
+        data class SearchItemClicked(val id: String) : Event()
+    }
 }
