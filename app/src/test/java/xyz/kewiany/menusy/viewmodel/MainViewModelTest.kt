@@ -6,6 +6,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.SearchTextHolder
 import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
@@ -15,13 +16,16 @@ import xyz.kewiany.menusy.ui.language.Language
 class MainViewModelTest : BaseTest() {
 
     private val navigator = mockk<Navigator>(relaxed = true)
+    private val searchTextHolder = mockk<SearchTextHolder>()
     private val settingsRepository = mockk<SettingsRepository> {
         coEvery { this@mockk.language } returns MutableStateFlow(Language.ENGLISH)
     }
 
     private val viewModel: MainViewModel by lazy {
         MainViewModel(
-            navigator, settingsRepository
+            navigator,
+            searchTextHolder,
+            settingsRepository
         )
     }
 
