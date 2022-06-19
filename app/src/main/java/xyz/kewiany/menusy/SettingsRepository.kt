@@ -1,27 +1,36 @@
 package xyz.kewiany.menusy
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import xyz.kewiany.menusy.ui.language.Language
 import javax.inject.Inject
 
 interface SettingsRepository {
-    val language: SharedFlow<Language>
+    val language: Flow<Language>
     fun getLanguages(): List<Language>
-    fun setLanguage(language: Language)
+    suspend fun setLanguage(language: Language)
 }
 
-class SettingsRepositoryImpl @Inject constructor() : SettingsRepository {
+class SettingsRepositoryImpl @Inject constructor(
+    private val dataStore: DataStore<Preferences>
+) : SettingsRepository {
 
-    private val _language = MutableStateFlow(Language.ENGLISH)
-    override val language = _language.asSharedFlow()
-
-    override fun getLanguages(): List<Language> {
-        return Language.values().toList()
+    override val language: Flow<Language> = dataStore.data.map { preferences ->
+        Language.valueOf(preferences[PreferencesKeys.LANGUAGE] ?: Language.ENGLISH.name)
     }
 
-    override fun setLanguage(language: Language) {
-        _language.tryEmit(language)
+    override fun getLanguages(): List<Language> = LANGUAGES
+
+    override suspend fun setLanguage(language: Language) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKeys.LANGUAGE] = language.name
+        }
+    }
+
+    companion object {
+        private val LANGUAGES = Language.values().toList()
     }
 }

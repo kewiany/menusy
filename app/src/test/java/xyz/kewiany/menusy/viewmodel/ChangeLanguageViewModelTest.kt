@@ -1,11 +1,9 @@
 package xyz.kewiany.menusy.viewmodel
 
 import app.cash.turbine.test
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.justRun
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -13,6 +11,7 @@ import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel
+import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.Event
 import xyz.kewiany.menusy.ui.language.Language
 
 class ChangeLanguageViewModelTest : BaseTest() {
@@ -23,12 +22,13 @@ class ChangeLanguageViewModelTest : BaseTest() {
     private val settingsRepository = mockk<SettingsRepository> {
         coEvery { this@mockk.getLanguages() } returns languages
         coEvery { this@mockk.language } returns MutableStateFlow(currentLanguage)
-        justRun { setLanguage(any()) }
+        coJustRun { setLanguage(any()) }
     }
     private val viewModel: ChangeLanguageViewModel by lazy {
         ChangeLanguageViewModel(
             navigator,
-            settingsRepository
+            settingsRepository,
+            testDispatcherProvider
         )
     }
 
@@ -47,7 +47,7 @@ class ChangeLanguageViewModelTest : BaseTest() {
         val language = Language.UKRAINIAN
         viewModel.state.test {
             skipItems(2)
-            viewModel.eventHandler(ChangeLanguageViewModel.Event.LanguageClicked(language))
+            viewModel.eventHandler(Event.LanguageClicked(language))
             assertEquals(language, awaitItem().currentLanguage)
         }
     }
@@ -56,7 +56,7 @@ class ChangeLanguageViewModelTest : BaseTest() {
     fun when_outsideClicked_then_navigateBack() = testScope.runTest {
         viewModel.state.test {
             skipItems(2)
-            viewModel.eventHandler(ChangeLanguageViewModel.Event.OutsideClicked)
+            viewModel.eventHandler(Event.OutsideClicked)
             coVerify { navigator.back() }
         }
     }
@@ -65,7 +65,7 @@ class ChangeLanguageViewModelTest : BaseTest() {
     fun when_cancelClicked_then_navigateBack() = testScope.runTest {
         viewModel.state.test {
             skipItems(2)
-            viewModel.eventHandler(ChangeLanguageViewModel.Event.CancelClicked)
+            viewModel.eventHandler(Event.CancelClicked)
             coVerify { navigator.back() }
         }
     }
@@ -75,11 +75,12 @@ class ChangeLanguageViewModelTest : BaseTest() {
         val language = Language.UKRAINIAN
         viewModel.state.test {
             skipItems(2)
-            viewModel.eventHandler(ChangeLanguageViewModel.Event.LanguageClicked(language))
+            viewModel.eventHandler(Event.LanguageClicked(language))
             awaitItem()
-            viewModel.eventHandler(ChangeLanguageViewModel.Event.OKClicked)
+            viewModel.eventHandler(Event.OKClicked)
+            runCurrent()
             coVerify { settingsRepository.setLanguage(language) }
-            coVerify { navigator.back() }
+            verify { navigator.back() }
         }
     }
 }

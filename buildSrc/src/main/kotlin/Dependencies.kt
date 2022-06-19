@@ -17,6 +17,7 @@ object Library {
         const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
         const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
         const val composeUiTooling = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+        const val dataStore = "androidx.datastore:datastore-preferences:1.0.0"
         const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
         const val activityCompose = "androidx.activity:activity-compose:1.3.1"
         const val navigationRuntime = "androidx.navigation:navigation-runtime-ktx:2.4.2"

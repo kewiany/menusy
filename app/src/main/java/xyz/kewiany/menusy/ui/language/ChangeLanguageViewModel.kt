@@ -9,21 +9,23 @@ import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.Event
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel
+import xyz.kewiany.menusy.utils.DispatcherProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class ChangeLanguageViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main()) {
             val currentLanguage = settingsRepository.language.first()
             updateState {
                 it.copy(
                     currentLanguage = currentLanguage,
-                    languages = Language.values().toList()
+                    languages = settingsRepository.getLanguages()
                 )
             }
         }
@@ -40,7 +42,9 @@ class ChangeLanguageViewModel @Inject constructor(
             navigator.back()
         }
         is Event.OKClicked -> {
-            settingsRepository.setLanguage(requireNotNull(state.value.currentLanguage))
+            viewModelScope.launch(dispatcherProvider.main()) {
+                settingsRepository.setLanguage(requireNotNull(state.value.currentLanguage))
+            }
             navigator.back()
         }
     }
