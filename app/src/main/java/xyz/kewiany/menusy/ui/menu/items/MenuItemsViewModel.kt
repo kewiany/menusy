@@ -8,6 +8,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.entity.Category
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
@@ -21,6 +22,7 @@ import xyz.kewiany.menusy.utils.UiItem
 
 class MenuItemsViewModel @AssistedInject constructor(
     private val getMenuUseCase: GetMenuUseCase,
+    private val orderRepository: OrderRepository,
     @Assisted private val menuId: String,
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
@@ -48,15 +50,19 @@ class MenuItemsViewModel @AssistedInject constructor(
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
         val index = state.value.items.indexOfFirst { it.id == event.productId }
         val product = state.value.items[index] as ProductUiItem
+        val quantity = product.quantity - 1
 
-        changeQuantity(index, product, product.quantity - 1)
+        changeQuantity(index, product, quantity)
+        orderRepository.updateOrder(product.id, quantity)
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
         val index = state.value.items.indexOfFirst { it.id == event.productId }
         val product = state.value.items[index] as ProductUiItem
+        val quantity = product.quantity + 1
 
-        changeQuantity(index, product, product.quantity + 1)
+        changeQuantity(index, product, quantity)
+        orderRepository.updateOrder(product.id, quantity)
     }
 
     private fun changeQuantity(index: Int, product: ProductUiItem, quantity: Int) {

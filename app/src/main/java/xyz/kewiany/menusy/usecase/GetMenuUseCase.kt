@@ -38,7 +38,6 @@ class GetMenuUseCaseImpl @Inject constructor(
             }
             Success(menu, products)
         } catch (e: Exception) {
-            println("kewin $e")
             Error(GetMenuError.Unknown)
         }
     }
