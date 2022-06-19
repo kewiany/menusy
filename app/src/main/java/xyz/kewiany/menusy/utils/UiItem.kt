@@ -1,3 +1,5 @@
 package xyz.kewiany.menusy.utils
 
-interface UiItem
+interface UiItem {
+    val id: String
+}

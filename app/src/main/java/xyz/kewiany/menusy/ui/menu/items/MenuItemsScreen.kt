@@ -1,7 +1,6 @@
 package xyz.kewiany.menusy.ui.menu.items
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,13 +47,17 @@ fun MenuItemsScreen(
                 items(state.value.items) { item ->
                     when (item) {
                         is CategoryUiItem -> CategoryItem(item.id)
-                        is ProductUiItem -> ProductItem(
-                            item.id,
-                            item.name,
-                            item.description,
-                            item.price
-                        ) {
-                            eventHandler(Event.ProductClicked(item.id))
+                        is ProductUiItem -> {
+                            ProductItem(
+                                item.id,
+                                item.name,
+                                item.description,
+                                item.price,
+                                item.quantity,
+                                { id -> eventHandler(Event.ProductClicked(id)) },
+                                { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
+                                { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
+                            )
                         }
                     }
                 }
@@ -78,43 +81,6 @@ private fun CategoryItem(
             text = id,
         )
     }
-}
-
-@Composable
-private fun ProductItem(
-    id: String,
-    name: String,
-    description: String,
-    price: String,
-    onProductClicked: (String) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .clickable { onProductClicked(id) }
-            .background(Color.Green)
-            .padding(10.dp)
-    ) {
-        Row {
-            Text(
-                text = id,
-                modifier = Modifier.weight(0.2f)
-            )
-            Text(
-                text = name,
-                modifier = Modifier.weight(0.6f)
-            )
-            Text(
-                text = price,
-                modifier = Modifier.weight(0.2f)
-            )
-        }
-        Row {
-            Text(
-                text = description
-            )
-        }
-    }
-
 }
 
 @Composable

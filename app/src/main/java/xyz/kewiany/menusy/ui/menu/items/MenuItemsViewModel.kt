@@ -32,13 +32,43 @@ class MenuItemsViewModel @AssistedInject constructor(
     }
 
     override fun handleEvent(event: Event) = when (event) {
-        is Event.TabClicked -> {
-            val items = state.value.items
-            val index = event.index
-            val currentCategory = findCategoryIndex(items, index.toString())
-            updateState { it.copy(currentTab = index, currentCategory = currentCategory) }
-        }
+        is Event.TabClicked -> handleTabClicked(event)
         is Event.ProductClicked -> println(event.id)
+        is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
+        is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
+    }
+
+    private fun handleTabClicked(event: Event.TabClicked) {
+        val items = state.value.items
+        val index = event.index
+        val currentCategory = findCategoryIndex(items, index.toString())
+        updateState { it.copy(currentTab = index, currentCategory = currentCategory) }
+    }
+
+    private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
+        val index = state.value.items.indexOfFirst { it.id == event.productId }
+        val product = state.value.items[index] as ProductUiItem
+
+        changeQuantity(index, product, product.quantity - 1)
+    }
+
+    private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
+        val index = state.value.items.indexOfFirst { it.id == event.productId }
+        val product = state.value.items[index] as ProductUiItem
+
+        changeQuantity(index, product, product.quantity + 1)
+    }
+
+    private fun changeQuantity(index: Int, product: ProductUiItem, quantity: Int) {
+        val newProduct = ProductUiItem(product.id, product.name, product.description, product.price, quantity)
+        updateState {
+            val items = it.items.toMutableList()
+            items.apply {
+                remove(product)
+                add(index, newProduct)
+            }
+            it.copy(items = items)
+        }
     }
 
     private suspend fun loadMenu(menuId: String) {
@@ -49,10 +79,7 @@ class MenuItemsViewModel @AssistedInject constructor(
                     val products = response.products
                     val items = combineToMenu(categories, products)
                     updateState {
-                        it.copy(
-                            tabs = categories?.map { category -> category.name } ?: emptyList(),
-                            items = items
-                        )
+                        it.copy(tabs = categories?.map { category -> category.name } ?: emptyList(), items = items)
                     }
                 }
                 is GetMenuResponse.Error -> {
@@ -75,6 +102,8 @@ class MenuItemsViewModel @AssistedInject constructor(
     sealed class Event {
         data class TabClicked(val index: Int) : Event()
         data class ProductClicked(val id: String) : Event()
+        data class IncreaseQuantityClicked(val productId: String) : Event()
+        data class DecreaseQuantityClicked(val productId: String) : Event()
     }
 
     @AssistedFactory
@@ -85,8 +114,7 @@ class MenuItemsViewModel @AssistedInject constructor(
     @Suppress("UNCHECKED_CAST")
     companion object {
         fun provideFactory(
-            assistedFactory: Factory,
-            menuId: String
+            assistedFactory: Factory, menuId: String
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return assistedFactory.create(menuId) as T
@@ -97,13 +125,11 @@ class MenuItemsViewModel @AssistedInject constructor(
 
 fun combineToMenu(categories: List<Category>?, products: List<Product>): List<UiItem> {
     val items = mutableListOf<UiItem>()
-    products
-        .groupBy { it.categoryId }.entries
-        .forEach { (categoryId, products) ->
-            val category = categories?.find { it.id == categoryId }
-            if (category != null) items.add(CategoryMapper.map(category))
-            items.addAll(products.map(ProductMapper::map))
-        }
+    products.groupBy { it.categoryId }.entries.forEach { (categoryId, products) ->
+        val category = categories?.find { it.id == categoryId }
+        if (category != null) items.add(CategoryMapper.map(category))
+        items.addAll(products.map(ProductMapper::map))
+    }
     return items
 }
 

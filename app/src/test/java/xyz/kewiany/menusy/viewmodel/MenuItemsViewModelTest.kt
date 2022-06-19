@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -12,6 +13,8 @@ import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.createMenu
 import xyz.kewiany.menusy.createProduct
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
+import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
+import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
 import xyz.kewiany.menusy.ui.menu.items.combineToMenu
 import xyz.kewiany.menusy.ui.menu.items.findCategoryIndex
 import xyz.kewiany.menusy.usecase.GetMenuError
@@ -78,10 +81,30 @@ class MenuItemsViewModelTest : BaseTest() {
         val viewModel = viewModel()
         viewModel.state.test {
             skipItems(2)
-            viewModel.eventHandler(MenuItemsViewModel.Event.TabClicked(index))
+            viewModel.eventHandler(Event.TabClicked(index))
             val state = awaitItem()
             assertEquals(index, state.currentTab)
             assertEquals(findCategoryIndex(uiItems, index.toString()), state.currentCategory)
         }
+    }
+
+    @Test
+    fun when_decreaseQuantityClicked_then_changeQuantity() = testScope.runTest {
+        val viewModel = viewModel()
+        val index = 0
+        runCurrent()
+        val product = viewModel.state.value.items[index]
+        viewModel.eventHandler(Event.DecreaseQuantityClicked(product.id))
+        assertEquals(-1, (viewModel.state.value.items[index] as ProductUiItem).quantity)
+    }
+
+    @Test
+    fun when_increaseQuantityClicked_then_updateItems() = testScope.runTest {
+        val viewModel = viewModel()
+        val index = 0
+        runCurrent()
+        val product = viewModel.state.value.items[index]
+        viewModel.eventHandler(Event.IncreaseQuantityClicked(product.id))
+        assertEquals(1, (viewModel.state.value.items[index] as ProductUiItem).quantity)
     }
 }

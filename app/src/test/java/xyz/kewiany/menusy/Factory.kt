@@ -31,12 +31,12 @@ fun createProduct(
     description: String = "description",
     price: String = "price",
     menuId: String = "menuId",
-    categoryId: String = "categoryId"
+    categoryId: String = "categoryId",
 ) = Product(
     id = id,
     name = name,
     description = description,
     price = price,
     menuId = menuId,
-    categoryId = categoryId
+    categoryId = categoryId,
 )

@@ -7,6 +7,6 @@ object ProductMapper {
         product.id,
         product.name,
         product.description,
-        product.price
+        product.price,
     )
 }
