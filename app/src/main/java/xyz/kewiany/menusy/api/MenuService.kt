@@ -8,21 +8,21 @@ class MenuService @Inject constructor() : MenuApi {
 
     override suspend fun getMenu(menuId: String): MenuResponse? {
         return try {
-            val data = if (menuId == "0") {
+            val data = if (menuId == "m0") {
                 Menu(
-                    "0",
+                    "m0",
                     "menu of the day",
                     emptyList()
                 )
             } else {
                 Menu(
-                    "1",
+                    "m1",
                     "main",
                     listOf(
-                        Category("0", "entries"),
-                        Category("1", "desserts"),
-                        Category("2", "coffee and tea"),
-                        Category("3", "soft drinks")
+                        Category("c0", "entries"),
+                        Category("c1", "desserts"),
+                        Category("c2", "coffee and tea"),
+                        Category("c3", "soft drinks")
                     )
                 )
             }
@@ -35,8 +35,8 @@ class MenuService @Inject constructor() : MenuApi {
     override suspend fun getMenus(): MenusResponse? {
         return try {
             val data = listOf(
-                Menu("0", "menu of the day"),
-                Menu("1", "main")
+                Menu("m0", "menu of the day"),
+                Menu("m1", "main")
             )
             MenusResponse(data)
         } catch (e: Exception) {

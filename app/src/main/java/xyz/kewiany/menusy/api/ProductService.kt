@@ -15,87 +15,87 @@ class ProductService @Inject constructor() : ProductApi {
 
     private fun get(menuId: String?, categoryId: String?): ProductsResponse {
         return try {
-            val data = if (menuId == "0") {
+            val data = if (menuId == "m0") {
                 listOf(
                     Product(
-                        id = "0",
+                        id = "p0",
                         name = "tomato soup",
                         description = "italian tomatoes, basiland a touch of fennel",
                         price = "10.90",
-                        menuId = "0"
+                        menuId = "m0"
                     )
                 )
             } else {
                 when (categoryId) {
-                    "0" -> {
+                    "c0" -> {
                         listOf(
                             Product(
-                                id = "0",
+                                id = "p0",
                                 name = "chicken wings",
                                 description = "crispy chicken wings, louisiana hot sauce, buttermilk blue cheese ranch dressing, carrot, celery",
                                 price = "31.90",
-                                menuId = "1",
-                                categoryId = "0"
+                                menuId = "m1",
+                                categoryId = "c0"
                             ),
                             Product(
-                                id = "1",
+                                id = "p1",
                                 name = "salmon tatar",
                                 description = "salmon, soy sauce, chives, cucumber, mustard, purple potato chips",
                                 price = "36.90",
-                                menuId = "1",
-                                categoryId = "0"
+                                menuId = "m1",
+                                categoryId = "c0"
                             ),
                         )
                     }
-                    "1" -> {
+                    "c1" -> {
                         listOf(
                             Product(
-                                id = "2",
+                                id = "p2",
                                 name = "apple cake",
                                 description = "warm apple cake with shortcrust pastry, vanilla ice cream",
                                 price = "22.90",
-                                menuId = "1",
-                                categoryId = "1"
+                                menuId = "m1",
+                                categoryId = "c1"
                             )
                         )
                     }
-                    "2" -> {
+                    "c2" -> {
                         listOf(
                             Product(
-                                id = "3",
+                                id = "p3",
                                 name = "tea",
                                 description = "black, earl grey, green, jasmine, chamomile, mint",
                                 price = "14.00",
-                                menuId = "1",
-                                categoryId = "2"
+                                menuId = "m1",
+                                categoryId = "c2"
                             ),
                             Product(
-                                id = "4",
+                                id = "p4",
                                 name = "almond frappe",
                                 description = "black or with milk",
                                 price = "18.00",
-                                menuId = "1",
-                                categoryId = "2"
+                                menuId = "m1",
+                                categoryId = "c2"
                             )
                         )
                     }
-                    "3" -> {
+                    "c3" -> {
                         listOf(
                             Product(
-                                id = "5",
+                                id = "p5",
                                 name = "toma juice",
                                 description = "apple, orange, grapefruit, tomato",
                                 price = "9.00",
-                                menuId = "1",
-                                categoryId = "3"
+                                menuId = "m1",
+                                categoryId = "c3"
                             ),
                             Product(
-                                id = "6",
+                                id = "p6",
                                 name = "cisowianka",
                                 description = "still, sparkling",
                                 price = "19.00",
-                                menuId = "1",
-                                categoryId = "3"
+                                menuId = "m1",
+                                categoryId = "c3"
                             )
                         )
                     }
