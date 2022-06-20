@@ -1,19 +1,19 @@
 package xyz.kewiany.menusy
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 interface SearchTextHolder {
-    val searchText: SharedFlow<String>
+    val searchText: StateFlow<String>
     fun setSearchText(text: String)
 }
 
 class SearchTextHolderImpl @Inject constructor() : SearchTextHolder {
 
-    private val _searchText = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    override val searchText = _searchText.asSharedFlow()
+    private val _searchText = MutableStateFlow("")
+    override val searchText = _searchText.asStateFlow()
 
     override fun setSearchText(text: String) {
         _searchText.tryEmit(text)

@@ -18,13 +18,12 @@ class SearchViewModel @Inject constructor(
     searchTextHolder: SearchTextHolder
 ) : BaseViewModel<State, Event>(State()) {
 
-    private val results = mutableListOf<SearchUiItem>()
-
     init {
         searchTextHolder.searchText
             .onStart { emit("") }
             .debounce(500L)
             .onEach { text ->
+                val results = state.value.results.toMutableList()
                 if (text.isNotEmpty()) {
                     results.add(SearchUiItem(Random.nextInt().toString(), text))
                     updateState { it.copy(results = results.toList()) }

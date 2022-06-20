@@ -30,6 +30,6 @@ class OrderRepositoryImpl @Inject constructor() : OrderRepository {
         } else {
             mutableList.add(Order(productId, quantity))
         }
-        _order.tryEmit(mutableList)
+        _order.value = mutableList
     }
 }
