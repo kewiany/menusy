@@ -1,36 +1,35 @@
 package xyz.kewiany.menusy
 
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 interface OrderRepository {
-    val order: SharedFlow<List<Order>>
+    val order: StateFlow<List<Order>>
     fun updateOrder(productId: String, quantity: Int)
 }
 
 class OrderRepositoryImpl @Inject constructor() : OrderRepository {
 
-    override val order = MutableSharedFlow<List<Order>>(extraBufferCapacity = 1)
-    private val _order: MutableList<Order> = mutableListOf()
+    private val _order = MutableStateFlow<List<Order>>(emptyList())
+    override val order = _order.asStateFlow()
 
     override fun updateOrder(productId: String, quantity: Int) {
-        val inOrder = _order.firstOrNull { it.productId == productId }?.run { true } ?: false
+        val mutableList = order.value.toMutableList()
+        val inOrder = mutableList.firstOrNull { it.productId == productId }
+            ?.run { true }
+            ?: false
 
-        when {
-            inOrder && quantity == 0 -> {
-                val index = _order.indexOfFirst { it.productId == productId }
-                _order.removeAt(index)
+        if (inOrder) {
+            val index = mutableList.indexOfFirst { it.productId == productId }
+            mutableList.removeAt(index)
+            if (quantity > 0) {
+                mutableList.add(index, Order(productId, quantity))
             }
-            inOrder -> {
-                val index = _order.indexOfFirst { it.productId == productId }
-                _order.removeAt(index)
-                _order.add(index, Order(productId, quantity))
-            }
-            else -> {
-                _order.add(Order(productId, quantity))
-            }
+        } else {
+            mutableList.add(Order(productId, quantity))
         }
-        order.tryEmit(_order)
+        _order.tryEmit(mutableList)
     }
 }

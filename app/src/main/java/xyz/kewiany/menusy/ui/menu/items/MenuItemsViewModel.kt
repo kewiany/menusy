@@ -53,7 +53,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val quantity = product.quantity - 1
 
         changeQuantity(index, product, quantity)
-        orderRepository.updateOrder(product.id, quantity)
+        updateOrder(product.id, quantity)
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
@@ -62,7 +62,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val quantity = product.quantity + 1
 
         changeQuantity(index, product, quantity)
-        orderRepository.updateOrder(product.id, quantity)
+        updateOrder(product.id, quantity)
     }
 
     private fun changeQuantity(index: Int, product: ProductUiItem, quantity: Int) {
@@ -75,6 +75,10 @@ class MenuItemsViewModel @AssistedInject constructor(
             }
             it.copy(items = items)
         }
+    }
+
+    private fun updateOrder(productId: String, quantity: Int) {
+        orderRepository.updateOrder(productId, quantity)
     }
 
     private suspend fun loadMenu(menuId: String) {
