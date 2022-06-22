@@ -29,6 +29,7 @@ class MainViewModel @Inject constructor(
     override fun handleEvent(event: Event) = when (event) {
         Event.MenuClicked -> navigator.navigate(NavigationDirections.menuEntry)
         Event.OrderClicked -> navigator.navigate(NavigationDirections.order)
+        Event.HistoryClicked -> navigator.navigate(NavigationDirections.history)
         Event.SearchClicked -> navigator.navigate(NavigationDirections.search)
         Event.ChangeLanguageClicked -> navigator.navigate(NavigationDirections.changeLanguage)
         Event.ClearSearchClicked -> handleClearSearchClicked()
@@ -83,6 +84,7 @@ class MainViewModel @Inject constructor(
     sealed class Event {
         object MenuClicked : Event()
         object OrderClicked : Event()
+        object HistoryClicked : Event()
         object SearchClicked : Event()
         object ChangeLanguageClicked : Event()
         object ClearSearchClicked : Event()

@@ -51,6 +51,13 @@ android {
         }
     }
 }
+//
+//configurations {
+//    all {
+//        exclude(group = "org.jetbrains", module = "annotations")
+//        exclude(group = "com.intellij", module = "annotations")
+//    }
+//}
 
 dependencies {
     implementation(Library.AndroidX.core)
@@ -64,6 +71,10 @@ dependencies {
     implementation(Library.AndroidX.navigationCompose)
     implementation(Library.AndroidX.hilt)
     implementation(Library.AndroidX.hiltNavigation)
+    implementation(Library.AndroidX.room)
+    annotationProcessor(Library.AndroidX.roomCompiler)
+    kapt(Library.AndroidX.roomCompiler)
+    implementation(Library.AndroidX.roomKtx)
     kapt(Library.AndroidX.hiltCompiler)
     implementation(Library.hilt)
     kapt(Library.hiltCompiler)

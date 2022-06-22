@@ -47,6 +47,12 @@ class MainViewModelTest : BaseTest() {
     }
 
     @Test
+    fun when_historyClicked_then_navigate_to_historyScreen() {
+        viewModel.eventHandler(MainViewModel.Event.HistoryClicked)
+        coVerify { navigator.navigate(NavigationDirections.history) }
+    }
+
+    @Test
     fun when_searchClicked_then_navigate_to_searchScreen() {
         viewModel.eventHandler(MainViewModel.Event.SearchClicked)
         coVerify { navigator.navigate(NavigationDirections.search) }

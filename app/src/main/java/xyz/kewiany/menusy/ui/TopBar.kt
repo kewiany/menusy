@@ -7,6 +7,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -68,6 +69,15 @@ fun TopBar(
                         tint = Color.White
                     )
                 }
+            }
+            IconButton(onClick = {
+                eventHandler(Event.HistoryClicked)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "History",
+                    tint = Color.White
+                )
             }
             IconButton(onClick = {
                 eventHandler(Event.ChangeLanguageClicked)

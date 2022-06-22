@@ -6,6 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.room.Room
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import xyz.kewiany.menusy.SearchTextHolder
 import xyz.kewiany.menusy.SearchTextHolderImpl
+import xyz.kewiany.menusy.db.AppDatabase
+import xyz.kewiany.menusy.db.OrderDataStore
+import xyz.kewiany.menusy.db.OrderDataStoreImpl
 import xyz.kewiany.menusy.utils.DefaultDispatcherProvider
 import xyz.kewiany.menusy.utils.DispatcherProvider
 import javax.inject.Singleton
@@ -38,6 +42,13 @@ class AppModule {
             produceFile = { context.preferencesDataStoreFile(PREFERENCES) })
     }
 
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Context): AppDatabase {
+        val database = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "database")
+        return database.build()
+    }
+
     @InstallIn(SingletonComponent::class)
     @Module
     abstract class BindsModule {
@@ -48,6 +59,10 @@ class AppModule {
         @Singleton
         @Binds
         abstract fun bindsSearchTextHolder(impl: SearchTextHolderImpl): SearchTextHolder
+
+        @Singleton
+        @Binds
+        abstract fun bindsOrderDataStore(impl: OrderDataStoreImpl): OrderDataStore
     }
 
     companion object {

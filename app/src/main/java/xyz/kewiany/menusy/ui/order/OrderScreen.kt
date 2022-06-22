@@ -7,40 +7,43 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import xyz.kewiany.menusy.ui.order.OrderViewModel.Event
 
 @Composable
 fun OrderScreen(
     state: State<OrderViewModel.State>,
-    eventHandler: (OrderViewModel.Event) -> Unit,
+    eventHandler: (Event) -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        val results = state.value.results
-        if (results.isNotEmpty()) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(1f),
-            ) {
-                items(state.value.results) { item ->
-                    Column(
-                        modifier = Modifier
-                            .background(Color.Yellow)
-                            .padding(10.dp)
-                    ) {
-                        Text(
-                            text = item
-                        )
+    Column(Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.weight(1f)) {
+            val results = state.value.results
+            if (results.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(1f),
+                ) {
+                    items(state.value.results) { item ->
+                        Column(
+                            modifier = Modifier
+                                .background(Color.Yellow)
+                                .padding(10.dp)
+                        ) {
+                            Text(text = "${item.product.id} ${item.quantity}")
+                        }
                     }
                 }
+            } else {
+                Text(text = "No order")
             }
-        } else {
-            Text(
-                text = "No order"
-            )
+        }
+        Button(onClick = { eventHandler(Event.PayButtonClicked) }) {
+            Text("Pay")
         }
     }
 }

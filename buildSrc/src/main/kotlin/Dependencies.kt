@@ -25,6 +25,9 @@ object Library {
         const val hilt = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
         const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
         const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0-alpha03"
+        const val room = "androidx.room:room-runtime:${Versions.room}"
+        const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+        const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     }
 }
 

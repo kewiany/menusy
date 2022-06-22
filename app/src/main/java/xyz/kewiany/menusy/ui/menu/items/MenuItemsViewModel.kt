@@ -27,6 +27,8 @@ class MenuItemsViewModel @AssistedInject constructor(
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
+    private val cachedProducts = mutableListOf<Product>()
+
     init {
         viewModelScope.launch(dispatcherProvider.main()) {
             loadMenu(menuId)
@@ -53,7 +55,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val quantity = product.quantity - 1
 
         changeQuantity(index, product, quantity)
-        updateOrder(product.id, quantity)
+        updateOrder(quantity, product.id)
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
@@ -62,7 +64,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val quantity = product.quantity + 1
 
         changeQuantity(index, product, quantity)
-        updateOrder(product.id, quantity)
+        updateOrder(quantity, product.id)
     }
 
     private fun changeQuantity(index: Int, product: ProductUiItem, quantity: Int) {
@@ -77,8 +79,9 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
     }
 
-    private fun updateOrder(productId: String, quantity: Int) {
-        orderRepository.updateOrder(productId, quantity)
+    private fun updateOrder(quantity: Int, productId: String) = viewModelScope.launch {
+        val product = cachedProducts.first { it.id == productId }
+        orderRepository.updateOrder(quantity, product)
     }
 
     private suspend fun loadMenu(menuId: String) {
@@ -87,6 +90,8 @@ class MenuItemsViewModel @AssistedInject constructor(
                 is GetMenuResponse.Success -> {
                     val categories = response.menu.categories
                     val products = response.products
+                    cachedProducts.clear()
+                    cachedProducts.addAll(products)
                     val items = combineToMenu(categories, products)
                     updateState {
                         it.copy(tabs = categories?.map { category -> category.name } ?: emptyList(), items = items)

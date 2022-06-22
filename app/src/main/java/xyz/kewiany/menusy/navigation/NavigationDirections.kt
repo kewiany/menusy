@@ -30,6 +30,12 @@ object NavigationDirections {
         override val destination = "order"
     }
 
+    val history = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+        override val destination = "history"
+    }
+
     val search = object : NavigationCommand {
 
         override val arguments = emptyList<NamedNavArgument>()

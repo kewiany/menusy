@@ -14,6 +14,8 @@ import dagger.hilt.android.EntryPointAccessors
 import xyz.kewiany.menusy.MainActivity
 import xyz.kewiany.menusy.navigation.MENU_ID
 import xyz.kewiany.menusy.navigation.NavigationDirections
+import xyz.kewiany.menusy.ui.history.HistoryScreen
+import xyz.kewiany.menusy.ui.history.HistoryViewModel
 import xyz.kewiany.menusy.ui.language.ChangeLanguageScreen
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryScreen
@@ -58,6 +60,11 @@ fun NavGraph(
             route = NavigationDirections.order.destination
         ) {
             OrderDestination()
+        }
+        composable(
+            route = NavigationDirections.history.destination
+        ) {
+            HistoryDestination()
         }
         composable(
             route = NavigationDirections.search.destination,
@@ -116,6 +123,16 @@ private fun OrderDestination() {
         eventHandler = viewModel.eventHandler
     )
 }
+
+@Composable
+private fun HistoryDestination() {
+    val viewModel: HistoryViewModel = hiltViewModel()
+    HistoryScreen(
+        state = viewModel.state.collectAsState(),
+        eventHandler = viewModel.eventHandler
+    )
+}
+
 
 @Composable
 private fun SearchDestination() {
