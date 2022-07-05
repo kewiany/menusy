@@ -25,8 +25,9 @@ class HistoryViewModel @Inject constructor(
     private suspend fun load() {
         val items = mutableListOf<HistoryUiItem>()
         val orders = orderRepository.getOrdersFromHistory()
-        orders.map { orderEntity ->
-            with(orderEntity) {
+        orders.map { orderWithProducts ->
+
+            with(orderWithProducts.order) {
                 HistoryOrderUiItem(
                     id = id.toString(),
                     date = date,
@@ -35,7 +36,7 @@ class HistoryViewModel @Inject constructor(
                 ).also(items::add)
             }
 
-            orderEntity.products.forEach { productEntity ->
+            orderWithProducts.products.forEach { productEntity ->
                 with(productEntity) {
                     HistoryProductUiItem(
                         id = id.toString(),

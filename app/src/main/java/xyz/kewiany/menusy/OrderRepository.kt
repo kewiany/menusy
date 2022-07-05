@@ -4,13 +4,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import xyz.kewiany.menusy.db.OrderDataStore
-import xyz.kewiany.menusy.db.OrderEntity
+import xyz.kewiany.menusy.db.OrderWithProducts
 import xyz.kewiany.menusy.entity.Product
 import javax.inject.Inject
 
 interface OrderRepository {
     val order: StateFlow<List<OrderedProduct>>
-    suspend fun getOrdersFromHistory(): List<OrderEntity>
+    suspend fun getOrdersFromHistory(): List<OrderWithProducts>
     suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>)
     suspend fun updateOrder(quantity: Int, product: Product)
     suspend fun clear()
@@ -23,7 +23,7 @@ class OrderRepositoryImpl @Inject constructor(
     private val _order = MutableStateFlow<List<OrderedProduct>>(emptyList())
     override val order = _order.asStateFlow()
 
-    override suspend fun getOrdersFromHistory(): List<OrderEntity> {
+    override suspend fun getOrdersFromHistory(): List<OrderWithProducts> {
         return orderDataStore.getAll()
     }
 

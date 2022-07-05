@@ -9,11 +9,9 @@ import xyz.kewiany.menusy.db.OrderEntity.Companion.TABLE_NAME
 data class OrderEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int = 0,
+    val id: Long = 0,
     @ColumnInfo(name = "date")
     val date: String,
-    @ColumnInfo(name = "products")
-    val products: List<ProductEntity>,
     @ColumnInfo(name = "total_price")
     val totalPrice: Float,
     @ColumnInfo(name = "total_quantity")

@@ -11,7 +11,7 @@ interface OrderDataStore {
         totalQuantity: Int
     )
 
-    suspend fun getAll(): List<OrderEntity>
+    suspend fun getAll(): List<OrderWithProducts>
 }
 
 class OrderDataStoreImpl @Inject constructor(private val database: AppDatabase) : OrderDataStore {
@@ -22,26 +22,29 @@ class OrderDataStoreImpl @Inject constructor(private val database: AppDatabase) 
         totalPrice: Float,
         totalQuantity: Int
     ) {
-        val dao = database.orderDao()
-        val entity = OrderEntity(
+        val orderDao = database.orderDao()
+        val orderEntity = OrderEntity(
             date = date,
-            products = orderedProducts.map { orderedProduct ->
-                with(orderedProduct) {
-                    ProductEntity(
-                        name = product.name,
-                        description = product.description,
-                        price = product.price.toString(),
-                        quantity = quantity,
-                    )
-                }
-            },
             totalPrice = totalPrice,
             totalQuantity = totalQuantity
         )
-        dao.insert(entity)
+        val orderId = orderDao.insert(orderEntity)
+        val productDao = database.productDao()
+        val productEntities = orderedProducts.map { orderedProduct ->
+            with(orderedProduct) {
+                ProductEntity(
+                    orderId = orderId,
+                    name = product.name,
+                    description = product.description,
+                    price = product.price.toString(),
+                    quantity = quantity,
+                )
+            }
+        }
+        productDao.insertAll(productEntities)
     }
 
-    override suspend fun getAll(): List<OrderEntity> {
+    override suspend fun getAll(): List<OrderWithProducts> {
         val dao = database.orderDao()
         return dao.getAll()
     }

@@ -2,11 +2,9 @@ package xyz.kewiany.menusy.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import xyz.kewiany.menusy.ProductEntitiesConverter
 
-@Database(entities = [OrderEntity::class], version = 1)
-@TypeConverters(ProductEntitiesConverter::class)
+@Database(entities = [OrderEntity::class, ProductEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun orderDao(): OrderDao
+    abstract fun productDao(): ProductDao
 }
