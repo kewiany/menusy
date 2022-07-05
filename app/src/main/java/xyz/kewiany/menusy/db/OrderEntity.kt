@@ -10,8 +10,12 @@ data class OrderEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int = 0,
-    @ColumnInfo(name = "productId")
-    val productId: String,
+    @ColumnInfo(name = "product_name")
+    val productName: String,
+    @ColumnInfo(name = "product_description")
+    val productDescription: String,
+    @ColumnInfo(name = "product_price")
+    val productPrice: String,
     @ColumnInfo(name = "quantity")
     val quantity: Int
 ) {

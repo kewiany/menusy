@@ -10,6 +10,6 @@ interface OrderDao {
     @Insert
     suspend fun insert(orderEntity: OrderEntity)
 
-    @Query("SELECT * FROM `order`")
+    @Query("SELECT * FROM `${OrderEntity.TABLE_NAME}`")
     suspend fun getAll(): List<OrderEntity>
 }

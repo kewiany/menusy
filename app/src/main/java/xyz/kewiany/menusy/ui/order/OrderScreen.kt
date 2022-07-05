@@ -3,7 +3,6 @@ package xyz.kewiany.menusy.ui.order
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,13 +20,11 @@ fun OrderScreen(
     state: State<OrderViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
-    Column(Modifier.fillMaxSize()) {
+    Column {
         Box(modifier = Modifier.weight(1f)) {
             val results = state.value.results
             if (results.isNotEmpty()) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(1f),
-                ) {
+                LazyColumn {
                     items(state.value.results) { item ->
                         Column(
                             modifier = Modifier
