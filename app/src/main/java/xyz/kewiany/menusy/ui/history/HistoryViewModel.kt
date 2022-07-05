@@ -23,15 +23,28 @@ class HistoryViewModel @Inject constructor(
     }
 
     private suspend fun load() {
-        val orderedProducts = orderRepository.getOrdersFromHistory()
-        val items = orderedProducts.map { orderEntity ->
+        val items = mutableListOf<HistoryUiItem>()
+        val orders = orderRepository.getOrdersFromHistory()
+        orders.map { orderEntity ->
             with(orderEntity) {
-                HistoryUiItem(
-                    productName = productName,
-                    productDescription = productDescription,
-                    productPrice = productPrice,
-                    quantity = quantity.toString()
-                )
+                HistoryOrderUiItem(
+                    id = id.toString(),
+                    date = date,
+                    totalPrice = totalPrice.toString(),
+                    totalQuantity = totalQuantity.toString()
+                ).also(items::add)
+            }
+
+            orderEntity.products.forEach { productEntity ->
+                with(productEntity) {
+                    HistoryProductUiItem(
+                        id = id.toString(),
+                        name = name,
+                        description = description,
+                        price = price,
+                        quantity = quantity.toString()
+                    ).also(items::add)
+                }
             }
         }
         updateState { it.copy(items = items) }

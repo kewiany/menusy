@@ -28,16 +28,29 @@ class OrderRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>) {
-        orderedProducts.forEach { orderedProduct ->
-            with(orderedProduct) {
-                orderDataStore.insert(
-                    name = product.name,
-                    description = product.description,
-                    price = product.price,
-                    quantity = quantity
-                )
-            }
-        }
+        val totalPrice = calculateTotalPrice(orderedProducts)
+        val totalQuantity = calculateTotalQuantity(orderedProducts)
+
+        orderDataStore.insert(
+            date = "",
+            orderedProducts = orderedProducts,
+            totalPrice = totalPrice,
+            totalQuantity = totalQuantity
+        )
+    }
+
+    private fun calculateTotalPrice(products: List<OrderedProduct>): Float {
+        var totalPrice = 0f
+        products.map { it.product.price }
+            .forEach { price -> totalPrice += price }
+        return totalPrice
+    }
+
+    private fun calculateTotalQuantity(products: List<OrderedProduct>): Int {
+        var totalQuantity = 0
+        products.map { it.quantity }
+            .forEach { quantity -> totalQuantity += quantity }
+        return totalQuantity
     }
 
     override suspend fun updateOrder(quantity: Int, product: Product) {

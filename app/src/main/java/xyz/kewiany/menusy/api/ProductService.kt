@@ -21,7 +21,7 @@ class ProductService @Inject constructor() : ProductApi {
                         id = "p20",
                         name = "tomato soup",
                         description = "italian tomatoes, basiland a touch of fennel",
-                        price = "10.90",
+                        price = 10.90f,
                         menuId = "m0"
                     )
                 )
@@ -33,7 +33,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p0",
                                 name = "chicken wings",
                                 description = "crispy chicken wings, louisiana hot sauce, buttermilk blue cheese ranch dressing, carrot, celery",
-                                price = "31.90",
+                                price = 31.90f,
                                 menuId = "m1",
                                 categoryId = "c0"
                             ),
@@ -41,7 +41,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p1",
                                 name = "salmon tatar",
                                 description = "salmon, soy sauce, chives, cucumber, mustard, purple potato chips",
-                                price = "36.90",
+                                price = 36.90f,
                                 menuId = "m1",
                                 categoryId = "c0"
                             ),
@@ -53,7 +53,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p2",
                                 name = "apple cake",
                                 description = "warm apple cake with shortcrust pastry, vanilla ice cream",
-                                price = "22.90",
+                                price = 22.90f,
                                 menuId = "m1",
                                 categoryId = "c1"
                             )
@@ -65,7 +65,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p3",
                                 name = "tea",
                                 description = "black, earl grey, green, jasmine, chamomile, mint",
-                                price = "14.00",
+                                price = 14.00f,
                                 menuId = "m1",
                                 categoryId = "c2"
                             ),
@@ -73,7 +73,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p4",
                                 name = "almond frappe",
                                 description = "black or with milk",
-                                price = "18.00",
+                                price = 18.00f,
                                 menuId = "m1",
                                 categoryId = "c2"
                             )
@@ -85,7 +85,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p5",
                                 name = "toma juice",
                                 description = "apple, orange, grapefruit, tomato",
-                                price = "9.00",
+                                price = 9.00f,
                                 menuId = "m1",
                                 categoryId = "c3"
                             ),
@@ -93,7 +93,7 @@ class ProductService @Inject constructor() : ProductApi {
                                 id = "p6",
                                 name = "cisowianka",
                                 description = "still, sparkling",
-                                price = "19.00",
+                                price = 19.00f,
                                 menuId = "m1",
                                 categoryId = "c3"
                             )

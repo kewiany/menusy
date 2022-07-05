@@ -11,6 +11,7 @@ object Library {
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    const val gson = "com.google.code.gson:gson:2.9.0"
 
     object AndroidX {
         const val core = "androidx.core:core-ktx:1.7.0"

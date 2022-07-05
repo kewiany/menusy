@@ -78,6 +78,7 @@ dependencies {
     kapt(Library.AndroidX.hiltCompiler)
     implementation(Library.hilt)
     kapt(Library.hiltCompiler)
+    implementation(Library.gson)
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.coroutines)
     testImplementation(TestLibrary.mockk)

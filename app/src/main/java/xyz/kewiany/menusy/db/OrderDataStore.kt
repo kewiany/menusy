@@ -1,26 +1,42 @@
 package xyz.kewiany.menusy.db
 
+import xyz.kewiany.menusy.OrderedProduct
 import javax.inject.Inject
 
 interface OrderDataStore {
-    suspend fun insert(name: String, description: String, price: String, quantity: Int)
+    suspend fun insert(
+        date: String,
+        orderedProducts: List<OrderedProduct>,
+        totalPrice: Float,
+        totalQuantity: Int
+    )
+
     suspend fun getAll(): List<OrderEntity>
 }
 
 class OrderDataStoreImpl @Inject constructor(private val database: AppDatabase) : OrderDataStore {
 
     override suspend fun insert(
-        name: String,
-        description: String,
-        price: String,
-        quantity: Int
+        date: String,
+        orderedProducts: List<OrderedProduct>,
+        totalPrice: Float,
+        totalQuantity: Int
     ) {
         val dao = database.orderDao()
         val entity = OrderEntity(
-            productName = name,
-            productDescription = description,
-            productPrice = price,
-            quantity = quantity
+            date = date,
+            products = orderedProducts.map { orderedProduct ->
+                with(orderedProduct) {
+                    ProductEntity(
+                        name = product.name,
+                        description = product.description,
+                        price = product.price.toString(),
+                        quantity = quantity,
+                    )
+                }
+            },
+            totalPrice = totalPrice,
+            totalQuantity = totalQuantity
         )
         dao.insert(entity)
     }

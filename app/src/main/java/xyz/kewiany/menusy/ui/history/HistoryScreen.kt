@@ -23,12 +23,17 @@ fun HistoryScreen(
                 modifier = Modifier.fillMaxSize(1f),
             ) {
                 items(state.value.items) { item ->
-                    with(item) {
-                        HistoryItem(
-                            name = productName,
-                            description = productDescription,
-                            price = productPrice,
-                            quantity = quantity
+                    when (item) {
+                        is HistoryOrderUiItem -> HistoryOrderItem(
+                            date = item.date,
+                            totalPrice = item.totalPrice,
+                            totalQuantity = item.totalQuantity
+                        )
+                        is HistoryProductUiItem -> HistoryProductItem(
+                            name = item.name,
+                            description = item.description,
+                            price = item.price,
+                            quantity = item.quantity
                         )
                     }
                 }
@@ -42,7 +47,36 @@ fun HistoryScreen(
 }
 
 @Composable
-private fun HistoryItem(
+private fun HistoryOrderItem(
+    date: String,
+    totalPrice: String,
+    totalQuantity: String,
+) {
+    Column(
+        modifier = Modifier
+            .background(Color.Magenta)
+            .padding(10.dp)
+    ) {
+        Row {
+            Text(
+                text = date,
+                modifier = Modifier.weight(0.8f)
+            )
+            Text(
+                text = totalPrice,
+                modifier = Modifier.weight(0.2f)
+            )
+            Text(
+                text = totalQuantity,
+                modifier = Modifier.weight(0.2f)
+            )
+        }
+    }
+}
+
+
+@Composable
+private fun HistoryProductItem(
     name: String,
     description: String,
     price: String,
@@ -50,7 +84,7 @@ private fun HistoryItem(
 ) {
     Column(
         modifier = Modifier
-            .background(Color.Magenta)
+            .background(Color.Yellow)
             .padding(10.dp)
     ) {
         Row {
