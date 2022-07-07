@@ -4,10 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.OrderRepositoryImpl
-import xyz.kewiany.menusy.SettingsRepository
-import xyz.kewiany.menusy.SettingsRepositoryImpl
+import xyz.kewiany.menusy.*
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -21,4 +18,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindsOrderRepository(impl: OrderRepositoryImpl): OrderRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindsMenuRepository(impl: MenuRepositoryImpl): MenuRepository
 }

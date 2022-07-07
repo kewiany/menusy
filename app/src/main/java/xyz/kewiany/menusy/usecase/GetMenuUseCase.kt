@@ -1,8 +1,7 @@
 package xyz.kewiany.menusy.usecase
 
 import kotlinx.coroutines.withContext
-import xyz.kewiany.menusy.api.MenuApi
-import xyz.kewiany.menusy.api.ProductApi
+import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.entity.Menu
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Error
@@ -15,8 +14,7 @@ interface GetMenuUseCase {
 }
 
 class GetMenuUseCaseImpl @Inject constructor(
-    private val menuApi: MenuApi,
-    private val productsApi: ProductApi,
+    private val menuRepository: MenuRepository,
     private val dispatcherProvider: DispatcherProvider
 ) : GetMenuUseCase {
 
@@ -24,17 +22,17 @@ class GetMenuUseCaseImpl @Inject constructor(
         try {
             val products = mutableListOf<Product>()
 
-            val menu = menuApi.getMenu(menuId)?.menu; requireNotNull(menu)
+            val menu = menuRepository.getMenu(menuId)
             val categories = menu.categories
 
             val areCategories = categories?.isNotEmpty() == true
 
             if (areCategories) {
                 categories?.forEach { category ->
-                    products.addAll(productsApi.getProducts(menuId, category.id)?.products ?: emptyList())
+                    products.addAll(menuRepository.getProducts(menuId, category.id))
                 }
             } else {
-                products.addAll(productsApi.getProducts(menuId)?.products ?: emptyList())
+                products.addAll(menuRepository.getProducts(menuId))
             }
             Success(menu, products)
         } catch (e: Exception) {

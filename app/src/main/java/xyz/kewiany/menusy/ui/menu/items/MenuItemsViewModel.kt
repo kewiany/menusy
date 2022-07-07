@@ -7,7 +7,9 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.entity.Category
 import xyz.kewiany.menusy.entity.Product
@@ -23,6 +25,7 @@ import xyz.kewiany.menusy.utils.UiItem
 class MenuItemsViewModel @AssistedInject constructor(
     private val getMenuUseCase: GetMenuUseCase,
     private val orderRepository: OrderRepository,
+    menuRepository: MenuRepository,
     @Assisted private val menuId: String,
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
@@ -31,7 +34,10 @@ class MenuItemsViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch(dispatcherProvider.main()) {
-            loadMenu(menuId)
+            while (true) {
+                loadMenu(menuId)
+                menuRepository.needReloadProducts.first()
+            }
         }
     }
 
