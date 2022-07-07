@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.SearchTextHolder
 import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.NavigationDirections
@@ -17,12 +18,17 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val navigator: Navigator,
     private val searchTextHolder: SearchTextHolder,
+    orderRepository: OrderRepository,
     settingsRepository: SettingsRepository
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
         settingsRepository.language.onEach {
             println("language $it")
+        }.launchIn(viewModelScope)
+
+        orderRepository.productsOrderedCount.onEach { count ->
+            updateState { it.copy(orderedProductsCount = count) }
         }.launchIn(viewModelScope)
     }
 
@@ -78,7 +84,8 @@ class MainViewModel @Inject constructor(
         val showSearchButton: Boolean = false,
         val showSearchBar: Boolean = false,
         val searchText: String = "",
-        val showClearButton: Boolean = false
+        val showClearButton: Boolean = false,
+        val orderedProductsCount: Int = 0
     )
 
     sealed class Event {

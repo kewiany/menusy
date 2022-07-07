@@ -3,10 +3,7 @@ package xyz.kewiany.menusy.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
@@ -44,7 +41,14 @@ fun BottomBar(
 
                 BottomNavigationItem(
                     icon = {
-                        Icon(imageVector = Icons.Default.Add, "")
+                        val orderedProductsCount = state.value.orderedProductsCount
+                        if (orderedProductsCount > 0) {
+                            BadgedBox(badge = { Badge { Text(orderedProductsCount.toString()) } }) {
+                                Icon(imageVector = Icons.Filled.Add, "")
+                            }
+                        } else {
+                            Icon(imageVector = Icons.Filled.Add, "")
+                        }
                     },
                     label = { Text(text = "Order") },
                     selected = (selectedIndex.value == 1),

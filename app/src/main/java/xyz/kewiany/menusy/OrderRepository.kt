@@ -1,8 +1,9 @@
 package xyz.kewiany.menusy
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import xyz.kewiany.menusy.db.OrderDataStore
 import xyz.kewiany.menusy.db.OrderWithProducts
 import xyz.kewiany.menusy.entity.Product
@@ -10,6 +11,7 @@ import javax.inject.Inject
 
 interface OrderRepository {
     val order: StateFlow<List<OrderedProduct>>
+    val productsOrderedCount: Flow<Int>
     suspend fun getOrdersFromHistory(): List<OrderWithProducts>
     suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>)
     suspend fun updateOrder(quantity: Int, product: Product)
@@ -20,8 +22,14 @@ class OrderRepositoryImpl @Inject constructor(
     private val orderDataStore: OrderDataStore
 ) : OrderRepository {
 
-    private val _order = MutableStateFlow<List<OrderedProduct>>(emptyList())
-    override val order = _order.asStateFlow()
+    private val _order: MutableStateFlow<List<OrderedProduct>> = MutableStateFlow(emptyList())
+    override val order: StateFlow<List<OrderedProduct>> = _order
+    override val productsOrderedCount: Flow<Int> = _order
+        .map { orderedProducts ->
+            var quantity = 0
+            orderedProducts.forEach { quantity += it.quantity }
+            quantity
+        }
 
     override suspend fun getOrdersFromHistory(): List<OrderWithProducts> {
         return orderDataStore.getAll()
