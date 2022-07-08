@@ -2,7 +2,6 @@ package xyz.kewiany.menusy
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 interface SearchTextHolder {
@@ -12,8 +11,8 @@ interface SearchTextHolder {
 
 class SearchTextHolderImpl @Inject constructor() : SearchTextHolder {
 
-    private val _searchText = MutableStateFlow("")
-    override val searchText = _searchText.asStateFlow()
+    private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
+    override val searchText: StateFlow<String> = _searchText
 
     override fun setSearchText(text: String) {
         _searchText.tryEmit(text)

@@ -13,6 +13,7 @@ interface MenuRepository {
     suspend fun getMenu(menuId: String): Menu
     suspend fun getProducts(menuId: String): List<Product>
     suspend fun getProducts(menuId: String, categoryId: String): List<Product>
+    suspend fun getProductsByQuery(query: String): List<Product>
     fun reloadProducts()
 }
 
@@ -37,6 +38,11 @@ class MenuRepositoryImpl @Inject constructor(
 
     override suspend fun getProducts(menuId: String, categoryId: String): List<Product> {
         val response = productsApi.getProducts(menuId, categoryId)
+        return response?.products ?: emptyList()
+    }
+
+    override suspend fun getProductsByQuery(query: String): List<Product> {
+        val response = productsApi.getProductsByQuery(query)
         return response?.products ?: emptyList()
     }
 

@@ -14,6 +14,8 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import xyz.kewiany.menusy.ui.menu.items.ProductItem
+import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
 
 @Composable
 fun SearchScreen(
@@ -27,12 +29,17 @@ fun SearchScreen(
                 modifier = Modifier.fillMaxSize(1f),
             ) {
                 items(state.value.results) { item ->
-                    SearchItem(
-                        id = item.id,
-                        name = item.name,
-                        onItemClicked = {
-                            eventHandler(SearchViewModel.Event.SearchItemClicked(item.id))
-                        })
+                    item as ProductUiItem
+                    ProductItem(
+                        item.id,
+                        item.name,
+                        item.description,
+                        item.price,
+                        item.quantity,
+                        { id -> },
+                        { id -> },
+                        { id -> },
+                    )
                 }
             }
         } else {

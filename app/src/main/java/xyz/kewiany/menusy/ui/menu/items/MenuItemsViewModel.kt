@@ -153,6 +153,16 @@ class MenuItemsViewModel @AssistedInject constructor(
 }
 
 fun obtainUiItems(
+    products: List<Product>,
+    orderedProducts: List<OrderedProduct>
+): List<UiItem> {
+    val items = mutableListOf<UiItem>()
+    val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
+    items.addAll(matchedProducts)
+    return items
+}
+
+fun obtainUiItems(
     categories: List<Category>?,
     products: List<Product>,
     orderedProducts: List<OrderedProduct>
@@ -164,20 +174,25 @@ fun obtainUiItems(
         val category = categories?.find { it.id == categoryId }
         if (category != null) items.add(CategoryMapper.map(category))
 
-        products.forEach { product ->
-            val matchedProductWithOrderedProduct = orderedProducts
-                .firstOrNull { orderedProduct -> orderedProduct.product.id == product.id }
-
-            val productUiItem = if (matchedProductWithOrderedProduct != null) {
-                val orderedQuantity = matchedProductWithOrderedProduct.quantity
-                ProductMapper.map(product, orderedQuantity)
-            } else {
-                ProductMapper.map(product)
-            }
-            items.add(productUiItem)
-        }
+        val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
+        items.addAll(matchedProducts)
     }
     return items
+}
+
+private fun matchProductsWithOrderedProducts(
+    products: List<Product>,
+    orderedProducts: List<OrderedProduct>
+): List<ProductUiItem> = products.map { product ->
+    val matchedProductWithOrderedProduct = orderedProducts
+        .firstOrNull { orderedProduct -> orderedProduct.product.id == product.id }
+
+    if (matchedProductWithOrderedProduct != null) {
+        val orderedQuantity = matchedProductWithOrderedProduct.quantity
+        ProductMapper.map(product, orderedQuantity)
+    } else {
+        ProductMapper.map(product)
+    }
 }
 
 fun findCategoryIndex(items: List<UiItem>, index: String): Int = items.indexOfFirst { item ->
