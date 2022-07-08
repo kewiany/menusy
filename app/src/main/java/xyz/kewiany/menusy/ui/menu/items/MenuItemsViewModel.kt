@@ -42,10 +42,6 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
     }
 
-    private fun sync() {
-
-    }
-
     override fun handleEvent(event: Event) = when (event) {
         is Event.TabClicked -> handleTabClicked(event)
         is Event.ProductClicked -> println(event.id)
