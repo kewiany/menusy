@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
+import xyz.kewiany.menusy.OrderedProduct
 import xyz.kewiany.menusy.entity.Category
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
@@ -39,6 +40,10 @@ class MenuItemsViewModel @AssistedInject constructor(
                 menuRepository.needReloadProducts.first()
             }
         }
+    }
+
+    private fun sync() {
+
     }
 
     override fun handleEvent(event: Event) = when (event) {
@@ -98,7 +103,10 @@ class MenuItemsViewModel @AssistedInject constructor(
                     val products = response.products
                     cachedProducts.clear()
                     cachedProducts.addAll(products)
-                    val items = combineToMenu(categories, products)
+
+                    val orderedProducts = orderRepository.order.value
+                    val items = obtainUiItems(categories, products, orderedProducts)
+
                     updateState {
                         it.copy(tabs = categories?.map { category -> category.name } ?: emptyList(), items = items)
                     }
@@ -144,12 +152,30 @@ class MenuItemsViewModel @AssistedInject constructor(
     }
 }
 
-fun combineToMenu(categories: List<Category>?, products: List<Product>): List<UiItem> {
+fun obtainUiItems(
+    categories: List<Category>?,
+    products: List<Product>,
+    orderedProducts: List<OrderedProduct>
+): List<UiItem> {
     val items = mutableListOf<UiItem>()
-    products.groupBy { it.categoryId }.entries.forEach { (categoryId, products) ->
+    val groupedProducts = products.groupBy { it.categoryId }.entries
+
+    groupedProducts.forEach { (categoryId, products) ->
         val category = categories?.find { it.id == categoryId }
         if (category != null) items.add(CategoryMapper.map(category))
-        items.addAll(products.map(ProductMapper::map))
+
+        products.forEach { product ->
+            val matchedProductWithOrderedProduct = orderedProducts
+                .firstOrNull { orderedProduct -> orderedProduct.product.id == product.id }
+
+            val productUiItem = if (matchedProductWithOrderedProduct != null) {
+                val orderedQuantity = matchedProductWithOrderedProduct.quantity
+                ProductMapper.map(product, orderedQuantity)
+            } else {
+                ProductMapper.map(product)
+            }
+            items.add(productUiItem)
+        }
     }
     return items
 }

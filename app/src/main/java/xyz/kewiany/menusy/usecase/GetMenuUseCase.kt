@@ -7,6 +7,7 @@ import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Success
 import xyz.kewiany.menusy.utils.DispatcherProvider
+import xyz.kewiany.menusy.utils.UiItem
 import javax.inject.Inject
 
 interface GetMenuUseCase {
@@ -49,3 +50,5 @@ sealed class GetMenuResponse {
 sealed class GetMenuError {
     object Unknown : GetMenuError()
 }
+
+data class CachedMenu(val menu: Menu, val products: List<UiItem>)

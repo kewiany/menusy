@@ -63,9 +63,7 @@ class OrderRepositoryImpl @Inject constructor(
 
     override suspend fun updateOrder(quantity: Int, product: Product) {
         val orderedProducts = order.value.toMutableList()
-        val inOrder = orderedProducts.firstOrNull { it.product.id == product.id }
-            ?.run { true }
-            ?: false
+        val inOrder = orderedProducts.firstOrNull { it.product.id == product.id }.run { this != null }
 
         if (inOrder) {
             val index = orderedProducts.indexOfFirst { it.product.id == product.id }

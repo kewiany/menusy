@@ -14,8 +14,8 @@ import xyz.kewiany.menusy.createProduct
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
-import xyz.kewiany.menusy.ui.menu.items.combineToMenu
 import xyz.kewiany.menusy.ui.menu.items.findCategoryIndex
+import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
 import xyz.kewiany.menusy.usecase.GetMenuError
 import xyz.kewiany.menusy.usecase.GetMenuResponse
 import xyz.kewiany.menusy.usecase.GetMenuUseCase
@@ -29,7 +29,7 @@ class MenuItemsViewModelTest : BaseTest() {
         createProduct(),
         createProduct()
     )
-    private val uiItems = combineToMenu(menu.categories, products)
+    private val uiItems = obtainUiItems(menu.categories, products)
     private val orderRepository = mockk<OrderRepository> {
         justRun { updateOrder(any(), any()) }
     }
