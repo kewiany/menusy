@@ -22,7 +22,7 @@ class MenuRepositoryImpl @Inject constructor(
     private val productsApi: ProductApi,
 ) : MenuRepository {
 
-    private val _needReloadProducts: MutableSharedFlow<Unit> = MutableSharedFlow(extraBufferCapacity = 1)
+    private val _needReloadProducts = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     override val needReloadProducts: SharedFlow<Unit> = _needReloadProducts
 
     override suspend fun getMenu(menuId: String): Menu {
