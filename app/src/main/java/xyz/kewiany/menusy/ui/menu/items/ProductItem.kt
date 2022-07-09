@@ -1,7 +1,6 @@
 package xyz.kewiany.menusy.ui.menu.items
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -21,13 +20,11 @@ fun ProductItem(
     description: String,
     price: String,
     quantity: Int,
-    onProductClicked: (String) -> Unit,
     onDecreaseQuantityClicked: (String) -> Unit,
     onIncreaseQuantityClicked: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
-            .clickable { onProductClicked(id) }
             .background(Color.Green)
             .padding(10.dp)
     ) {
@@ -85,9 +82,6 @@ fun ProductItemPreview() {
         description = "description",
         price = "price",
         quantity = 0,
-        onProductClicked = {
-
-        },
         onIncreaseQuantityClicked = {
 
         },

@@ -10,11 +10,11 @@ import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.SearchRepository
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
-import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
 import xyz.kewiany.menusy.ui.search.SearchViewModel.Event
 import xyz.kewiany.menusy.ui.search.SearchViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel
 import xyz.kewiany.menusy.utils.UiItem
+import xyz.kewiany.menusy.utils.obtainUiItems
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,13 +32,8 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun handleEvent(event: Event) = when (event) {
-        is Event.SearchItemClicked -> handleSearchItemClicked(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
-    }
-
-    private fun handleSearchItemClicked(event: Event.SearchItemClicked) {
-        println(event.id)
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
@@ -65,10 +60,10 @@ class SearchViewModel @Inject constructor(
     private fun searchTextFlow() = searchRepository.searchText
         .debounce(500L)
         .onEach { text ->
-            if (text.isNotEmpty()) queryProducts(text)
+            if (text.isNotEmpty()) searchProducts(text)
         }
 
-    private suspend fun queryProducts(query: String) {
+    private suspend fun searchProducts(query: String) {
         val products = menuRepository.getProductsByQuery(query)
         val orderedProducts = orderRepository.order.value
         val items = obtainUiItems(products, orderedProducts)
@@ -76,15 +71,17 @@ class SearchViewModel @Inject constructor(
         cachedProducts.clear()
         cachedProducts.addAll(products)
 
-        updateState {
-            it.copy(results = items)
-        }
+        updateState { it.copy(results = items) }
     }
 
     override fun onCleared() {
         searchRepository.clearSearchText()
-        menuRepository.reloadProducts()
+        reloadProducts()
         super.onCleared()
+    }
+
+    private fun reloadProducts() {
+        if (isOrderModified) menuRepository.reloadProducts()
     }
 
     data class State(
@@ -93,7 +90,6 @@ class SearchViewModel @Inject constructor(
     )
 
     sealed class Event {
-        data class SearchItemClicked(val id: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()
     }

@@ -31,7 +31,6 @@ fun SearchScreen(
                         item.description,
                         item.price,
                         item.quantity,
-                        { id -> },
                         { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
                         { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
                     )
