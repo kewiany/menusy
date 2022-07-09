@@ -5,7 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.SearchRepository
@@ -43,41 +42,24 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
-        val results = state.value.results
-        val index = results.indexOfFirst { it.id == event.productId }
-        val product = results[index] as ProductUiItem
-        val quantity = product.quantity - 1
-
-        changeQuantity(index, product, quantity)
-        updateOrder(quantity, product.id)
+        val productId = event.productId
+        val items = ProductUItemModifier.decreaseQuantity(state.value.results, productId)
+        updateState { it.copy(results = items) }
+        updateOrder(items, productId)
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
-        val results = state.value.results
-        val index = results.indexOfFirst { it.id == event.productId }
-        val product = results[index] as ProductUiItem
-        val quantity = product.quantity + 1
-
-        changeQuantity(index, product, quantity)
-        updateOrder(quantity, product.id)
+        val productId = event.productId
+        val items = ProductUItemModifier.increaseQuantity(state.value.results, productId)
+        updateState { it.copy(results = items) }
+        updateOrder(items, productId)
     }
 
-    private fun changeQuantity(index: Int, product: ProductUiItem, quantity: Int) {
-        val newProduct = ProductUiItem(product.id, product.name, product.description, product.price, quantity)
-        updateState {
-            val items = it.results.toMutableList()
-            items.apply {
-                remove(product)
-                add(index, newProduct)
-            }
-            it.copy(results = items)
-        }
-    }
-
-    private fun updateOrder(quantity: Int, productId: String) = viewModelScope.launch {
-        isOrderModified = true
+    private fun updateOrder(uiItems: List<UiItem>, productId: String) {
+        val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
-        orderRepository.updateOrder(quantity, product)
+        isOrderModified = true
+        orderRepository.updateOrder(productQuantity, product)
     }
 
     private fun searchTextFlow() = searchRepository.searchText

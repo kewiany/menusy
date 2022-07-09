@@ -16,6 +16,7 @@ import xyz.kewiany.menusy.entity.Category
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.State
+import xyz.kewiany.menusy.ui.search.ProductUItemModifier
 import xyz.kewiany.menusy.usecase.GetMenuResponse
 import xyz.kewiany.menusy.usecase.GetMenuUseCase
 import xyz.kewiany.menusy.utils.BaseViewModel
@@ -57,38 +58,23 @@ class MenuItemsViewModel @AssistedInject constructor(
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
-        val index = state.value.items.indexOfFirst { it.id == event.productId }
-        val product = state.value.items[index] as ProductUiItem
-        val quantity = product.quantity - 1
-
-        changeQuantity(index, product, quantity)
-        updateOrder(quantity, product.id)
+        val productId = event.productId
+        val items = ProductUItemModifier.decreaseQuantity(state.value.items, productId)
+        updateState { it.copy(items = items) }
+        updateOrder(items, productId)
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
-        val index = state.value.items.indexOfFirst { it.id == event.productId }
-        val product = state.value.items[index] as ProductUiItem
-        val quantity = product.quantity + 1
-
-        changeQuantity(index, product, quantity)
-        updateOrder(quantity, product.id)
+        val productId = event.productId
+        val items = ProductUItemModifier.increaseQuantity(state.value.items, productId)
+        updateState { it.copy(items = items) }
+        updateOrder(items, productId)
     }
 
-    private fun changeQuantity(index: Int, product: ProductUiItem, quantity: Int) {
-        val newProduct = ProductUiItem(product.id, product.name, product.description, product.price, quantity)
-        updateState {
-            val items = it.items.toMutableList()
-            items.apply {
-                remove(product)
-                add(index, newProduct)
-            }
-            it.copy(items = items)
-        }
-    }
-
-    private fun updateOrder(quantity: Int, productId: String) = viewModelScope.launch {
+    private fun updateOrder(uiItems: List<UiItem>, productId: String) {
+        val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
-        orderRepository.updateOrder(quantity, product)
+        orderRepository.updateOrder(productQuantity, product)
     }
 
     private suspend fun loadMenu(menuId: String) {

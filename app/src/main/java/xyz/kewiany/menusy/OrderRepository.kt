@@ -14,7 +14,7 @@ interface OrderRepository {
     val productsOrderedCount: Flow<Int>
     suspend fun getOrdersFromHistory(): List<OrderWithProducts>
     suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>)
-    suspend fun updateOrder(quantity: Int, product: Product)
+    fun updateOrder(quantity: Int, product: Product)
     suspend fun clear()
 }
 
@@ -61,7 +61,7 @@ class OrderRepositoryImpl @Inject constructor(
         return totalQuantity
     }
 
-    override suspend fun updateOrder(quantity: Int, product: Product) {
+    override fun updateOrder(quantity: Int, product: Product) {
         val orderedProducts = order.value.toMutableList()
         val inOrder = orderedProducts.firstOrNull { it.product.id == product.id }.run { this != null }
 
