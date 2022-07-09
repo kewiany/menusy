@@ -22,4 +22,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindsMenuRepository(impl: MenuRepositoryImpl): MenuRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindsSearchRepository(impl: SearchRepositoryImpl): SearchRepository
 }

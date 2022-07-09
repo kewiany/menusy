@@ -5,11 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.SearchTextHolder
+import xyz.kewiany.menusy.SearchRepository
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
 import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchTextHolder: SearchTextHolder,
+    private val searchRepository: SearchRepository,
     private val menuRepository: MenuRepository,
     private val orderRepository: OrderRepository
 ) : BaseViewModel<State, Event>(State()) {
@@ -36,7 +35,6 @@ class SearchViewModel @Inject constructor(
         is Event.SearchItemClicked -> handleSearchItemClicked(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
-
     }
 
     private fun handleSearchItemClicked(event: Event.SearchItemClicked) {
@@ -80,10 +78,11 @@ class SearchViewModel @Inject constructor(
         orderRepository.updateOrder(quantity, product)
     }
 
-    private fun searchTextFlow() = searchTextHolder.searchText
-        .onStart { emit("") }
+    private fun searchTextFlow() = searchRepository.searchText
         .debounce(500L)
-        .onEach { text -> if (text.isNotEmpty()) queryProducts(text) }
+        .onEach { text ->
+            if (text.isNotEmpty()) queryProducts(text)
+        }
 
     private suspend fun queryProducts(query: String) {
         val products = menuRepository.getProductsByQuery(query)
@@ -98,7 +97,13 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        searchRepository.clearSearchText()
+        super.onCleared()
+    }
+
     data class State(
+        val searchText: String = "",
         val results: List<UiItem> = emptyList()
     )
 

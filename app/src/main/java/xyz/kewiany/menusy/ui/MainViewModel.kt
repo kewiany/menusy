@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.SearchTextHolder
+import xyz.kewiany.menusy.SearchRepository
 import xyz.kewiany.menusy.SettingsRepository
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
@@ -17,19 +17,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val searchTextHolder: SearchTextHolder,
-    orderRepository: OrderRepository,
-    settingsRepository: SettingsRepository
+    private val searchRepository: SearchRepository,
+    private val orderRepository: OrderRepository,
+    private val settingsRepository: SettingsRepository
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        settingsRepository.language.onEach {
-            println("language $it")
-        }.launchIn(viewModelScope)
-
-        orderRepository.productsOrderedCount.onEach { count ->
-            updateState { it.copy(orderedProductsCount = count) }
-        }.launchIn(viewModelScope)
+        languageFlow().launchIn(viewModelScope)
+        productsOrderedCountFlow().launchIn(viewModelScope)
+        searchTextFlow().launchIn(viewModelScope)
     }
 
     override fun handleEvent(event: Event) = when (event) {
@@ -43,6 +39,21 @@ class MainViewModel @Inject constructor(
         is Event.SearchTextChanged -> handleSearchTextChanged(event)
         is Event.SearchFocused -> handleSearchFocused(event)
     }
+
+    private fun languageFlow() = settingsRepository.language
+        .onEach { language ->
+            println("language $language")
+        }
+
+    private fun productsOrderedCountFlow() = orderRepository.productsOrderedCount
+        .onEach { count ->
+            updateState { it.copy(orderedProductsCount = count) }
+        }
+
+    private fun searchTextFlow() = searchRepository.searchText
+        .onEach { text ->
+            updateState { it.copy(searchText = text) }
+        }
 
     private fun handleCurrentRoute(event: Event.SetCurrentRoute) {
         val currentRoute = event.route
@@ -64,13 +75,12 @@ class MainViewModel @Inject constructor(
     }
 
     private fun handleClearSearchClicked() {
-        updateState { it.copy(searchText = "") }
+        searchRepository.clearSearchText()
     }
 
     private fun handleSearchTextChanged(event: Event.SearchTextChanged) {
         val text = event.text
-        searchTextHolder.setSearchText(text)
-        updateState { it.copy(searchText = text) }
+        searchRepository.setSearchText(text)
     }
 
     private fun handleSearchFocused(event: Event.SearchFocused) {
