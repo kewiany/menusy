@@ -31,6 +31,10 @@ class SearchViewModel @Inject constructor(
         searchTextFlow().launchIn(viewModelScope)
     }
 
+    private fun searchTextFlow() = searchRepository.searchText
+        .debounce(500L)
+        .onEach { text -> searchProducts(text) }
+
     override fun handleEvent(event: Event) = when (event) {
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
@@ -51,19 +55,14 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun updateOrder(uiItems: List<UiItem>, productId: String) {
+        isOrderModified = true
         val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
-        isOrderModified = true
         orderRepository.updateOrder(productQuantity, product)
     }
 
-    private fun searchTextFlow() = searchRepository.searchText
-        .debounce(500L)
-        .onEach { text ->
-            if (text.isNotEmpty()) searchProducts(text)
-        }
-
     private suspend fun searchProducts(query: String) {
+        if (query.isEmpty()) return
         val products = menuRepository.getProductsByQuery(query)
         val orderedProducts = orderRepository.order.value
         val items = obtainUiItems(products, orderedProducts)
@@ -76,12 +75,8 @@ class SearchViewModel @Inject constructor(
 
     override fun onCleared() {
         searchRepository.clearSearchText()
-        reloadProducts()
-        super.onCleared()
-    }
-
-    private fun reloadProducts() {
         if (isOrderModified) menuRepository.reloadProducts()
+        super.onCleared()
     }
 
     data class State(

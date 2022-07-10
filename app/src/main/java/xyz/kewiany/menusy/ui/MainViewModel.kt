@@ -28,6 +28,15 @@ class MainViewModel @Inject constructor(
         searchTextFlow().launchIn(viewModelScope)
     }
 
+    private fun languageFlow() = settingsRepository.language
+        .onEach { language -> println("language $language") }
+
+    private fun productsOrderedCountFlow() = orderRepository.orderedProductsCount
+        .onEach { count -> updateState { it.copy(orderedProductsCount = count) } }
+
+    private fun searchTextFlow() = searchRepository.searchText
+        .onEach { text -> updateState { it.copy(searchText = text) } }
+
     override fun handleEvent(event: Event) = when (event) {
         Event.MenuClicked -> navigator.navigate(NavigationDirections.menuEntry)
         Event.OrderClicked -> navigator.navigate(NavigationDirections.order)
@@ -39,21 +48,6 @@ class MainViewModel @Inject constructor(
         is Event.SearchTextChanged -> handleSearchTextChanged(event)
         is Event.SearchFocused -> handleSearchFocused(event)
     }
-
-    private fun languageFlow() = settingsRepository.language
-        .onEach { language ->
-            println("language $language")
-        }
-
-    private fun productsOrderedCountFlow() = orderRepository.productsOrderedCount
-        .onEach { count ->
-            updateState { it.copy(orderedProductsCount = count) }
-        }
-
-    private fun searchTextFlow() = searchRepository.searchText
-        .onEach { text ->
-            updateState { it.copy(searchText = text) }
-        }
 
     private fun handleCurrentRoute(event: Event.SetCurrentRoute) {
         val currentRoute = event.route

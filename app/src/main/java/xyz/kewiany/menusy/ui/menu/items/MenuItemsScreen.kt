@@ -54,7 +54,6 @@ fun MenuItemsScreen(
                                 item.description,
                                 item.price,
                                 item.quantity,
-                                { id -> eventHandler(Event.ProductClicked(id)) },
                                 { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
                                 { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
                             )

@@ -2,8 +2,6 @@ package xyz.kewiany.menusy.ui.order
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
@@ -20,7 +18,7 @@ class OrderViewModel @Inject constructor(
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        viewModelScope.launch { load() }
+        load()
     }
 
     override fun handleEvent(event: Event) = when (event) {
@@ -28,24 +26,17 @@ class OrderViewModel @Inject constructor(
     }
 
     private fun load() {
-        orderRepository.order
-            .onEach { orderedProducts ->
-                updateState { it.copy(results = orderedProducts) }
-            }
-            .launchIn(viewModelScope)
+        val orderedProducts = orderRepository.order.value
+        updateState { it.copy(results = orderedProducts) }
     }
 
     private fun handlePayButtonClicked() {
-        val order = state.value.results
         viewModelScope.launch {
-            orderRepository.saveOrderToHistory(order)
-            clearOrder()
+            orderRepository.finishOrder()
+            menuRepository.reloadProducts()
+            val orderedProducts = orderRepository.order.value
+            updateState { it.copy(results = orderedProducts) }
         }
-    }
-
-    private suspend fun clearOrder() {
-        orderRepository.clear()
-        menuRepository.reloadProducts()
     }
 
     data class State(
