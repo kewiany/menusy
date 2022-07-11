@@ -36,12 +36,13 @@ class MenuEntryViewModel @Inject constructor(
 
     private suspend fun loadMenus() {
         try {
+            updateState { it.copy(showLoading = true) }
             when (val response = getMenusUseCase()) {
                 is Success -> {
-                    updateState { it.copy(menus = response.menus) }
+                    updateState { it.copy(menus = response.menus, showLoading = false) }
                 }
                 is Error -> {
-                    updateState { it.copy(showError = SingleEvent(Unit)) }
+                    updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
                 }
             }
         } catch (e: CancellationException) {
@@ -51,6 +52,7 @@ class MenuEntryViewModel @Inject constructor(
 
     data class State(
         val menus: List<Menu> = emptyList(),
+        val showLoading: Boolean = false,
         val showError: SingleEvent<Unit>? = null
     )
 
