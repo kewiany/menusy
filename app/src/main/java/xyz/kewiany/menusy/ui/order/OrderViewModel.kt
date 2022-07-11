@@ -26,7 +26,7 @@ class OrderViewModel @Inject constructor(
     }
 
     private fun load() {
-        val orderedProducts = orderRepository.order.value
+        val orderedProducts = orderRepository.getOrderedProducts()
         updateState { it.copy(results = orderedProducts) }
     }
 
@@ -34,8 +34,7 @@ class OrderViewModel @Inject constructor(
         viewModelScope.launch {
             orderRepository.finishOrder()
             menuRepository.reloadProducts()
-            val orderedProducts = orderRepository.order.value
-            updateState { it.copy(results = orderedProducts) }
+            updateState { it.copy(results = emptyList()) }
         }
     }
 

@@ -68,7 +68,9 @@ class MenuItemsViewModel @AssistedInject constructor(
     private fun updateOrder(uiItems: List<UiItem>, productId: String) {
         val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
-        orderRepository.updateOrder(productQuantity, product)
+        viewModelScope.launch {
+            orderRepository.updateOrder(productQuantity, product)
+        }
     }
 
     private suspend fun loadMenu(menuId: String) {
@@ -77,15 +79,15 @@ class MenuItemsViewModel @AssistedInject constructor(
                 is GetMenuResponse.Success -> {
                     val categories = response.menu.categories
                     val products = response.products
+
                     cachedProducts.clear()
                     cachedProducts.addAll(products)
 
-                    val orderedProducts = orderRepository.order.value
+                    val tabs = categories?.map { category -> category.name } ?: emptyList()
+                    val orderedProducts = orderRepository.getOrderedProducts()
                     val items = obtainUiItems(categories, products, orderedProducts)
 
-                    updateState {
-                        it.copy(tabs = categories?.map { category -> category.name } ?: emptyList(), items = items)
-                    }
+                    updateState { it.copy(tabs = tabs, items = items) }
                 }
                 is GetMenuResponse.Error -> {
                     updateState { it.copy(showError = SingleEvent(Unit)) }

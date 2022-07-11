@@ -20,12 +20,13 @@ fun OrderScreen(
     state: State<OrderViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
+//    val res by remember { mutableStateOf(state.value.results) }
     Column {
         Box(modifier = Modifier.weight(1f)) {
             val results = state.value.results
             if (results.isNotEmpty()) {
                 LazyColumn {
-                    items(state.value.results) { item ->
+                    items(results) { item ->
                         Column(
                             modifier = Modifier
                                 .background(Color.Yellow)

@@ -15,6 +15,8 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import xyz.kewiany.menusy.InMemoryDataStore
+import xyz.kewiany.menusy.InMemoryDataStoreImpl
 import xyz.kewiany.menusy.SearchTextHolder
 import xyz.kewiany.menusy.SearchTextHolderImpl
 import xyz.kewiany.menusy.db.AppDatabase
@@ -63,6 +65,10 @@ class AppModule {
         @Singleton
         @Binds
         abstract fun bindsOrderDataStore(impl: OrderDataStoreImpl): OrderDataStore
+
+        @Singleton
+        @Binds
+        abstract fun bindsInMemoryDataStore(impl: InMemoryDataStoreImpl): InMemoryDataStore
     }
 
     companion object {

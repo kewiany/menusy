@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.SearchRepository
@@ -58,13 +59,13 @@ class SearchViewModel @Inject constructor(
         isOrderModified = true
         val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
-        orderRepository.updateOrder(productQuantity, product)
+        viewModelScope.launch { orderRepository.updateOrder(productQuantity, product) }
     }
 
     private suspend fun searchProducts(query: String) {
         if (query.isEmpty()) return
         val products = menuRepository.getProductsByQuery(query)
-        val orderedProducts = orderRepository.order.value
+        val orderedProducts = orderRepository.getOrderedProducts()
         val items = obtainUiItems(products, orderedProducts)
 
         cachedProducts.clear()

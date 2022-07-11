@@ -1,39 +1,38 @@
 package xyz.kewiany.menusy
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 import xyz.kewiany.menusy.db.OrderDataStore
 import xyz.kewiany.menusy.db.OrderWithProducts
 import xyz.kewiany.menusy.entity.Product
 import javax.inject.Inject
 
 interface OrderRepository {
-    val order: StateFlow<List<OrderedProduct>>
-    val orderedProductsCount: StateFlow<Int>
+    val orderedProductsCount: Flow<Int>
+    fun getOrderedProducts(): List<OrderedProduct>
     suspend fun getOrdersFromHistory(): List<OrderWithProducts>
     suspend fun finishOrder()
-    fun updateOrder(quantity: Int, product: Product)
+    suspend fun updateOrder(quantity: Int, product: Product)
 }
 
 class OrderRepositoryImpl @Inject constructor(
+    private val inMemoryDataStore: InMemoryDataStore,
     private val orderDataStore: OrderDataStore
 ) : OrderRepository {
 
-    private val _order = MutableStateFlow<List<OrderedProduct>>(emptyList())
-    override val order: StateFlow<List<OrderedProduct>> get() = _order
+    override val orderedProductsCount: Flow<Int> = inMemoryDataStore.orderedProductsCount
 
-    private val _orderedProductsCount = MutableStateFlow(0)
-    override val orderedProductsCount: StateFlow<Int> = _orderedProductsCount
+    override fun getOrderedProducts(): List<OrderedProduct> {
+        return inMemoryDataStore.orderedProducts.value
+    }
 
     override suspend fun getOrdersFromHistory(): List<OrderWithProducts> {
         return orderDataStore.getAll()
     }
 
     override suspend fun finishOrder() {
-        val orderedProducts = _order.value
+        val orderedProducts = getOrderedProducts()
         saveOrderToHistory(orderedProducts)
         updateOrderedProducts(emptyList())
-        updateOrderedProductsCount(emptyList())
     }
 
     private suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>) {
@@ -59,8 +58,8 @@ class OrderRepositoryImpl @Inject constructor(
         return totalQuantity
     }
 
-    override fun updateOrder(quantity: Int, product: Product) {
-        val orderedProducts = _order.value.toMutableList()
+    override suspend fun updateOrder(quantity: Int, product: Product) {
+        val orderedProducts = getOrderedProducts().toMutableList()
         val inOrder = orderedProducts.firstOrNull { it.product.id == product.id }.run { this != null }
 
         if (inOrder) {
@@ -74,16 +73,9 @@ class OrderRepositoryImpl @Inject constructor(
         }
 
         updateOrderedProducts(orderedProducts)
-        updateOrderedProductsCount(orderedProducts)
     }
 
-    private fun updateOrderedProducts(orderedProducts: List<OrderedProduct>) {
-        _order.value = orderedProducts
-    }
-
-    private fun updateOrderedProductsCount(orderedProducts: List<OrderedProduct>) {
-        var quantity = 0
-        orderedProducts.forEach { quantity += it.quantity }
-        _orderedProductsCount.value = quantity
+    private suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>) {
+        inMemoryDataStore.updateOrderedProducts(orderedProducts)
     }
 }
