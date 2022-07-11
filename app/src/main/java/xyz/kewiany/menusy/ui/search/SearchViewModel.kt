@@ -76,7 +76,7 @@ class SearchViewModel @Inject constructor(
 
     override fun onCleared() {
         searchRepository.clearSearchText()
-        if (isOrderModified) menuRepository.reloadProducts()
+        if (isOrderModified) menuRepository.reloadMenuProducts()
         super.onCleared()
     }
 

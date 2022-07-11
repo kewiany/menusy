@@ -75,6 +75,7 @@ class MenuItemsViewModel @AssistedInject constructor(
 
     private suspend fun loadMenu(menuId: String) {
         try {
+            updateState { it.copy(showLoading = true) }
             when (val response = getMenuUseCase(menuId)) {
                 is GetMenuResponse.Success -> {
                     val categories = response.menu.categories
@@ -87,10 +88,10 @@ class MenuItemsViewModel @AssistedInject constructor(
                     val orderedProducts = orderRepository.getOrderedProducts()
                     val items = obtainUiItems(categories, products, orderedProducts)
 
-                    updateState { it.copy(tabs = tabs, items = items) }
+                    updateState { it.copy(tabs = tabs, items = items, showLoading = false) }
                 }
                 is GetMenuResponse.Error -> {
-                    updateState { it.copy(showError = SingleEvent(Unit)) }
+                    updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
                 }
             }
         } catch (e: CancellationException) {
@@ -103,6 +104,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val currentTab: Int = 0,
         val items: List<UiItem> = emptyList(),
         val currentCategory: Int = 0,
+        val showLoading: Boolean = false,
         val showError: SingleEvent<Unit>? = null
     )
 

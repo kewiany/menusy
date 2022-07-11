@@ -33,7 +33,7 @@ class OrderViewModel @Inject constructor(
     private fun handlePayButtonClicked() {
         viewModelScope.launch {
             orderRepository.finishOrder()
-            menuRepository.reloadProducts()
+            menuRepository.reloadMenuProducts()
             updateState { it.copy(results = emptyList()) }
         }
     }

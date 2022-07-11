@@ -11,10 +11,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.ui.ProgressBar
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 
 @Composable
@@ -25,15 +27,20 @@ fun MenuItemsScreen(
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            val tabs = state.value.tabs
-            if (tabs.isNotEmpty()) {
-                CategoriesScrollableTabRow(
-                    tabs = state.value.tabs,
-                    selectedTabIndex = state.value.currentTab
-                ) { index -> eventHandler(Event.TabClicked(index)) }
-            }
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        val tabs = state.value.tabs
+        if (tabs.isNotEmpty()) {
+            CategoriesScrollableTabRow(
+                tabs = state.value.tabs,
+                selectedTabIndex = state.value.currentTab
+            ) { index -> eventHandler(Event.TabClicked(index)) }
+        }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(1f),
                 state = listState
@@ -60,6 +67,9 @@ fun MenuItemsScreen(
                         }
                     }
                 }
+            }
+            if (state.value.showLoading) {
+                ProgressBar()
             }
         }
     }

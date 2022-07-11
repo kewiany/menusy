@@ -14,7 +14,7 @@ interface MenuRepository {
     suspend fun getProducts(menuId: String): List<Product>
     suspend fun getProducts(menuId: String, categoryId: String): List<Product>
     suspend fun getProductsByQuery(query: String): List<Product>
-    fun reloadProducts()
+    fun reloadMenuProducts()
 }
 
 class MenuRepositoryImpl @Inject constructor(
@@ -46,7 +46,7 @@ class MenuRepositoryImpl @Inject constructor(
         return response?.products ?: emptyList()
     }
 
-    override fun reloadProducts() {
+    override fun reloadMenuProducts() {
         _needReloadProducts.tryEmit(Unit)
     }
 }
