@@ -39,7 +39,7 @@ fun MenuItemsScreen(
             CategoriesScrollableTabRow(
                 tabs = state.value.tabs,
                 selectedTabIndex = state.value.currentTab
-            ) { index -> eventHandler(Event.TabClicked(index)) }
+            ) { id -> eventHandler(Event.TabClicked(id)) }
         }
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -98,9 +98,9 @@ private fun CategoryItem(
 
 @Composable
 private fun CategoriesScrollableTabRow(
-    tabs: List<String>,
+    tabs: List<CategoryTab>,
     selectedTabIndex: Int,
-    onTabClick: (Int) -> Unit
+    onTabClick: (String) -> Unit
 ) {
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
@@ -110,8 +110,8 @@ private fun CategoriesScrollableTabRow(
         tabs.forEachIndexed { tabIndex, tab ->
             Tab(
                 selected = selectedTabIndex == tabIndex,
-                onClick = { onTabClick(tabIndex) },
-                text = { Text(text = tab) }
+                onClick = { onTabClick(tab.id) },
+                text = { Text(text = tab.name) }
             )
         }
     }

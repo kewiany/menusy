@@ -40,10 +40,12 @@ class MenuItemsViewModel @AssistedInject constructor(
     }
 
     private fun handleTabClicked(event: Event.TabClicked) {
+        val id = event.id
+        val tabs = state.value.tabs
+        val indexOnTabs = tabs.indexOfFirst { item -> item.id == id }
         val items = state.value.items
-        val index = event.index
-        val currentCategory = findCategoryIndex(items, index.toString())
-        updateState { it.copy(currentTab = index, currentCategory = currentCategory) }
+        val indexOnList = items.indexOfFirst { item -> if (item is CategoryUiItem) item.id == id else false }
+        updateState { it.copy(currentTab = indexOnTabs, currentCategory = indexOnList) }
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
@@ -79,7 +81,7 @@ class MenuItemsViewModel @AssistedInject constructor(
                     cachedProducts.clear()
                     cachedProducts.addAll(products)
 
-                    val tabs = categories?.map { category -> category.name } ?: emptyList()
+                    val tabs = categories?.map { category -> CategoryTab(category.id, category.name) } ?: emptyList()
                     val orderedProducts = orderRepository.getOrderedProducts()
                     val items = obtainUiItems(categories, products, orderedProducts)
 
@@ -95,7 +97,7 @@ class MenuItemsViewModel @AssistedInject constructor(
     }
 
     data class State(
-        val tabs: List<String> = emptyList(),
+        val tabs: List<CategoryTab> = emptyList(),
         val currentTab: Int = 0,
         val items: List<UiItem> = emptyList(),
         val currentCategory: Int = 0,
@@ -105,7 +107,7 @@ class MenuItemsViewModel @AssistedInject constructor(
 
     sealed class Event {
         object LoadMenu : Event()
-        data class TabClicked(val index: Int) : Event()
+        data class TabClicked(val id: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()
     }
@@ -126,3 +128,5 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
     }
 }
+
+data class CategoryTab(val id: String, val name: String)

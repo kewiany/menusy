@@ -14,7 +14,7 @@ import xyz.kewiany.menusy.createProduct
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
-import xyz.kewiany.menusy.ui.menu.items.findCategoryIndex
+import xyz.kewiany.menusy.ui.menu.items.findCategoryId
 import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
 import xyz.kewiany.menusy.usecase.GetMenuError
 import xyz.kewiany.menusy.usecase.GetMenuResponse
@@ -87,7 +87,7 @@ class MenuItemsViewModelTest : BaseTest() {
             viewModel.eventHandler(Event.TabClicked(index))
             val state = awaitItem()
             assertEquals(index, state.currentTab)
-            assertEquals(findCategoryIndex(uiItems, index.toString()), state.currentCategory)
+            assertEquals(findCategoryId(uiItems, index.toString()), state.currentCategory)
         }
     }
 
