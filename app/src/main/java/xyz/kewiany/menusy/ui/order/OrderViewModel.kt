@@ -3,7 +3,6 @@ package xyz.kewiany.menusy.ui.order
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.OrderedProduct
 import xyz.kewiany.menusy.ui.order.OrderViewModel.Event
@@ -13,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OrderViewModel @Inject constructor(
-    private val menuRepository: MenuRepository,
     private val orderRepository: OrderRepository,
 ) : BaseViewModel<State, Event>(State()) {
 
@@ -33,7 +31,6 @@ class OrderViewModel @Inject constructor(
     private fun handlePayButtonClicked() {
         viewModelScope.launch {
             orderRepository.finishOrder()
-            menuRepository.reloadMenuProducts()
             updateState { it.copy(results = emptyList()) }
         }
     }

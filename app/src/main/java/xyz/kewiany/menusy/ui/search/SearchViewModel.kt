@@ -26,7 +26,6 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel<State, Event>(State()) {
 
     private val cachedProducts = mutableListOf<Product>()
-    private var isOrderModified: Boolean = false
 
     init {
         searchTextFlow().launchIn(viewModelScope)
@@ -56,7 +55,6 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun updateOrder(uiItems: List<UiItem>, productId: String) {
-        isOrderModified = true
         val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
         viewModelScope.launch { orderRepository.updateOrder(productQuantity, product) }
@@ -76,7 +74,6 @@ class SearchViewModel @Inject constructor(
 
     override fun onCleared() {
         searchRepository.clearSearchText()
-        if (isOrderModified) menuRepository.reloadMenuProducts()
         super.onCleared()
     }
 

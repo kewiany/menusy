@@ -9,6 +9,7 @@ import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -25,6 +26,9 @@ fun MenuItemsScreen(
     state: State<MenuItemsViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        eventHandler(Event.LoadMenu)
+    }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     Column(

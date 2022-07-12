@@ -7,9 +7,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.MenuRepository
 import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.entity.Product
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
@@ -22,26 +20,23 @@ import xyz.kewiany.menusy.utils.*
 class MenuItemsViewModel @AssistedInject constructor(
     private val getMenuUseCase: GetMenuUseCase,
     private val orderRepository: OrderRepository,
-    menuRepository: MenuRepository,
     @Assisted private val menuId: String,
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
     private val cachedProducts = mutableListOf<Product>()
 
-    init {
-        viewModelScope.launch(dispatcherProvider.main()) {
-            while (true) {
-                loadMenu(menuId)
-                menuRepository.needReloadProducts.first()
-            }
-        }
-    }
-
     override fun handleEvent(event: Event) = when (event) {
+        is Event.LoadMenu -> handleLoadMenu()
         is Event.TabClicked -> handleTabClicked(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
+    }
+
+    private fun handleLoadMenu() {
+        viewModelScope.launch {
+            loadMenu(menuId)
+        }
     }
 
     private fun handleTabClicked(event: Event.TabClicked) {
@@ -109,6 +104,7 @@ class MenuItemsViewModel @AssistedInject constructor(
     )
 
     sealed class Event {
+        object LoadMenu : Event()
         data class TabClicked(val index: Int) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()
