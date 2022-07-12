@@ -15,10 +15,9 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import xyz.kewiany.menusy.*
+import xyz.kewiany.menusy.SearchTextHolder
+import xyz.kewiany.menusy.SearchTextHolderImpl
 import xyz.kewiany.menusy.db.AppDatabase
-import xyz.kewiany.menusy.db.OrderDataStore
-import xyz.kewiany.menusy.db.OrderDataStoreImpl
 import xyz.kewiany.menusy.utils.DefaultDispatcherProvider
 import xyz.kewiany.menusy.utils.DispatcherProvider
 import javax.inject.Singleton
@@ -58,18 +57,6 @@ class AppModule {
         @Singleton
         @Binds
         abstract fun bindsSearchTextHolder(impl: SearchTextHolderImpl): SearchTextHolder
-
-        @Singleton
-        @Binds
-        abstract fun bindsOrderDataStore(impl: OrderDataStoreImpl): OrderDataStore
-
-        @Singleton
-        @Binds
-        abstract fun bindsPreferenceDataStore(impl: PreferenceDataStoreImpl): PreferenceDataStore
-
-        @Singleton
-        @Binds
-        abstract fun bindsInMemoryDataStore(impl: InMemoryDataStoreImpl): InMemoryDataStore
     }
 
     companion object {
