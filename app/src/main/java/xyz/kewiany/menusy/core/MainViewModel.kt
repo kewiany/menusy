@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import xyz.kewiany.menusy.core.MainViewModel.Event
 import xyz.kewiany.menusy.core.MainViewModel.State
-import xyz.kewiany.menusy.domain.repository.OrderRepository
-import xyz.kewiany.menusy.domain.repository.SearchRepository
-import xyz.kewiany.menusy.domain.repository.SettingsRepository
+import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase
+import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
+import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
+import xyz.kewiany.menusy.domain.usecase.search.SetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.navigation.NavigationDirections
 import xyz.kewiany.menusy.presentation.navigation.Navigator
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
@@ -17,24 +18,21 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val searchRepository: SearchRepository,
-    private val orderRepository: OrderRepository,
-    private val settingsRepository: SettingsRepository
+    private val clearSearchTextUseCase: ClearSearchTextUseCase,
+    private val getSearchTextUseCase: GetSearchTextUseCase,
+    private val getOrderedProductsCountUseCase: GetOrderedProductsCountUseCase,
+    private val setSearchTextUseCase: SetSearchTextUseCase,
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
-        languageFlow().launchIn(viewModelScope)
         productsOrderedCountFlow().launchIn(viewModelScope)
         searchTextFlow().launchIn(viewModelScope)
     }
 
-    private fun languageFlow() = settingsRepository.language
-        .onEach { language -> println("language $language") }
-
-    private fun productsOrderedCountFlow() = orderRepository.orderedProductsCount
+    private fun productsOrderedCountFlow() = getOrderedProductsCountUseCase()
         .onEach { count -> updateState { it.copy(orderedProductsCount = count) } }
 
-    private fun searchTextFlow() = searchRepository.searchText
+    private fun searchTextFlow() = getSearchTextUseCase()
         .onEach { text -> updateState { it.copy(searchText = text) } }
 
     override fun handleEvent(event: Event) = when (event) {
@@ -69,12 +67,12 @@ class MainViewModel @Inject constructor(
     }
 
     private fun handleClearSearchClicked() {
-        searchRepository.clearSearchText()
+        clearSearchTextUseCase()
     }
 
     private fun handleSearchTextChanged(event: Event.SearchTextChanged) {
         val text = event.text
-        searchRepository.setSearchText(text)
+        setSearchTextUseCase(text)
     }
 
     private fun handleSearchFocused(event: Event.SearchFocused) {
