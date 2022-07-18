@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.search
+package xyz.kewiany.menusy.presentation.features.search.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,8 +8,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductItem
 import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
+import xyz.kewiany.menusy.presentation.features.menu.items.ui.ProductItem
+import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
 
 @Composable

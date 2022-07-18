@@ -18,12 +18,12 @@ import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageScreen
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryScreen
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel
-import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsScreen
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
+import xyz.kewiany.menusy.presentation.features.menu.items.ui.MenuItemsScreen
 import xyz.kewiany.menusy.presentation.features.order.OrderScreen
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel
-import xyz.kewiany.menusy.presentation.features.search.SearchScreen
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
+import xyz.kewiany.menusy.presentation.features.search.ui.SearchScreen
 import xyz.kewiany.menusy.presentation.features.welcome.WelcomeScreen
 import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel
 import xyz.kewiany.menusy.presentation.navigation.MENU_ID

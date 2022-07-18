@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.ui
+package xyz.kewiany.menusy.presentation.utils
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -16,7 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.core.MainViewModel
 import xyz.kewiany.menusy.core.MainViewModel.Event
-import xyz.kewiany.menusy.presentation.features.search.SearchBar
+import xyz.kewiany.menusy.presentation.features.search.ui.SearchBar
 
 @Composable
 fun TopBar(

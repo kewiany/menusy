@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.menu.items
+package xyz.kewiany.menusy.presentation.features.menu.items.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

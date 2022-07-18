@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.menu.items
+package xyz.kewiany.menusy.presentation.features.menu.items.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,8 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.presentation.features.menu.items.CategoryTab
+import xyz.kewiany.menusy.presentation.features.menu.items.CategoryUiItem
+import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
-import xyz.kewiany.menusy.ui.ProgressBar
+import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
+import xyz.kewiany.menusy.presentation.utils.ProgressBar
 
 @Composable
 fun MenuItemsScreen(

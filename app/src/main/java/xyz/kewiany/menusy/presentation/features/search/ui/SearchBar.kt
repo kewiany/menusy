@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.search
+package xyz.kewiany.menusy.presentation.features.search.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

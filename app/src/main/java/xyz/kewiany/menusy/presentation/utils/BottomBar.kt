@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.main
+package xyz.kewiany.menusy.presentation.utils
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically

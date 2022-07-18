@@ -12,7 +12,7 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
-import xyz.kewiany.menusy.ui.ProgressBar
+import xyz.kewiany.menusy.presentation.utils.ProgressBar
 
 @Composable
 fun MenuEntryScreen(
