@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.usecase.order.FinishOrderUseCase
-import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProducts
+import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OrderViewModel @Inject constructor(
-    private val getOrderedProducts: GetOrderedProducts,
+    private val getOrderedProductsUseCase: GetOrderedProductsUseCase,
     private val finishOrderUseCase: FinishOrderUseCase
 ) : BaseViewModel<State, Event>(State()) {
 
@@ -26,7 +26,7 @@ class OrderViewModel @Inject constructor(
     }
 
     private fun load() {
-        val orderedProducts = getOrderedProducts()
+        val orderedProducts = getOrderedProductsUseCase()
         updateState { it.copy(results = orderedProducts) }
     }
 

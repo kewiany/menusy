@@ -10,9 +10,10 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Product
-import xyz.kewiany.menusy.domain.repository.OrderRepository
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
+import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
+import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.State
 import xyz.kewiany.menusy.presentation.features.search.ProductUItemModifier
@@ -23,7 +24,8 @@ import xyz.kewiany.menusy.presentation.utils.obtainUiItems
 
 class MenuItemsViewModel @AssistedInject constructor(
     private val getMenuUseCase: GetMenuUseCase,
-    private val orderRepository: OrderRepository,
+    private val getOrderedProductsUseCase: GetOrderedProductsUseCase,
+    private val updateOrderUseCase: UpdateOrderUseCase,
     @Assisted private val menuId: String,
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
@@ -70,7 +72,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
         val product = cachedProducts.first { it.id == productId }
         viewModelScope.launch {
-            orderRepository.updateOrder(productQuantity, product)
+            updateOrderUseCase(productQuantity, product)
         }
     }
 
@@ -86,7 +88,7 @@ class MenuItemsViewModel @AssistedInject constructor(
                     cachedProducts.addAll(products)
 
                     val tabs = categories?.map { category -> CategoryTab(category.id, category.name) } ?: emptyList()
-                    val orderedProducts = orderRepository.getOrderedProducts()
+                    val orderedProducts = getOrderedProductsUseCase()
                     val items = obtainUiItems(categories, products, orderedProducts)
 
                     updateState { it.copy(tabs = tabs, items = items, showLoading = false) }
