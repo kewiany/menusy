@@ -3,8 +3,8 @@ package xyz.kewiany.menusy.ui.order
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.OrderedProduct
+import xyz.kewiany.menusy.data.repository.OrderRepository
+import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.ui.order.OrderViewModel.Event
 import xyz.kewiany.menusy.ui.order.OrderViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel

@@ -1,14 +1,10 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import xyz.kewiany.menusy.PreferenceDataStore
+import xyz.kewiany.menusy.domain.repository.SettingsRepository
 import xyz.kewiany.menusy.ui.language.Language
 import javax.inject.Inject
-
-interface SettingsRepository {
-    val language: Flow<Language>
-    fun getLanguages(): List<Language>
-    suspend fun setLanguage(language: Language)
-}
 
 class SettingsRepositoryImpl @Inject constructor(
     private val preferenceDataStore: PreferenceDataStore

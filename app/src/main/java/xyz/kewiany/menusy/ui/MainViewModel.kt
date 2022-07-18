@@ -4,9 +4,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.SearchRepository
-import xyz.kewiany.menusy.SettingsRepository
+import xyz.kewiany.menusy.data.repository.OrderRepository
+import xyz.kewiany.menusy.data.repository.SearchRepository
+import xyz.kewiany.menusy.data.repository.SettingsRepository
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.MainViewModel.Event

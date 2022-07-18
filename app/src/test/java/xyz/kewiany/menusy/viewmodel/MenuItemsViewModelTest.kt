@@ -8,9 +8,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.OrderRepository
 import xyz.kewiany.menusy.createMenu
 import xyz.kewiany.menusy.createProduct
+import xyz.kewiany.menusy.data.repository.OrderRepository
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem

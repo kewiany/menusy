@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.SearchTextHolder
+import xyz.kewiany.menusy.ui.search.SearchTextHolder
 import xyz.kewiany.menusy.ui.search.SearchViewModel
 import kotlin.random.Random
 

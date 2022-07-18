@@ -1,9 +1,8 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.ui.search
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
-
 
 interface SearchTextHolder {
     val searchText: Flow<String>

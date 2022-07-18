@@ -1,18 +1,14 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import xyz.kewiany.menusy.InMemoryDataStore
 import xyz.kewiany.menusy.db.OrderDataStore
 import xyz.kewiany.menusy.db.OrderWithProducts
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.domain.model.OrderedProduct
+import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.domain.repository.OrderRepository
 import javax.inject.Inject
 
-interface OrderRepository {
-    val orderedProductsCount: Flow<Int>
-    fun getOrderedProducts(): List<OrderedProduct>
-    suspend fun getOrdersFromHistory(): List<OrderWithProducts>
-    suspend fun finishOrder()
-    suspend fun updateOrder(quantity: Int, product: Product)
-}
 
 class OrderRepositoryImpl @Inject constructor(
     private val inMemoryDataStore: InMemoryDataStore,

@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.usecase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.api.ProductApi
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.utils.DispatcherProvider
 import javax.inject.Inject
 

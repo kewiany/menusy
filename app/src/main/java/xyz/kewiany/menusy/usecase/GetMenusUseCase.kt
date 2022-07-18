@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.api.MenuApi
-import xyz.kewiany.menusy.entity.Menu
+import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.usecase.GetMenusError.Unknown
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenusResponse.Success

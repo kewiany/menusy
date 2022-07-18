@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy.utils
 
-import xyz.kewiany.menusy.OrderedProduct
-import xyz.kewiany.menusy.entity.Category
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.domain.model.Category
+import xyz.kewiany.menusy.domain.model.OrderedProduct
+import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.ui.menu.items.CategoryMapper
 import xyz.kewiany.menusy.ui.menu.items.ProductMapper
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem

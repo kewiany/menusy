@@ -8,8 +8,8 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.data.repository.OrderRepository
+import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.State
 import xyz.kewiany.menusy.ui.search.ProductUItemModifier

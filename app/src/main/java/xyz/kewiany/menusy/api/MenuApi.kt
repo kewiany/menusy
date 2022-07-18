@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.api
 
-import xyz.kewiany.menusy.entity.Menu
+import xyz.kewiany.menusy.domain.model.Menu
 
 interface MenuApi {
     suspend fun getMenu(menuId: String): MenuResponse?

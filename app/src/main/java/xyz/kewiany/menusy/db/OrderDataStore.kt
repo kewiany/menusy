@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.db
 
-import xyz.kewiany.menusy.OrderedProduct
+import xyz.kewiany.menusy.domain.model.OrderedProduct
 import javax.inject.Inject
 
 interface OrderDataStore {

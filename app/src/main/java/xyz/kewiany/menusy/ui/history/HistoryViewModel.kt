@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.ui.history
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.OrderRepository
+import xyz.kewiany.menusy.data.repository.OrderRepository
 import xyz.kewiany.menusy.ui.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.ui.history.HistoryViewModel.State
 import xyz.kewiany.menusy.utils.BaseViewModel

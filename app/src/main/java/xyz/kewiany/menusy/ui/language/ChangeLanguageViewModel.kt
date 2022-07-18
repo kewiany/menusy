@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.SettingsRepository
+import xyz.kewiany.menusy.data.repository.SettingsRepository
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.Event
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.State

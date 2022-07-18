@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.MenuRepository
-import xyz.kewiany.menusy.OrderRepository
-import xyz.kewiany.menusy.SearchRepository
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.data.repository.MenuRepository
+import xyz.kewiany.menusy.data.repository.OrderRepository
+import xyz.kewiany.menusy.data.repository.SearchRepository
+import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
 import xyz.kewiany.menusy.ui.search.SearchViewModel.Event
 import xyz.kewiany.menusy.ui.search.SearchViewModel.State

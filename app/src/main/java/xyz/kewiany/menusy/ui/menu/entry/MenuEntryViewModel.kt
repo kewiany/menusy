@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.entity.Menu
+import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.navigation.NavigationDirections
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel.Event

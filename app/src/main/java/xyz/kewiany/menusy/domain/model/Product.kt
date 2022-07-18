@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.entity
+package xyz.kewiany.menusy.domain.model
 
 data class Product(
     val id: String,

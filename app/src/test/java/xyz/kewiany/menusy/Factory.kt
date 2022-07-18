@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy
 
-import xyz.kewiany.menusy.entity.Category
-import xyz.kewiany.menusy.entity.Menu
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.domain.model.Category
+import xyz.kewiany.menusy.domain.model.Menu
+import xyz.kewiany.menusy.domain.model.Product
 
 fun createCategory(
     id: String = "id",

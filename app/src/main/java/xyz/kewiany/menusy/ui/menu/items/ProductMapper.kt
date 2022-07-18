@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.ui.menu.items
 
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.domain.model.Product
 
 object ProductMapper {
     fun map(product: Product, quantity: Int = 0) = ProductUiItem(

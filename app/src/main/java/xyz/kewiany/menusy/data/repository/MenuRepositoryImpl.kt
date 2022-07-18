@@ -1,17 +1,11 @@
-package xyz.kewiany.menusy
+package xyz.kewiany.menusy.data.repository
 
 import xyz.kewiany.menusy.api.MenuApi
 import xyz.kewiany.menusy.api.ProductApi
-import xyz.kewiany.menusy.entity.Menu
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.domain.model.Menu
+import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.domain.repository.MenuRepository
 import javax.inject.Inject
-
-interface MenuRepository {
-    suspend fun getMenu(menuId: String): Menu
-    suspend fun getProducts(menuId: String): List<Product>
-    suspend fun getProducts(menuId: String, categoryId: String): List<Product>
-    suspend fun getProductsByQuery(query: String): List<Product>
-}
 
 class MenuRepositoryImpl @Inject constructor(
     private val menuApi: MenuApi,

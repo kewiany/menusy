@@ -1,9 +1,9 @@
 package xyz.kewiany.menusy.usecase
 
 import kotlinx.coroutines.withContext
-import xyz.kewiany.menusy.MenuRepository
-import xyz.kewiany.menusy.entity.Menu
-import xyz.kewiany.menusy.entity.Product
+import xyz.kewiany.menusy.data.repository.MenuRepository
+import xyz.kewiany.menusy.domain.model.Menu
+import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Error
 import xyz.kewiany.menusy.usecase.GetMenuResponse.Success
 import xyz.kewiany.menusy.utils.DispatcherProvider

@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.api
 
-import xyz.kewiany.menusy.entity.Category
-import xyz.kewiany.menusy.entity.Menu
+import xyz.kewiany.menusy.domain.model.Category
+import xyz.kewiany.menusy.domain.model.Menu
 import javax.inject.Inject
 
 class MenuService @Inject constructor() : MenuApi {

@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.SettingsRepository
+import xyz.kewiany.menusy.data.repository.SettingsRepository
 import xyz.kewiany.menusy.navigation.Navigator
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.ui.language.ChangeLanguageViewModel.Event
