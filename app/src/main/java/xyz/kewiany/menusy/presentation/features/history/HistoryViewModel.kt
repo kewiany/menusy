@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.presentation.features.history
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.domain.repository.OrderRepository
+import xyz.kewiany.menusy.domain.usecase.GetOrdersFromHistoryUseCase
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val orderRepository: OrderRepository,
+    private val getOrdersFromHistoryUseCase: GetOrdersFromHistoryUseCase
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
@@ -24,7 +24,7 @@ class HistoryViewModel @Inject constructor(
 
     private suspend fun load() {
         val items = mutableListOf<HistoryUiItem>()
-        val orders = orderRepository.getOrdersFromHistory()
+        val orders = getOrdersFromHistoryUseCase()
         orders.map { orderWithProducts ->
 
             with(orderWithProducts.order) {
