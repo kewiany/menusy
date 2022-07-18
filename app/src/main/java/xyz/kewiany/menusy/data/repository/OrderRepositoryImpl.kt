@@ -25,13 +25,7 @@ class OrderRepositoryImpl @Inject constructor(
         return orderDataStore.getAll()
     }
 
-    override suspend fun finishOrder() {
-        val orderedProducts = getOrderedProducts()
-        saveOrderToHistory(orderedProducts)
-        updateOrderedProducts(emptyList())
-    }
-
-    private suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>) {
+    override suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>) {
         val totalPrice = calculateTotalPrice(orderedProducts)
         val totalQuantity = calculateTotalQuantity(orderedProducts)
         orderDataStore.insert(
@@ -71,7 +65,7 @@ class OrderRepositoryImpl @Inject constructor(
         updateOrderedProducts(orderedProducts)
     }
 
-    private suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>) {
+    override suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>) {
         inMemoryDataHolder.updateOrderedProducts(orderedProducts)
     }
 }

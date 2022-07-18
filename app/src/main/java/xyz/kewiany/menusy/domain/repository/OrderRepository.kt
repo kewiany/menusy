@@ -9,6 +9,7 @@ interface OrderRepository {
     val orderedProductsCount: Flow<Int>
     fun getOrderedProducts(): List<OrderedProduct>
     suspend fun getOrdersFromHistory(): List<OrderWithProducts>
-    suspend fun finishOrder()
     suspend fun updateOrder(quantity: Int, product: Product)
+    suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>)
+    suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>)
 }
