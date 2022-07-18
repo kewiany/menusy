@@ -2,11 +2,12 @@ package xyz.kewiany.menusy.presentation.features.language
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Language
-import xyz.kewiany.menusy.domain.repository.SettingsRepository
+import xyz.kewiany.menusy.domain.usecase.GetCurrentLanguageUseCase
+import xyz.kewiany.menusy.domain.usecase.GetLanguagesUseCase
+import xyz.kewiany.menusy.domain.usecase.SetLanguageUseCase
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.State
 import xyz.kewiany.menusy.presentation.navigation.Navigator
@@ -16,17 +17,19 @@ import javax.inject.Inject
 @HiltViewModel
 class ChangeLanguageViewModel @Inject constructor(
     private val navigator: Navigator,
-    private val settingsRepository: SettingsRepository,
+    private val getCurrentLanguageUseCase: GetCurrentLanguageUseCase,
+    private val getLanguagesUseCase: GetLanguagesUseCase,
+    private val setLanguageUseCase: SetLanguageUseCase,
     private val dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
         viewModelScope.launch(dispatcherProvider.main()) {
-            val currentLanguage = settingsRepository.language.first()
+            val currentLanguage = getCurrentLanguageUseCase()
             updateState {
                 it.copy(
                     currentLanguage = currentLanguage,
-                    languages = settingsRepository.getLanguages()
+                    languages = getLanguagesUseCase()
                 )
             }
         }
@@ -44,7 +47,8 @@ class ChangeLanguageViewModel @Inject constructor(
         }
         is Event.OKClicked -> {
             viewModelScope.launch(dispatcherProvider.main()) {
-                settingsRepository.setLanguage(requireNotNull(state.value.currentLanguage))
+                val currentLanguage = requireNotNull(state.value.currentLanguage)
+                setLanguageUseCase(currentLanguage)
             }
             navigator.back()
         }
