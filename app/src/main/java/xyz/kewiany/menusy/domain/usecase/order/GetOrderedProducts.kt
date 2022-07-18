@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.domain.usecase
+package xyz.kewiany.menusy.domain.usecase.order
 
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.repository.OrderRepository

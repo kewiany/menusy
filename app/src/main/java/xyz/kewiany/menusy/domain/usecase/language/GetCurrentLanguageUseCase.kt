@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.domain.usecase
+package xyz.kewiany.menusy.domain.usecase.language
 
 import kotlinx.coroutines.flow.first
 import xyz.kewiany.menusy.domain.model.Language

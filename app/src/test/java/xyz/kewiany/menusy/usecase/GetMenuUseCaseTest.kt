@@ -15,9 +15,9 @@ import xyz.kewiany.menusy.data.source.remote.api.MenuApi
 import xyz.kewiany.menusy.data.source.remote.api.MenuResponse
 import xyz.kewiany.menusy.data.source.remote.api.ProductApi
 import xyz.kewiany.menusy.data.source.remote.api.ProductsResponse
-import xyz.kewiany.menusy.domain.usecase.GetMenuResponse
-import xyz.kewiany.menusy.domain.usecase.GetMenuUseCase
 import xyz.kewiany.menusy.domain.usecase.GetMenuUseCaseImpl
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 
 class GetMenuUseCaseTest : BaseTest() {
 

@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.OrderRepository
-import xyz.kewiany.menusy.domain.usecase.GetMenuResponse
-import xyz.kewiany.menusy.domain.usecase.GetMenuUseCase
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.State
 import xyz.kewiany.menusy.presentation.features.search.ProductUItemModifier

@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.domain.usecase
+package xyz.kewiany.menusy.domain.usecase.language
 
 import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.domain.repository.SettingsRepository

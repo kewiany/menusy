@@ -6,9 +6,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
-import xyz.kewiany.menusy.domain.usecase.GetMenusResponse.Error
-import xyz.kewiany.menusy.domain.usecase.GetMenusResponse.Success
-import xyz.kewiany.menusy.domain.usecase.GetMenusUseCase
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenusResponse.Error
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenusResponse.Success
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenusUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.State
 import xyz.kewiany.menusy.presentation.navigation.NavigationDirections

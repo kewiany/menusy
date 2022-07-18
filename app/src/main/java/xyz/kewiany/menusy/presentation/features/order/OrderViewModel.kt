@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.domain.model.OrderedProduct
-import xyz.kewiany.menusy.domain.usecase.FinishOrderUseCase
-import xyz.kewiany.menusy.domain.usecase.GetOrderedProducts
+import xyz.kewiany.menusy.domain.usecase.order.FinishOrderUseCase
+import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProducts
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel

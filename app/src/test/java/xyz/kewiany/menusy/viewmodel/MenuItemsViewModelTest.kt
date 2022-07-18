@@ -11,9 +11,9 @@ import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.createMenu
 import xyz.kewiany.menusy.createProduct
 import xyz.kewiany.menusy.data.repository.OrderRepository
-import xyz.kewiany.menusy.domain.usecase.GetMenuError
-import xyz.kewiany.menusy.domain.usecase.GetMenuResponse
-import xyz.kewiany.menusy.domain.usecase.GetMenuUseCase
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuError
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem

@@ -1,25 +1,20 @@
-package xyz.kewiany.menusy.domain.usecase
+package xyz.kewiany.menusy.domain.usecase.menu
 
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.MenuRepository
-import xyz.kewiany.menusy.domain.usecase.GetMenuResponse.Error
-import xyz.kewiany.menusy.domain.usecase.GetMenuResponse.Success
-import xyz.kewiany.menusy.presentation.utils.UiItem
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse.Error
+import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse.Success
 import javax.inject.Inject
 
-interface GetMenuUseCase {
-    suspend operator fun invoke(menuId: String): GetMenuResponse
-}
-
-class GetMenuUseCaseImpl @Inject constructor(
+class GetMenuUseCase @Inject constructor(
     private val menuRepository: MenuRepository,
     private val dispatcherProvider: DispatcherProvider
-) : GetMenuUseCase {
+) {
 
-    override suspend fun invoke(menuId: String): GetMenuResponse = withContext(dispatcherProvider.io()) {
+    suspend operator fun invoke(menuId: String): GetMenuResponse = withContext(dispatcherProvider.io()) {
         try {
             val products = mutableListOf<Product>()
 
@@ -50,5 +45,3 @@ sealed class GetMenuResponse {
 sealed class GetMenuError {
     object Unknown : GetMenuError()
 }
-
-data class CachedMenu(val menu: Menu, val products: List<UiItem>)
