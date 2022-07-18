@@ -7,9 +7,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.api.ProductApi
-import xyz.kewiany.menusy.api.ProductsResponse
 import xyz.kewiany.menusy.createProduct
+import xyz.kewiany.menusy.data.source.remote.api.ProductApi
+import xyz.kewiany.menusy.data.source.remote.api.ProductsResponse
+import xyz.kewiany.menusy.domain.usecase.GetProductsResponse
+import xyz.kewiany.menusy.domain.usecase.GetProductsUseCase
+import xyz.kewiany.menusy.domain.usecase.GetProductsUseCaseImpl
 
 class GetProductsUseCaseTest : BaseTest() {
 

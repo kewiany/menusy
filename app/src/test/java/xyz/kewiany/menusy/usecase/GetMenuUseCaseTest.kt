@@ -8,13 +8,16 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.api.MenuApi
-import xyz.kewiany.menusy.api.MenuResponse
-import xyz.kewiany.menusy.api.ProductApi
-import xyz.kewiany.menusy.api.ProductsResponse
 import xyz.kewiany.menusy.createCategory
 import xyz.kewiany.menusy.createMenu
 import xyz.kewiany.menusy.createProduct
+import xyz.kewiany.menusy.data.source.remote.api.MenuApi
+import xyz.kewiany.menusy.data.source.remote.api.MenuResponse
+import xyz.kewiany.menusy.data.source.remote.api.ProductApi
+import xyz.kewiany.menusy.data.source.remote.api.ProductsResponse
+import xyz.kewiany.menusy.domain.usecase.GetMenuResponse
+import xyz.kewiany.menusy.domain.usecase.GetMenuUseCase
+import xyz.kewiany.menusy.domain.usecase.GetMenuUseCaseImpl
 
 class GetMenuUseCaseTest : BaseTest() {
 

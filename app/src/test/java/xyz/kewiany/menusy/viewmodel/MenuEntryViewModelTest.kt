@@ -10,11 +10,11 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.createMenu
-import xyz.kewiany.menusy.navigation.Navigator
-import xyz.kewiany.menusy.ui.menu.entry.MenuEntryViewModel
-import xyz.kewiany.menusy.usecase.GetMenusError
-import xyz.kewiany.menusy.usecase.GetMenusResponse
-import xyz.kewiany.menusy.usecase.GetMenusUseCase
+import xyz.kewiany.menusy.domain.usecase.GetMenusError
+import xyz.kewiany.menusy.domain.usecase.GetMenusResponse
+import xyz.kewiany.menusy.domain.usecase.GetMenusUseCase
+import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel
+import xyz.kewiany.menusy.presentation.navigation.Navigator
 
 class MenuEntryViewModelTest : BaseTest() {
 

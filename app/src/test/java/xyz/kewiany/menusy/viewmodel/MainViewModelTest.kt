@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.core.MainViewModel
 import xyz.kewiany.menusy.data.repository.SettingsRepository
-import xyz.kewiany.menusy.navigation.NavigationDirections
-import xyz.kewiany.menusy.navigation.Navigator
-import xyz.kewiany.menusy.ui.MainViewModel
-import xyz.kewiany.menusy.ui.language.Language
-import xyz.kewiany.menusy.ui.search.SearchTextHolder
+import xyz.kewiany.menusy.data.source.local.SearchTextHolder
+import xyz.kewiany.menusy.domain.model.Language
+import xyz.kewiany.menusy.presentation.navigation.NavigationDirections
+import xyz.kewiany.menusy.presentation.navigation.Navigator
 import kotlin.random.Random
 
 class MainViewModelTest : BaseTest() {

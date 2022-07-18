@@ -1,9 +1,9 @@
 package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import xyz.kewiany.menusy.PreferenceDataStore
+import xyz.kewiany.menusy.data.source.local.PreferenceDataStore
+import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.domain.repository.SettingsRepository
-import xyz.kewiany.menusy.ui.language.Language
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(

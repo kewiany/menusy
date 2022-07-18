@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import xyz.kewiany.menusy.db.OrderWithProducts
+import xyz.kewiany.menusy.data.source.local.entity.OrderWithProducts
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 

@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.data.repository
 
-import xyz.kewiany.menusy.api.MenuApi
-import xyz.kewiany.menusy.api.ProductApi
+import xyz.kewiany.menusy.data.source.remote.api.MenuApi
+import xyz.kewiany.menusy.data.source.remote.api.ProductApi
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.MenuRepository

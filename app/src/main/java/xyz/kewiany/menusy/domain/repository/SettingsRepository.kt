@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import xyz.kewiany.menusy.ui.language.Language
+import xyz.kewiany.menusy.domain.model.Language
 
 interface SettingsRepository {
     val language: Flow<Language>

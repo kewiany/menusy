@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
-import xyz.kewiany.menusy.utils.DispatcherProvider
+import xyz.kewiany.menusy.core.DispatcherProvider
 
 abstract class BaseTest {
 

@@ -1,9 +1,9 @@
 package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import xyz.kewiany.menusy.InMemoryDataStore
-import xyz.kewiany.menusy.db.OrderDataStore
-import xyz.kewiany.menusy.db.OrderWithProducts
+import xyz.kewiany.menusy.data.source.local.InMemoryDataHolder
+import xyz.kewiany.menusy.data.source.local.OrderDataSource
+import xyz.kewiany.menusy.data.source.local.entity.OrderWithProducts
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.OrderRepository
@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 
 class OrderRepositoryImpl @Inject constructor(
-    private val inMemoryDataStore: InMemoryDataStore,
-    private val orderDataStore: OrderDataStore
+    private val inMemoryDataHolder: InMemoryDataHolder,
+    private val orderDataStore: OrderDataSource
 ) : OrderRepository {
 
-    override val orderedProductsCount: Flow<Int> = inMemoryDataStore.orderedProductsCount
+    override val orderedProductsCount: Flow<Int> = inMemoryDataHolder.orderedProductsCount
 
     override fun getOrderedProducts(): List<OrderedProduct> {
-        return inMemoryDataStore.orderedProducts.value
+        return inMemoryDataHolder.orderedProducts.value
     }
 
     override suspend fun getOrdersFromHistory(): List<OrderWithProducts> {
@@ -72,6 +72,6 @@ class OrderRepositoryImpl @Inject constructor(
     }
 
     private suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>) {
-        inMemoryDataStore.updateOrderedProducts(orderedProducts)
+        inMemoryDataHolder.updateOrderedProducts(orderedProducts)
     }
 }

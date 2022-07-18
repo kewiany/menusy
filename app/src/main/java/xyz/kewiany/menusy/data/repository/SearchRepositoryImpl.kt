@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import xyz.kewiany.menusy.data.source.local.SearchTextHolder
 import xyz.kewiany.menusy.domain.repository.SearchRepository
-import xyz.kewiany.menusy.ui.search.SearchTextHolder
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(

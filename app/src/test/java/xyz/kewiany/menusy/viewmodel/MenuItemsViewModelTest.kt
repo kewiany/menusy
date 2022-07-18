@@ -11,14 +11,14 @@ import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.createMenu
 import xyz.kewiany.menusy.createProduct
 import xyz.kewiany.menusy.data.repository.OrderRepository
-import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel
-import xyz.kewiany.menusy.ui.menu.items.MenuItemsViewModel.Event
-import xyz.kewiany.menusy.ui.menu.items.ProductUiItem
+import xyz.kewiany.menusy.domain.usecase.GetMenuError
+import xyz.kewiany.menusy.domain.usecase.GetMenuResponse
+import xyz.kewiany.menusy.domain.usecase.GetMenuUseCase
+import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
+import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
+import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
 import xyz.kewiany.menusy.ui.menu.items.findCategoryId
 import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
-import xyz.kewiany.menusy.usecase.GetMenuError
-import xyz.kewiany.menusy.usecase.GetMenuResponse
-import xyz.kewiany.menusy.usecase.GetMenuUseCase
 
 class MenuItemsViewModelTest : BaseTest() {
 
