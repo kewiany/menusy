@@ -7,18 +7,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
 import xyz.kewiany.menusy.presentation.features.menu.items.ui.ProductItem
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
+import xyz.kewiany.menusy.presentation.utils.ProgressBar
 
 @Composable
 fun SearchScreen(
     state: State<SearchViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         val results = state.value.results
         if (results.isNotEmpty()) {
             LazyColumn(
@@ -41,6 +46,9 @@ fun SearchScreen(
             Text(
                 text = "No results"
             )
+        }
+        if (state.value.showLoading) {
+            ProgressBar()
         }
     }
 }
