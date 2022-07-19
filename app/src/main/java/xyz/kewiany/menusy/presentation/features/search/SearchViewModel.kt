@@ -46,7 +46,10 @@ class SearchViewModel @Inject constructor(
 
     private fun handleSearchTextChanged(event: Event.SearchTextChanged) {
         val text = event.text
-        if (text.isEmpty()) return
+        if (text.isEmpty()) {
+            updateState { it.copy(results = emptyList()) }
+            return
+        }
         viewModelScope.launch { searchProducts(text) }
     }
 

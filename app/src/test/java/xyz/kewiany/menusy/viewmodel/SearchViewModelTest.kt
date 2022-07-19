@@ -19,6 +19,7 @@ import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.utils.ProductMapper
+import xyz.kewiany.menusy.presentation.utils.ProductUiItem
 import kotlin.random.Random
 
 class SearchViewModelTest : BaseTest() {
@@ -48,7 +49,7 @@ class SearchViewModelTest : BaseTest() {
     )
 
     @Test
-    fun given_noSearchText_then_doNotResults() = testScope.runTest {
+    fun given_noSearchText_then_noResults() = testScope.runTest {
         val state = viewModel().state
         val expected = emptyList<String>()
 
@@ -74,6 +75,25 @@ class SearchViewModelTest : BaseTest() {
 
         val actual = state.value.results
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun given_searchText_and_results_when_noSearchText_then_noResults() = testScope.runTest {
+        val state = viewModel().state
+        val products = listOf(
+            createProduct(id = "id1"), createProduct(id = "id2")
+        )
+        coEvery { getProductsByQueryUseCase(sampleText1) } returns GetProductsByQueryResult.Success(products)
+        val expected = emptyList<ProductUiItem>()
+
+        _searchText.value = sampleText1
+        advanceTimeBy(600)
+        _searchText.value = ""
+        advanceTimeBy(600)
+
+        val actual = state.value.results
+        assertEquals(expected, actual)
+        coVerify(exactly = 1) { getProductsByQueryUseCase(any()) }
     }
 
     @Test
