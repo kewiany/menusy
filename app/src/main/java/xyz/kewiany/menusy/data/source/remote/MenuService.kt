@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy.data.source.remote
 
 import xyz.kewiany.menusy.data.source.remote.api.MenuApi
-import xyz.kewiany.menusy.data.source.remote.api.MenuResponse
-import xyz.kewiany.menusy.data.source.remote.api.MenusResponse
+import xyz.kewiany.menusy.data.source.remote.response.MenuResponse
+import xyz.kewiany.menusy.data.source.remote.response.MenusResponse
 import xyz.kewiany.menusy.domain.model.Category
 import xyz.kewiany.menusy.domain.model.Menu
 import javax.inject.Inject

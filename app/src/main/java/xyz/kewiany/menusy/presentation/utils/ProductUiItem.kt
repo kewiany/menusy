@@ -1,6 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.menu.items
-
-import xyz.kewiany.menusy.presentation.utils.UiItem
+package xyz.kewiany.menusy.presentation.utils
 
 data class ProductUiItem(
     override val id: String,

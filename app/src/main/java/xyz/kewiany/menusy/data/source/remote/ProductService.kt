@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.data.source.remote
 
 import xyz.kewiany.menusy.data.source.remote.api.ProductApi
-import xyz.kewiany.menusy.data.source.remote.api.ProductsResponse
+import xyz.kewiany.menusy.data.source.remote.response.ProductsResponse
 import xyz.kewiany.menusy.domain.model.Product
 import javax.inject.Inject
 

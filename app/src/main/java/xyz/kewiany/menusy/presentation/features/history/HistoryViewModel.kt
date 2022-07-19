@@ -7,6 +7,9 @@ import xyz.kewiany.menusy.domain.usecase.order.GetOrdersFromHistoryUseCase
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
+import xyz.kewiany.menusy.presentation.utils.HistoryOrderUiItem
+import xyz.kewiany.menusy.presentation.utils.HistoryProductUiItem
+import xyz.kewiany.menusy.presentation.utils.HistoryUiItem
 import javax.inject.Inject
 
 @HiltViewModel

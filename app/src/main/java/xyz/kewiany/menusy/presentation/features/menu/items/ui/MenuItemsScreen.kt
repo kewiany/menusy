@@ -18,10 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.presentation.features.menu.items.CategoryTab
-import xyz.kewiany.menusy.presentation.features.menu.items.CategoryUiItem
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
+import xyz.kewiany.menusy.presentation.utils.CategoryUiItem
+import xyz.kewiany.menusy.presentation.utils.ProductUiItem
 import xyz.kewiany.menusy.presentation.utils.ProgressBar
 
 @Composable

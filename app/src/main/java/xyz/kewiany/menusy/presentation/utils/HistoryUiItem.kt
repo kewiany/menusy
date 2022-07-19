@@ -1,6 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.history
-
-import xyz.kewiany.menusy.presentation.utils.UiItem
+package xyz.kewiany.menusy.presentation.utils
 
 interface HistoryUiItem : UiItem
 

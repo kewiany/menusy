@@ -16,11 +16,7 @@ import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.State
-import xyz.kewiany.menusy.presentation.features.search.ProductUItemModifier
-import xyz.kewiany.menusy.presentation.utils.BaseViewModel
-import xyz.kewiany.menusy.presentation.utils.SingleEvent
-import xyz.kewiany.menusy.presentation.utils.UiItem
-import xyz.kewiany.menusy.presentation.utils.obtainUiItems
+import xyz.kewiany.menusy.presentation.utils.*
 
 class MenuItemsViewModel @AssistedInject constructor(
     private val getMenuUseCase: GetMenuUseCase,

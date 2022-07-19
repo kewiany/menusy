@@ -3,9 +3,6 @@ package xyz.kewiany.menusy.presentation.utils
 import xyz.kewiany.menusy.domain.model.Category
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
-import xyz.kewiany.menusy.presentation.features.menu.items.CategoryMapper
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductMapper
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
 
 interface UiItem {
     val id: String

@@ -16,7 +16,7 @@ import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
+import xyz.kewiany.menusy.presentation.utils.ProductUiItem
 import xyz.kewiany.menusy.ui.menu.items.findCategoryId
 import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
 

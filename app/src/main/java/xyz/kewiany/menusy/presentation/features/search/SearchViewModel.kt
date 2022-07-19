@@ -13,13 +13,9 @@ import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.State
-import xyz.kewiany.menusy.presentation.utils.BaseViewModel
-import xyz.kewiany.menusy.presentation.utils.SingleEvent
-import xyz.kewiany.menusy.presentation.utils.UiItem
-import xyz.kewiany.menusy.presentation.utils.obtainUiItems
+import xyz.kewiany.menusy.presentation.utils.*
 import javax.inject.Inject
 
 @HiltViewModel

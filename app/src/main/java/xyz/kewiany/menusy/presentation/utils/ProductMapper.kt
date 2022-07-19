@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.menu.items
+package xyz.kewiany.menusy.presentation.utils
 
 import xyz.kewiany.menusy.domain.model.Product
 

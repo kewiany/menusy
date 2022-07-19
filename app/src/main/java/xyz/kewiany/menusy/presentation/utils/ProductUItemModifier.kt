@@ -1,7 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.search
-
-import xyz.kewiany.menusy.presentation.features.menu.items.ProductUiItem
-import xyz.kewiany.menusy.presentation.utils.UiItem
+package xyz.kewiany.menusy.presentation.utils
 
 object ProductUItemModifier {
 

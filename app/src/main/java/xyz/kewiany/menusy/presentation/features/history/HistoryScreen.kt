@@ -10,6 +10,8 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import xyz.kewiany.menusy.presentation.utils.HistoryOrderUiItem
+import xyz.kewiany.menusy.presentation.utils.HistoryProductUiItem
 
 @Composable
 fun HistoryScreen(
