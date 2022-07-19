@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.data.source.remote.api
 
-import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.data.source.remote.response.ProductsResponse
 
 interface ProductApi {
     suspend fun getProducts(menuId: String): ProductsResponse?
@@ -8,6 +8,3 @@ interface ProductApi {
     suspend fun getProductsByQuery(query: String): ProductsResponse?
 }
 
-data class ProductsResponse(
-    val products: List<Product>
-)

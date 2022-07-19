@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.navigation
+package xyz.kewiany.menusy.common.navigation
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

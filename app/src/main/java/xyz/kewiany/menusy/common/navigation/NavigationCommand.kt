@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.navigation
+package xyz.kewiany.menusy.common.navigation
 
 import androidx.navigation.NamedNavArgument
 

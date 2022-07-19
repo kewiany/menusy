@@ -8,11 +8,11 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.data.repository.SettingsRepository
 import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
-import xyz.kewiany.menusy.presentation.navigation.Navigator
 
 class ChangeLanguageViewModelTest : BaseTest() {
 

@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import dagger.hilt.android.EntryPointAccessors
+import xyz.kewiany.menusy.common.navigation.MENU_ID
+import xyz.kewiany.menusy.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.core.MainActivity
 import xyz.kewiany.menusy.presentation.features.history.HistoryScreen
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel
@@ -26,8 +28,6 @@ import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.features.search.ui.SearchScreen
 import xyz.kewiany.menusy.presentation.features.welcome.WelcomeScreen
 import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel
-import xyz.kewiany.menusy.presentation.navigation.MENU_ID
-import xyz.kewiany.menusy.presentation.navigation.NavigationDirections
 
 @Composable
 fun NavGraph(

@@ -7,9 +7,9 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
+import xyz.kewiany.menusy.common.navigation.Navigator
+import xyz.kewiany.menusy.common.theme.AppTheme
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
-import xyz.kewiany.menusy.presentation.navigation.Navigator
-import xyz.kewiany.menusy.presentation.theme.AppTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint

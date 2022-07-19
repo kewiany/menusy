@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.theme
+package xyz.kewiany.menusy.common.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

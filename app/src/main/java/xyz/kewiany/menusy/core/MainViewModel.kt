@@ -4,14 +4,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import xyz.kewiany.menusy.common.navigation.NavigationDirections
+import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.core.MainViewModel.Event
 import xyz.kewiany.menusy.core.MainViewModel.State
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.SetSearchTextUseCase
-import xyz.kewiany.menusy.presentation.navigation.NavigationDirections
-import xyz.kewiany.menusy.presentation.navigation.Navigator
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
 import javax.inject.Inject
 
