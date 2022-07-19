@@ -1,66 +1,103 @@
 package xyz.kewiany.menusy.viewmodel
 
+import createProduct
+import createText
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.data.source.local.SearchTextHolder
+import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryResult
+import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
+import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
+import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
+import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
+import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
+import xyz.kewiany.menusy.presentation.utils.ProductMapper
 import kotlin.random.Random
 
 class SearchViewModelTest : BaseTest() {
 
-    private val text = Random.nextLong().toString()
-    private val _searchText = MutableStateFlow("")
-    private val searchTextHolder = mockk<SearchTextHolder> {
-        coEvery { this@mockk.searchText } returns _searchText
-    }
+    private val sampleText1 = createText()
+    private val sampleText2 = createText()
 
-    private val viewModel: SearchViewModel by lazy {
-        SearchViewModel(
-            searchTextHolder
-        )
+    private val _searchText = MutableStateFlow("")
+    private val clearSearchTextUseCase = mockk<ClearSearchTextUseCase>()
+    private val getOrderedProductsUseCase = mockk<GetOrderedProductsUseCase> {
+        coEvery { this@mockk.invoke() } returns emptyList()
     }
+    private val getProductsByQueryUseCase = mockk<GetProductsByQueryUseCase> {
+        coEvery { this@mockk.invoke(any()) } returns GetProductsByQueryResult.Success(emptyList())
+    }
+    private val getSearchTextUseCase = mockk<GetSearchTextUseCase> {
+        coEvery { this@mockk.invoke() } returns _searchText
+    }
+    private val updateOrderUseCase = mockk<UpdateOrderUseCase>()
+
+    private fun viewModel() = SearchViewModel(
+        clearSearchTextUseCase,
+        getOrderedProductsUseCase,
+        getProductsByQueryUseCase,
+        getSearchTextUseCase,
+        updateOrderUseCase
+    )
 
     @Test
     fun given_noSearchText_then_doNotResults() = testScope.runTest {
-        val state = viewModel.state
+        val state = viewModel().state
+        val expected = emptyList<String>()
+
+        _searchText.value = ""
         advanceTimeBy(600)
-        assertEquals(emptyList<String>(), state.value.results)
+
+        val actual = state.value.results
+        coVerify(exactly = 0) { getProductsByQueryUseCase(any()) }
+        assertEquals(expected, actual)
     }
 
     @Test
     fun when_searchText_then_setResults() = testScope.runTest {
-        val state = viewModel.state
-        val item = SearchUiItem(Random.nextInt().toString(), text)
-        _searchText.tryEmit(text)
+        val state = viewModel().state
+        val products = listOf(
+            createProduct(id = "id1"), createProduct(id = "id2")
+        )
+        coEvery { getProductsByQueryUseCase(sampleText1) } returns GetProductsByQueryResult.Success(products)
+        val expected = products.map { product -> ProductMapper.map(product) }
+
+        _searchText.value = sampleText1
         advanceTimeBy(600)
-        assertTrue(state.value.results.map { it.name }.contains(item.name))
+
+        val actual = state.value.results
+        assertEquals(expected, actual)
     }
 
     @Test
     fun when_searchTextTwice_then_setResultsOnce() = testScope.runTest {
-        val state = viewModel.state
-        _searchText.tryEmit(text)
+        viewModel()
+
+        _searchText.value = sampleText1
         advanceTimeBy(600)
-        val secondText = Random.nextLong().toString()
-        _searchText.tryEmit(secondText)
+        _searchText.value = sampleText2
         advanceTimeBy(400)
-        assertFalse(state.value.results.map { it.name }.contains(secondText))
+
+        coVerify(exactly = 1) { getProductsByQueryUseCase(any()) }
     }
 
     @Test
     fun when_searchTextTwice_then_setResultsTwice() = testScope.runTest {
-        val state = viewModel.state
-        _searchText.tryEmit(text)
+        viewModel()
+
+        _searchText.value = sampleText1
         advanceTimeBy(600)
         val secondText = Random.nextLong().toString()
         _searchText.tryEmit(secondText)
         advanceTimeBy(600)
-        assertTrue(state.value.results.map { it.name }.contains(secondText))
+
+        coVerify(exactly = 2) { getProductsByQueryUseCase(any()) }
     }
 }

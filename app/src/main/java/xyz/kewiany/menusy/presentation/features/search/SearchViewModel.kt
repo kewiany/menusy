@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.domain.model.Product
-import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryResponse
+import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryResult
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
+import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val clearSearchTextUseCase: ClearSearchTextUseCase,
+    private val getOrderedProductsUseCase: GetOrderedProductsUseCase,
     private val getProductsByQueryUseCase: GetProductsByQueryUseCase,
     private val getSearchTextUseCase: GetSearchTextUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase
@@ -79,15 +81,17 @@ class SearchViewModel @Inject constructor(
         try {
             updateState { it.copy(showLoading = true) }
             when (val response = getProductsByQueryUseCase(query)) {
-                is GetProductsByQueryResponse.Success -> {
-                    val items = obtainUiItems(response.products, response.orderedProducts)
+                is GetProductsByQueryResult.Success -> {
+                    val products = response.products
+                    val orderedProducts = getOrderedProductsUseCase()
+                    val items = obtainUiItems(products, orderedProducts)
 
                     cachedProducts.clear()
-                    cachedProducts.addAll(response.products)
+                    cachedProducts.addAll(products)
 
                     updateState { it.copy(showLoading = false, results = items) }
                 }
-                is GetProductsByQueryResponse.Error -> {
+                is GetProductsByQueryResult.Error -> {
                     updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
                 }
             }
