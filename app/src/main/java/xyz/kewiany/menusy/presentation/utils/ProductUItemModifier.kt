@@ -24,6 +24,7 @@ object ProductUItemModifier {
         product: ProductUiItem,
         quantity: Int
     ): List<UiItem> {
+        if (quantity < 0) throw ChangeQuantityException()
         val newProduct = ProductUiItem(
             id = product.id,
             name = product.name,
@@ -37,3 +38,6 @@ object ProductUItemModifier {
         }
     }
 }
+
+class ChangeQuantityException : IllegalStateException()
+

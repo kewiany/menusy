@@ -52,16 +52,26 @@ class MenuItemsViewModel @AssistedInject constructor(
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
         val productId = event.productId
-        val items = ProductUItemModifier.decreaseQuantity(state.value.items, productId)
-        updateState { it.copy(items = items) }
-        updateOrder(items, productId)
+        val items = state.value.items
+        try {
+            val updatedItems = ProductUItemModifier.decreaseQuantity(items, productId)
+            updateState { it.copy(items = updatedItems) }
+            updateOrder(updatedItems, productId)
+        } catch (e: ChangeQuantityException) {
+            println(e)
+        }
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
         val productId = event.productId
-        val items = ProductUItemModifier.increaseQuantity(state.value.items, productId)
-        updateState { it.copy(items = items) }
-        updateOrder(items, productId)
+        val items = state.value.items
+        try {
+            val updatedItems = ProductUItemModifier.increaseQuantity(items, productId)
+            updateState { it.copy(items = updatedItems) }
+            updateOrder(updatedItems, productId)
+        } catch (e: ChangeQuantityException) {
+            println(e)
+        }
     }
 
     private fun updateOrder(uiItems: List<UiItem>, productId: String) {
