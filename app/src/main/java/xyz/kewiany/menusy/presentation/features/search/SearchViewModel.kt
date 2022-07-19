@@ -36,11 +36,18 @@ class SearchViewModel @Inject constructor(
 
     private fun searchTextFlow() = getSearchTextUseCase()
         .debounce(500L)
-        .onEach { text -> searchProducts(text) }
+        .onEach { text -> eventHandler(Event.SearchTextChanged(text)) }
 
     override fun handleEvent(event: Event) = when (event) {
+        is Event.SearchTextChanged -> handleSearchTextChanged(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
+    }
+
+    private fun handleSearchTextChanged(event: Event.SearchTextChanged) {
+        val text = event.text
+        if (text.isEmpty()) return
+        viewModelScope.launch { searchProducts(text) }
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
@@ -76,8 +83,6 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun searchProducts(query: String) {
-        if (query.isEmpty()) return
-
         try {
             updateState { it.copy(showLoading = true) }
             when (val response = getProductsByQueryUseCase(query)) {
@@ -113,6 +118,7 @@ class SearchViewModel @Inject constructor(
     )
 
     sealed class Event {
+        data class SearchTextChanged(val text: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()
     }
