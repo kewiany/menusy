@@ -4,9 +4,9 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.*
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.common.navigation.NavigationDirections
@@ -46,9 +46,41 @@ class MainViewModelTest : BaseTest() {
     }
 
     @Test
+    fun when_currentRouteMenuEntry_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+        val viewModel = viewModel()
+        viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.menuEntry.destination))
+
+        val state = viewModel.state.value
+        val actualShowBackButton = state.showBackButton
+        val actualShowBottomBar = state.showBottomBar
+        val actualShowSearchButton = state.showSearchButton
+        val actualShowSearchBar = state.showSearchBar
+        assertFalse(actualShowBackButton)
+        assertTrue(actualShowBottomBar)
+        assertTrue(actualShowSearchButton)
+        assertFalse(actualShowSearchBar)
+    }
+
+    @Test
     fun when_orderClicked_then_navigateToOrderScreen() {
         viewModel().eventHandler(Event.OrderClicked)
         coVerify { navigator.navigate(NavigationDirections.order) }
+    }
+
+    @Test
+    fun when_currentRouteOrder_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+        val viewModel = viewModel()
+        viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.order.destination))
+
+        val state = viewModel.state.value
+        val actualShowBackButton = state.showBackButton
+        val actualShowBottomBar = state.showBottomBar
+        val actualShowSearchButton = state.showSearchButton
+        val actualShowSearchBar = state.showSearchBar
+        assertFalse(actualShowBackButton)
+        assertTrue(actualShowBottomBar)
+        assertTrue(actualShowSearchButton)
+        assertFalse(actualShowSearchBar)
     }
 
     @Test
@@ -58,15 +90,63 @@ class MainViewModelTest : BaseTest() {
     }
 
     @Test
+    fun when_currentRouteHistory_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+        val viewModel = viewModel()
+        viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.history.destination))
+
+        val state = viewModel.state.value
+        val actualShowBackButton = state.showBackButton
+        val actualShowBottomBar = state.showBottomBar
+        val actualShowSearchButton = state.showSearchButton
+        val actualShowSearchBar = state.showSearchBar
+        assertFalse(actualShowBackButton)
+        assertTrue(actualShowBottomBar)
+        assertTrue(actualShowSearchButton)
+        assertFalse(actualShowSearchBar)
+    }
+
+    @Test
     fun when_searchClicked_then_navigateToSearchScreen() {
         viewModel().eventHandler(Event.SearchClicked)
         coVerify { navigator.navigate(NavigationDirections.search) }
     }
 
     @Test
+    fun when_currentRouteSearch_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+        val viewModel = viewModel()
+        viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.search.destination))
+
+        val state = viewModel.state.value
+        val actualShowBackButton = state.showBackButton
+        val actualShowBottomBar = state.showBottomBar
+        val actualShowSearchButton = state.showSearchButton
+        val actualShowSearchBar = state.showSearchBar
+        assertTrue(actualShowBackButton)
+        assertFalse(actualShowBottomBar)
+        assertFalse(actualShowSearchButton)
+        assertTrue(actualShowSearchBar)
+    }
+
+    @Test
     fun when_changeLanguageClicked_then_navigateToChangeLanguageScreen() {
         viewModel().eventHandler(Event.ChangeLanguageClicked)
         coVerify { navigator.navigate(NavigationDirections.changeLanguage) }
+    }
+
+    @Test
+    fun when_currentRouteChangeLanguage_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+        val viewModel = viewModel()
+        viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.changeLanguage.destination))
+
+        val state = viewModel.state.value
+        val actualShowBackButton = state.showBackButton
+        val actualShowBottomBar = state.showBottomBar
+        val actualShowSearchButton = state.showSearchButton
+        val actualShowSearchBar = state.showSearchBar
+        assertFalse(actualShowBackButton)
+        assertTrue(actualShowBottomBar)
+        assertTrue(actualShowSearchButton)
+        assertFalse(actualShowSearchBar)
     }
 
     @Test
