@@ -10,7 +10,6 @@ import xyz.kewiany.menusy.core.MainViewModel.Event
 import xyz.kewiany.menusy.core.MainViewModel.State
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
-import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.SetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
 import javax.inject.Inject
@@ -19,21 +18,16 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val navigator: Navigator,
     private val clearSearchTextUseCase: ClearSearchTextUseCase,
-    private val getSearchTextUseCase: GetSearchTextUseCase,
     private val getOrderedProductsCountUseCase: GetOrderedProductsCountUseCase,
     private val setSearchTextUseCase: SetSearchTextUseCase,
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
         productsOrderedCountFlow().launchIn(viewModelScope)
-        searchTextFlow().launchIn(viewModelScope)
     }
 
     private fun productsOrderedCountFlow() = getOrderedProductsCountUseCase()
         .onEach { count -> updateState { it.copy(orderedProductsCount = count) } }
-
-    private fun searchTextFlow() = getSearchTextUseCase()
-        .onEach { text -> updateState { it.copy(searchText = text) } }
 
     override fun handleEvent(event: Event) = when (event) {
         Event.MenuClicked -> navigator.navigate(NavigationDirections.menuEntry)
@@ -73,6 +67,7 @@ class MainViewModel @Inject constructor(
     private fun handleSearchTextChanged(event: Event.SearchTextChanged) {
         val text = event.text
         setSearchTextUseCase(text)
+        updateState { it.copy(searchText = text) }
     }
 
     private fun handleSearchFocused(event: Event.SearchFocused) {
