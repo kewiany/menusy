@@ -18,20 +18,17 @@ import javax.inject.Inject
 class ChangeLanguageViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getCurrentLanguageUseCase: GetCurrentLanguageUseCase,
-    private val getLanguagesUseCase: GetLanguagesUseCase,
+    getLanguagesUseCase: GetLanguagesUseCase,
     private val setLanguageUseCase: SetLanguageUseCase,
     private val dispatcherProvider: DispatcherProvider
-) : BaseViewModel<State, Event>(State()) {
+) : BaseViewModel<State, Event>(
+    State(languages = getLanguagesUseCase())
+) {
 
     init {
-        viewModelScope.launch(dispatcherProvider.main()) {
+        viewModelScope.launch {
             val currentLanguage = getCurrentLanguageUseCase()
-            updateState {
-                it.copy(
-                    currentLanguage = currentLanguage,
-                    languages = getLanguagesUseCase()
-                )
-            }
+            updateState { it.copy(currentLanguage = currentLanguage) }
         }
     }
 
