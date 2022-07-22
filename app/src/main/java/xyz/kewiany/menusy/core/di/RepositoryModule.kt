@@ -16,21 +16,21 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class RepositoryModule {
+interface RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindsSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
+    fun bindsSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
     @Singleton
     @Binds
-    abstract fun bindsOrderRepository(impl: OrderRepositoryImpl): OrderRepository
+    fun bindsOrderRepository(impl: OrderRepositoryImpl): OrderRepository
 
     @Singleton
     @Binds
-    abstract fun bindsMenuRepository(impl: MenuRepositoryImpl): MenuRepository
+    fun bindsMenuRepository(impl: MenuRepositoryImpl): MenuRepository
 
     @Singleton
     @Binds
-    abstract fun bindsSearchRepository(impl: SearchRepositoryImpl): SearchRepository
+    fun bindsSearchRepository(impl: SearchRepositoryImpl): SearchRepository
 }

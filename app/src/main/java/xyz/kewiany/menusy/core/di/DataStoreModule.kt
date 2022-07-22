@@ -11,9 +11,9 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class DataStoreModule {
+interface DataStoreModule {
 
     @Singleton
     @Binds
-    abstract fun bindsOrderDataSource(impl: OrderDataSourceImpl): OrderDataSource
+    fun bindsOrderDataSource(impl: OrderDataSourceImpl): OrderDataSource
 }

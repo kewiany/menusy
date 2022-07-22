@@ -12,13 +12,13 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class ApiModule {
+interface ApiModule {
 
     @Singleton
     @Binds
-    abstract fun bindsMenuApi(impl: MenuService): MenuApi
+    fun bindsMenuApi(impl: MenuService): MenuApi
 
     @Singleton
     @Binds
-    abstract fun bindsProductsApi(impl: ProductService): ProductApi
+    fun bindsProductsApi(impl: ProductService): ProductApi
 }

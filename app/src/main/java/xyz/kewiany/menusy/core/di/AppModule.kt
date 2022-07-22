@@ -23,7 +23,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module(includes = [AppModule.BindsModule::class])
-class AppModule {
+object AppModule {
 
     @Singleton
     @Provides
@@ -46,27 +46,25 @@ class AppModule {
         return database.build()
     }
 
+    private const val PREFERENCES = "preferences"
+
     @InstallIn(SingletonComponent::class)
     @Module
-    abstract class BindsModule {
+    interface BindsModule {
         @Singleton
         @Binds
-        abstract fun bindsDispatcherProvider(dispatcherProvider: DefaultDispatcherProvider): DispatcherProvider
+        fun bindsDispatcherProvider(dispatcherProvider: DefaultDispatcherProvider): DispatcherProvider
 
         @Singleton
         @Binds
-        abstract fun bindsPreferenceDataStore(impl: PreferenceDataStoreImpl): PreferenceDataStore
+        fun bindsPreferenceDataStore(impl: PreferenceDataStoreImpl): PreferenceDataStore
 
         @Singleton
         @Binds
-        abstract fun bindsInMemoryDataHolder(impl: InMemoryDataHolderImpl): InMemoryDataHolder
+        fun bindsInMemoryDataHolder(impl: InMemoryDataHolderImpl): InMemoryDataHolder
 
         @Singleton
         @Binds
-        abstract fun bindsSearchTextHolder(impl: SearchTextHolderImpl): SearchTextHolder
-    }
-
-    companion object {
-        private const val PREFERENCES = "preferences"
+        fun bindsSearchTextHolder(impl: SearchTextHolderImpl): SearchTextHolder
     }
 }
