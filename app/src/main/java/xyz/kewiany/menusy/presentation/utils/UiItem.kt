@@ -3,6 +3,7 @@ package xyz.kewiany.menusy.presentation.utils
 import xyz.kewiany.menusy.domain.model.Category
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.domain.model.asUIItem
 
 interface UiItem {
     val id: String
@@ -28,7 +29,7 @@ fun obtainUiItems(
 
     groupedProducts.forEach { (categoryId, products) ->
         val category = categories?.find { it.id == categoryId }
-        if (category != null) items.add(CategoryMapper.map(category))
+        if (category != null) items.add(category.asUIItem())
 
         val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
         items.addAll(matchedProducts)
@@ -45,8 +46,8 @@ private fun matchProductsWithOrderedProducts(
 
     if (matchedProductWithOrderedProduct != null) {
         val orderedQuantity = matchedProductWithOrderedProduct.quantity
-        ProductMapper.map(product, orderedQuantity)
+        product.asUIItem(orderedQuantity)
     } else {
-        ProductMapper.map(product)
+        product.asUIItem()
     }
 }

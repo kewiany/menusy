@@ -11,6 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.domain.model.asUIItem
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryResult
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
@@ -18,7 +19,6 @@ import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
-import xyz.kewiany.menusy.presentation.utils.ProductMapper
 import xyz.kewiany.menusy.presentation.utils.ProductUiItem
 import kotlin.random.Random
 
@@ -68,7 +68,7 @@ class SearchViewModelTest : BaseTest() {
             createProduct(id = "id1"), createProduct(id = "id2")
         )
         coEvery { getProductsByQueryUseCase(sampleText1) } returns GetProductsByQueryResult.Success(products)
-        val expected = products.map { product -> ProductMapper.map(product) }
+        val expected = products.map { product -> product.asUIItem() }
 
         _searchText.value = sampleText1
         advanceTimeBy(600)
