@@ -51,13 +51,6 @@ android {
         }
     }
 }
-//
-//configurations {
-//    all {
-//        exclude(group = "org.jetbrains", module = "annotations")
-//        exclude(group = "com.intellij", module = "annotations")
-//    }
-//}
 
 dependencies {
     implementation(Library.AndroidX.core)

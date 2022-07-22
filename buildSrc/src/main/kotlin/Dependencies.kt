@@ -5,6 +5,7 @@ object BuildPlugin {
     const val kotlinKapt = "kotlin-kapt"
     const val hilt = "dagger.hilt.android.plugin"
     const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+    const val koverPlugin = "org.jetbrains.kotlinx.kover"
 }
 
 object Library {
