@@ -1,6 +1,7 @@
 package xyz.kewiany.menusy.data.source.local
 
-import xyz.kewiany.menusy.data.source.local.db.AppDatabase
+import xyz.kewiany.menusy.data.source.local.dao.OrderDao
+import xyz.kewiany.menusy.data.source.local.dao.ProductDao
 import xyz.kewiany.menusy.data.source.local.entity.OrderEntity
 import xyz.kewiany.menusy.data.source.local.entity.OrderWithProducts
 import xyz.kewiany.menusy.data.source.local.entity.ProductEntity
@@ -18,7 +19,10 @@ interface OrderDataSource {
     suspend fun getAll(): List<OrderWithProducts>
 }
 
-class OrderDataSourceImpl @Inject constructor(private val database: AppDatabase) : OrderDataSource {
+class OrderDataSourceImpl @Inject constructor(
+    private val productDao: ProductDao,
+    private val orderDao: OrderDao
+) : OrderDataSource {
 
     override suspend fun insert(
         date: String,
@@ -26,14 +30,12 @@ class OrderDataSourceImpl @Inject constructor(private val database: AppDatabase)
         totalPrice: Float,
         totalQuantity: Int
     ) {
-        val orderDao = database.orderDao()
         val orderEntity = OrderEntity(
             date = date,
             totalPrice = totalPrice,
             totalQuantity = totalQuantity
         )
         val orderId = orderDao.insert(orderEntity)
-        val productDao = database.productDao()
         val productEntities = orderedProducts.map { orderedProduct ->
             with(orderedProduct) {
                 ProductEntity(
@@ -49,7 +51,6 @@ class OrderDataSourceImpl @Inject constructor(private val database: AppDatabase)
     }
 
     override suspend fun getAll(): List<OrderWithProducts> {
-        val dao = database.orderDao()
-        return dao.getAll()
+        return orderDao.getAll()
     }
 }
