@@ -4,12 +4,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
-import xyz.kewiany.menusy.domain.usecase.menu.GetMenusResponse.Error
-import xyz.kewiany.menusy.domain.usecase.menu.GetMenusResponse.Success
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenusUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.State
@@ -37,11 +36,11 @@ class MenuEntryViewModel @Inject constructor(
     private suspend fun loadMenus() {
         try {
             updateState { it.copy(showLoading = true) }
-            when (val response = getMenusUseCase()) {
-                is Success -> {
-                    updateState { it.copy(menus = response.menus, showLoading = false) }
+            when (val result = getMenusUseCase()) {
+                is Result.Success -> {
+                    updateState { it.copy(menus = result.data, showLoading = false) }
                 }
-                is Error -> {
+                is Result.Error -> {
                     updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
                 }
             }
