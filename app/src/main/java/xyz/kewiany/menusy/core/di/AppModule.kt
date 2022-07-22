@@ -17,8 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import xyz.kewiany.menusy.core.DefaultDispatcherProvider
 import xyz.kewiany.menusy.core.DispatcherProvider
-import xyz.kewiany.menusy.data.source.local.SearchTextHolder
-import xyz.kewiany.menusy.data.source.local.SearchTextHolderImpl
+import xyz.kewiany.menusy.data.source.local.*
 import xyz.kewiany.menusy.data.source.local.db.AppDatabase
 import javax.inject.Singleton
 
@@ -53,6 +52,14 @@ class AppModule {
         @Singleton
         @Binds
         abstract fun bindsDispatcherProvider(dispatcherProvider: DefaultDispatcherProvider): DispatcherProvider
+
+        @Singleton
+        @Binds
+        abstract fun bindsPreferenceDataStore(impl: PreferenceDataStoreImpl): PreferenceDataStore
+
+        @Singleton
+        @Binds
+        abstract fun bindsInMemoryDataHolder(impl: InMemoryDataHolderImpl): InMemoryDataHolder
 
         @Singleton
         @Binds
