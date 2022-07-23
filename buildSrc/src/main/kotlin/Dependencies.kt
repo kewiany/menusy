@@ -39,9 +39,12 @@ object TestLibrary {
         const val extJunit = "androidx.test.ext:junit:1.1.3"
         const val espresso = "androidx.test.espresso:espresso-core:3.4.0"
         const val composeUi = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+        const val runner = "androidx.test:runner:${Versions.androidXTestVersion}"
+        const val rules = "androidx.test:rules:${Versions.androidXTestVersion}"
     }
 
-    const val junit = "junit:junit:4.13.2"
+    const val cucumber = "io.cucumber:cucumber-android:4.9.0"
+    const val junit = "junit:junit:4.12"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2"
     const val mockk = "io.mockk:mockk:1.12.4"
     const val turbine = "app.cash.turbine:turbine:0.8.0"

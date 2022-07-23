@@ -12,6 +12,8 @@ android {
         applicationId = "xyz.kewiany.menusy"
         minSdk = AndroidSdkVersions.min
         targetSdk = AndroidSdkVersions.target
+        testApplicationId = "xyz.kewiany.menusy.test"
+        testInstrumentationRunner = "xyz.kewiany.menusy.AndroidJUnitRunner"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -76,9 +78,12 @@ dependencies {
     testImplementation(TestLibrary.coroutines)
     testImplementation(TestLibrary.mockk)
     testImplementation(TestLibrary.turbine)
-    testImplementation(TestLibrary.AndroidX.extJunit)
-    testImplementation(TestLibrary.AndroidX.espresso)
-    testImplementation(TestLibrary.AndroidX.composeUi)
+    androidTestImplementation(TestLibrary.AndroidX.runner)
+    androidTestImplementation(TestLibrary.AndroidX.rules)
+    androidTestImplementation(TestLibrary.AndroidX.extJunit)
+    androidTestImplementation(TestLibrary.AndroidX.espresso)
+    androidTestImplementation(TestLibrary.AndroidX.composeUi)
+    androidTestImplementation(TestLibrary.cucumber)
     debugImplementation(DebugLibrary.composeUiTooling)
     debugImplementation(DebugLibrary.composeUiTest)
 }
