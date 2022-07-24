@@ -6,10 +6,12 @@ import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.MenuRepository
+import xyz.kewiany.menusy.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class GetMenuProductsUseCase @Inject constructor(
     private val menuRepository: MenuRepository,
+    private val productRepository: ProductRepository,
     private val dispatcherProvider: DispatcherProvider
 ) {
 
@@ -38,9 +40,9 @@ class GetMenuProductsUseCase @Inject constructor(
         menuId: String, categoryId: String? = null
     ): List<Product> = withContext(dispatcherProvider.io()) {
         if (categoryId == null) {
-            menuRepository.getProducts(menuId)
+            productRepository.getProducts(menuId)
         } else {
-            menuRepository.getProducts(menuId, categoryId)
+            productRepository.getProducts(menuId, categoryId)
         }
     }
 }

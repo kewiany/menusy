@@ -4,17 +4,17 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Product
-import xyz.kewiany.menusy.domain.repository.MenuRepository
+import xyz.kewiany.menusy.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class GetProductsUseCase @Inject constructor(
-    private val menuRepository: MenuRepository,
+    private val productRepository: ProductRepository,
     private val dispatcherProvider: DispatcherProvider
 ) {
 
     suspend operator fun invoke(menuId: String): GetProductsResponse = withContext(dispatcherProvider.io()) {
         try {
-            val data = menuRepository.getProducts(menuId, "")
+            val data = productRepository.getProducts(menuId)
             delay(1500)
             GetProductsResponse.Success(data)
         } catch (e: Exception) {
