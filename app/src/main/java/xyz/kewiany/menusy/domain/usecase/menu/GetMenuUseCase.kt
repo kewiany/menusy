@@ -1,47 +1,22 @@
 package xyz.kewiany.menusy.domain.usecase.menu
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import xyz.kewiany.menusy.core.DispatcherProvider
+import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.model.Menu
-import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.MenuRepository
-import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse.Error
-import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse.Success
 import javax.inject.Inject
 
-class GetMenuUseCase @Inject constructor(
-    private val menuRepository: MenuRepository,
-    private val dispatcherProvider: DispatcherProvider
-) {
+class GetMenuUseCase @Inject constructor(private val menuRepository: MenuRepository) {
 
-    suspend operator fun invoke(menuId: String): GetMenuResponse = withContext(dispatcherProvider.io()) {
+    suspend operator fun invoke(menuId: String): Result<Menu> = withContext(Dispatchers.IO) {
         try {
-            val products = mutableListOf<Product>()
-
-            val menu = menuRepository.getMenu(menuId)
-            val categories = menu.categories
-
-            val areCategories = categories?.isNotEmpty() == true
-
-            if (areCategories) {
-                categories?.forEach { category ->
-                    products.addAll(menuRepository.getProducts(menuId, category.id))
-                }
-            } else {
-                products.addAll(menuRepository.getProducts(menuId))
-            }
-            Success(menu, products)
+            val data = menuRepository.getMenu(menuId)
+            delay(1500)
+            Result.Success(data)
         } catch (e: Exception) {
-            Error(GetMenuError.Unknown)
+            Result.Error(e)
         }
     }
-}
-
-sealed class GetMenuResponse {
-    data class Success(val menu: Menu, val products: List<Product>) : GetMenuResponse()
-    data class Error(val error: GetMenuError) : GetMenuResponse()
-}
-
-sealed class GetMenuError {
-    object Unknown : GetMenuError()
 }

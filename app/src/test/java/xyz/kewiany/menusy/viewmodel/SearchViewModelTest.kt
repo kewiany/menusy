@@ -11,8 +11,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.model.asUIItem
-import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryResult
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
@@ -33,7 +33,7 @@ class SearchViewModelTest : BaseTest() {
         coEvery { this@mockk.invoke() } returns emptyList()
     }
     private val getProductsByQueryUseCase = mockk<GetProductsByQueryUseCase> {
-        coEvery { this@mockk.invoke(any()) } returns GetProductsByQueryResult.Success(emptyList())
+        coEvery { this@mockk.invoke(any()) } returns Result.Success(emptyList())
     }
     private val getSearchTextUseCase = mockk<GetSearchTextUseCase> {
         coEvery { this@mockk.invoke() } returns _searchText
@@ -67,7 +67,7 @@ class SearchViewModelTest : BaseTest() {
         val products = listOf(
             createProduct(id = "id1"), createProduct(id = "id2")
         )
-        coEvery { getProductsByQueryUseCase(sampleText1) } returns GetProductsByQueryResult.Success(products)
+        coEvery { getProductsByQueryUseCase(sampleText1) } returns Result.Success(products)
         val expected = products.map { product -> product.asUIItem() }
 
         _searchText.value = sampleText1
@@ -83,7 +83,7 @@ class SearchViewModelTest : BaseTest() {
         val products = listOf(
             createProduct(id = "id1"), createProduct(id = "id2")
         )
-        coEvery { getProductsByQueryUseCase(sampleText1) } returns GetProductsByQueryResult.Success(products)
+        coEvery { getProductsByQueryUseCase(sampleText1) } returns Result.Success(products)
         val expected = emptyList<ProductUiItem>()
 
         _searchText.value = sampleText1

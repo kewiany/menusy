@@ -7,8 +7,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import xyz.kewiany.menusy.domain.model.Product
-import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryResult
+import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
@@ -27,8 +26,6 @@ class SearchViewModel @Inject constructor(
     private val getSearchTextUseCase: GetSearchTextUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase
 ) : BaseViewModel<State, Event>(State()) {
-
-    private val cachedProducts = mutableListOf<Product>()
 
     init {
         searchTextFlow().launchIn(viewModelScope)
@@ -55,56 +52,52 @@ class SearchViewModel @Inject constructor(
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
         val productId = event.productId
-        val items = state.value.results
-        try {
-            updateQuantity(productId) { ProductUItemModifier.decreaseQuantity(items, productId) }
+        val items = try {
+            ProductUItemModifier.decreaseQuantity(state.value.results, productId)
         } catch (e: ChangeQuantityException) {
             println(e)
+            return
         }
+        updateState { it.copy(results = items) }
+
+        viewModelScope.launch { updateOrder(items, productId) }
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
         val productId = event.productId
-        val items = state.value.results
-        try {
-            updateQuantity(productId) { ProductUItemModifier.increaseQuantity(items, productId) }
+        val items = try {
+            ProductUItemModifier.increaseQuantity(state.value.results, productId)
         } catch (e: ChangeQuantityException) {
+            println(e)
+            return
+        }
+        updateState { it.copy(results = items) }
+
+        viewModelScope.launch { updateOrder(items, productId) }
+    }
+
+    private suspend fun updateOrder(items: List<UiItem>, productId: String) {
+        try {
+            val productQuantity = (items.first { it.id == productId } as ProductUiItem).quantity
+            updateOrderUseCase(productQuantity, productId)
+        } catch (e: CancellationException) {
             println(e)
         }
     }
 
-    private fun updateQuantity(productId: String, update: () -> List<UiItem>) {
-        val updatedItems = update()
-        updateOrder(updatedItems, productId)
-        updateState { it.copy(results = updatedItems) }
-    }
-
-    private fun updateOrder(uiItems: List<UiItem>, productId: String) {
-        val productQuantity = (uiItems.first { it.id == productId } as ProductUiItem).quantity
-        val product = cachedProducts.first { it.id == productId }
-        viewModelScope.launch { updateOrderUseCase(productQuantity, product) }
-    }
-
     private suspend fun searchProducts(query: String) {
-        try {
-            updateState { it.copy(showLoading = true) }
-            when (val response = getProductsByQueryUseCase(query)) {
-                is GetProductsByQueryResult.Success -> {
-                    val products = response.products
-                    val orderedProducts = getOrderedProductsUseCase()
-                    val items = obtainUiItems(products, orderedProducts)
+        updateState { it.copy(showLoading = true) }
+        when (val result = getProductsByQueryUseCase(query)) {
+            is Result.Success -> {
+                val products = result.data
+                val orderedProducts = getOrderedProductsUseCase()
 
-                    cachedProducts.clear()
-                    cachedProducts.addAll(products)
-
-                    updateState { it.copy(showLoading = false, results = items) }
-                }
-                is GetProductsByQueryResult.Error -> {
-                    updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
-                }
+                val items = obtainMenuContentUIItems(products, orderedProducts)
+                updateState { it.copy(showLoading = false, results = items) }
             }
-        } catch (e: CancellationException) {
-            println(e)
+            is Result.Error -> {
+                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
+            }
         }
     }
 

@@ -31,7 +31,7 @@ fun MenuItemsScreen(
     eventHandler: (Event) -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        eventHandler(Event.LoadMenu)
+        eventHandler(Event.TriggerLoadMenu)
     }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()

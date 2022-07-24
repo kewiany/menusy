@@ -23,6 +23,12 @@ class MenuRepositoryImpl @Inject constructor(
         return menu
     }
 
+    override suspend fun getProduct(id: String): Product {
+        val response = productsApi.getProduct(id)
+        val product = response?.product; requireNotNull(product)
+        return product
+    }
+
     override suspend fun getProducts(menuId: String): List<Product> {
         val response = productsApi.getProducts(menuId)
         return response?.products ?: emptyList()

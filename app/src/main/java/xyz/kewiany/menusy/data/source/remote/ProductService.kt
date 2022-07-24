@@ -1,11 +1,17 @@
 package xyz.kewiany.menusy.data.source.remote
 
 import xyz.kewiany.menusy.data.source.remote.api.ProductApi
+import xyz.kewiany.menusy.data.source.remote.response.ProductResponse
 import xyz.kewiany.menusy.data.source.remote.response.ProductsResponse
 import xyz.kewiany.menusy.domain.model.Product
 import javax.inject.Inject
 
 class ProductService @Inject constructor() : ProductApi {
+
+    override suspend fun getProduct(productId: String): ProductResponse? {
+        val data = allProducts.firstOrNull { it.id == productId }
+        return ProductResponse(data)
+    }
 
     override suspend fun getProducts(menuId: String): ProductsResponse? {
         return get(menuId, null)
@@ -111,72 +117,73 @@ class ProductService @Inject constructor() : ProductApi {
     }
 
     override suspend fun getProductsByQuery(query: String): ProductsResponse? {
-        val allProducts = listOf(
-            Product(
-                id = "p20",
-                name = "tomato soup",
-                description = "italian tomatoes, basiland a touch of fennel",
-                price = 10.90f,
-                menuId = "m0"
-            ),
-            Product(
-                id = "p0",
-                name = "chicken wings",
-                description = "crispy chicken wings, louisiana hot sauce, buttermilk blue cheese ranch dressing, carrot, celery",
-                price = 31.90f,
-                menuId = "m1",
-                categoryId = "c0"
-            ),
-            Product(
-                id = "p1",
-                name = "salmon tatar",
-                description = "salmon, soy sauce, chives, cucumber, mustard, purple potato chips",
-                price = 36.90f,
-                menuId = "m1",
-                categoryId = "c0"
-            ),
-            Product(
-                id = "p2",
-                name = "apple cake",
-                description = "warm apple cake with shortcrust pastry, vanilla ice cream",
-                price = 22.90f,
-                menuId = "m1",
-                categoryId = "c1"
-            ),
-            Product(
-                id = "p3",
-                name = "tea",
-                description = "black, earl grey, green, jasmine, chamomile, mint",
-                price = 14.00f,
-                menuId = "m1",
-                categoryId = "c2"
-            ),
-            Product(
-                id = "p4",
-                name = "almond frappe",
-                description = "black or with milk",
-                price = 18.00f,
-                menuId = "m1",
-                categoryId = "c2"
-            ),
-            Product(
-                id = "p5",
-                name = "toma juice",
-                description = "apple, orange, grapefruit, tomato",
-                price = 9.00f,
-                menuId = "m1",
-                categoryId = "c3"
-            ),
-            Product(
-                id = "p6",
-                name = "cisowianka",
-                description = "still, sparkling",
-                price = 19.00f,
-                menuId = "m1",
-                categoryId = "c3"
-            )
-        )
         val data = allProducts.filter { it.name.contains(query) }
         return ProductsResponse(data)
     }
+
+    private val allProducts = listOf(
+        Product(
+            id = "p20",
+            name = "tomato soup",
+            description = "italian tomatoes, basiland a touch of fennel",
+            price = 10.90f,
+            menuId = "m0"
+        ),
+        Product(
+            id = "p0",
+            name = "chicken wings",
+            description = "crispy chicken wings, louisiana hot sauce, buttermilk blue cheese ranch dressing, carrot, celery",
+            price = 31.90f,
+            menuId = "m1",
+            categoryId = "c0"
+        ),
+        Product(
+            id = "p1",
+            name = "salmon tatar",
+            description = "salmon, soy sauce, chives, cucumber, mustard, purple potato chips",
+            price = 36.90f,
+            menuId = "m1",
+            categoryId = "c0"
+        ),
+        Product(
+            id = "p2",
+            name = "apple cake",
+            description = "warm apple cake with shortcrust pastry, vanilla ice cream",
+            price = 22.90f,
+            menuId = "m1",
+            categoryId = "c1"
+        ),
+        Product(
+            id = "p3",
+            name = "tea",
+            description = "black, earl grey, green, jasmine, chamomile, mint",
+            price = 14.00f,
+            menuId = "m1",
+            categoryId = "c2"
+        ),
+        Product(
+            id = "p4",
+            name = "almond frappe",
+            description = "black or with milk",
+            price = 18.00f,
+            menuId = "m1",
+            categoryId = "c2"
+        ),
+        Product(
+            id = "p5",
+            name = "toma juice",
+            description = "apple, orange, grapefruit, tomato",
+            price = 9.00f,
+            menuId = "m1",
+            categoryId = "c3"
+        ),
+        Product(
+            id = "p6",
+            name = "cisowianka",
+            description = "still, sparkling",
+            price = 19.00f,
+            menuId = "m1",
+            categoryId = "c3"
+        )
+    )
 }

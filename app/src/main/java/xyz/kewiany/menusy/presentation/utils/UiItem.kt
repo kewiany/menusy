@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.presentation.utils
 
-import xyz.kewiany.menusy.domain.model.Category
+import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.model.asUIItem
@@ -9,27 +9,29 @@ interface UiItem {
     val id: String
 }
 
-fun obtainUiItems(
+fun obtainMenuContentUIItems(
     products: List<Product>,
     orderedProducts: List<OrderedProduct>
 ): List<UiItem> {
     val items = mutableListOf<UiItem>()
+
     val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
     items.addAll(matchedProducts)
     return items
 }
 
-fun obtainUiItems(
-    categories: List<Category>?,
+fun obtainMenuContentUIItems(
+    menu: Menu,
     products: List<Product>,
     orderedProducts: List<OrderedProduct>
 ): List<UiItem> {
     val items = mutableListOf<UiItem>()
-    val groupedProducts = products.groupBy { it.categoryId }.entries
 
-    groupedProducts.forEach { (categoryId, products) ->
-        val category = categories?.find { it.id == categoryId }
-        if (category != null) items.add(category.asUIItem())
+    val groupedProductsByCategory = products.groupBy { it.categoryId }.entries
+    groupedProductsByCategory.forEach { (categoryId, products) ->
+        val category = menu.categories?.find { it.id == categoryId }
+
+        category?.asUIItem()?.also(items::add)
 
         val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
         items.addAll(matchedProducts)
@@ -40,14 +42,16 @@ fun obtainUiItems(
 private fun matchProductsWithOrderedProducts(
     products: List<Product>,
     orderedProducts: List<OrderedProduct>
-): List<ProductUiItem> = products.map { product ->
-    val matchedProductWithOrderedProduct = orderedProducts
-        .firstOrNull { orderedProduct -> orderedProduct.product.id == product.id }
-
-    if (matchedProductWithOrderedProduct != null) {
-        val orderedQuantity = matchedProductWithOrderedProduct.quantity
-        product.asUIItem(orderedQuantity)
-    } else {
-        product.asUIItem()
+): List<ProductUiItem> {
+    return products.map { product ->
+        val matchedProductWithOrderedProduct = orderedProducts.firstOrNull { orderedProduct ->
+            orderedProduct.product.id == product.id
+        }
+        if (matchedProductWithOrderedProduct != null) {
+            val orderedQuantity = matchedProductWithOrderedProduct.quantity
+            product.asUIItem(orderedQuantity)
+        } else {
+            product.asUIItem()
+        }
     }
 }

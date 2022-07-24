@@ -2,6 +2,7 @@ package xyz.kewiany.menusy.domain.usecase.menu
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.MenuRepository
@@ -12,26 +13,13 @@ class GetProductsByQueryUseCase @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) {
 
-    suspend operator fun invoke(query: String): GetProductsByQueryResult = withContext(dispatcherProvider.io()) {
+    suspend operator fun invoke(query: String): Result<List<Product>> = withContext(dispatcherProvider.io()) {
         try {
             val products = menuRepository.getProductsByQuery(query)
             delay(1500)
-            GetProductsByQueryResult.Success(products)
+            Result.Success(products)
         } catch (e: Exception) {
-            GetProductsByQueryResult.Error(GetProductsError.Unknown)
+            Result.Error(e)
         }
     }
-}
-
-sealed class GetProductsByQueryResult {
-
-    data class Success(
-        val products: List<Product>,
-    ) : GetProductsByQueryResult()
-
-    data class Error(val error: GetProductsError) : GetProductsByQueryResult()
-}
-
-sealed class GetProductsByQueryError {
-    object Unknown : GetProductsByQueryError()
 }
