@@ -36,9 +36,19 @@ class SearchViewModel @Inject constructor(
         .onEach { text -> eventHandler(Event.SearchTextChanged(text)) }
 
     override fun handleEvent(event: Event) = when (event) {
+        is Event.TriggerDismissError -> handleDismissErrorTriggered()
+        is Event.ErrorOKClicked -> handleErrorOKClicked()
         is Event.SearchTextChanged -> handleSearchTextChanged(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
+    }
+
+    private fun handleDismissErrorTriggered() {
+        updateState { it.copy(showError = false) }
+    }
+
+    private fun handleErrorOKClicked() {
+        updateState { it.copy(showError = false) }
     }
 
     private fun handleSearchTextChanged(event: Event.SearchTextChanged) {
@@ -96,7 +106,7 @@ class SearchViewModel @Inject constructor(
                 updateState { it.copy(showLoading = false, results = items) }
             }
             is Result.Error -> {
-                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
+                updateState { it.copy(showError = true, showLoading = false) }
             }
         }
     }
@@ -107,13 +117,15 @@ class SearchViewModel @Inject constructor(
     }
 
     data class State(
-        val showError: SingleEvent<Unit>? = null,
+        val showError: Boolean = false,
         val showLoading: Boolean = false,
         val searchText: String = "",
         val results: List<UiItem> = emptyList()
     )
 
     sealed class Event {
+        object TriggerDismissError : Event()
+        object ErrorOKClicked : Event()
         data class SearchTextChanged(val text: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()

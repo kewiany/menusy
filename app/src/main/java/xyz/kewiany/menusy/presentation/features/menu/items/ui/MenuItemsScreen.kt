@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.common.ui.ErrorDialog
 import xyz.kewiany.menusy.presentation.features.menu.items.CategoryTab
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
@@ -79,6 +80,12 @@ fun MenuItemsScreen(
             if (state.value.showLoading) {
                 ProgressBar()
             }
+        }
+        if (state.value.showError) {
+            ErrorDialog(
+                onDismissRequest = { eventHandler(Event.TriggerDismissError) },
+                onOKClicked = { eventHandler(Event.ErrorOKClicked) }
+            )
         }
     }
 }

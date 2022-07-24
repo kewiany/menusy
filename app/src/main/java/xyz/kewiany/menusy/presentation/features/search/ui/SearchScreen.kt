@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import xyz.kewiany.menusy.common.ui.ErrorDialog
 import xyz.kewiany.menusy.presentation.features.menu.items.ui.ProductItem
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
@@ -50,5 +51,11 @@ fun SearchScreen(
         if (state.value.showLoading) {
             ProgressBar()
         }
+    }
+    if (state.value.showError) {
+        ErrorDialog(
+            onDismissRequest = { eventHandler(Event.TriggerDismissError) },
+            onOKClicked = { eventHandler(Event.ErrorOKClicked) }
+        )
     }
 }

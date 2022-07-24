@@ -24,10 +24,20 @@ class MenuItemsViewModel @AssistedInject constructor(
 ) : BaseViewModel<State, Event>(State()) {
 
     override fun handleEvent(event: Event) = when (event) {
+        is Event.TriggerDismissError -> handleDismissErrorTriggered()
+        is Event.ErrorOKClicked -> handleErrorOKClicked()
         is Event.TriggerLoadMenu -> handleLoadMenuTriggered()
         is Event.TabClicked -> handleTabClicked(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
+    }
+
+    private fun handleDismissErrorTriggered() {
+        updateState { it.copy(showError = false) }
+    }
+
+    private fun handleErrorOKClicked() {
+        updateState { it.copy(showError = false) }
     }
 
     private fun handleLoadMenuTriggered() {
@@ -87,7 +97,7 @@ class MenuItemsViewModel @AssistedInject constructor(
                 updateState { it.copy(tabs = tabs, items = items, showLoading = false) }
             }
             is Result.Error -> {
-                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
+                updateState { it.copy(showError = true, showLoading = false) }
             }
         }
     }
@@ -98,10 +108,12 @@ class MenuItemsViewModel @AssistedInject constructor(
         val items: List<UiItem> = emptyList(),
         val currentCategory: Int = 0,
         val showLoading: Boolean = false,
-        val showError: SingleEvent<Unit>? = null
+        val showError: Boolean = false
     )
 
     sealed class Event {
+        object TriggerDismissError : Event()
+        object ErrorOKClicked : Event()
         object TriggerLoadMenu : Event()
         data class TabClicked(val id: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
