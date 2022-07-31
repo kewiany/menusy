@@ -49,7 +49,9 @@ class MainViewModel @Inject constructor(
 
     private fun handleCurrentRoute(event: Event.SetCurrentRoute) {
         val currentRoute = event.route
-        val showBackButton = currentRoute == NavigationDirections.search.destination
+        val showBackButton = currentRoute == "menuEntry/{menuId}"
+                || currentRoute == NavigationDirections.search.destination
+                || currentRoute == NavigationDirections.history.destination
         val showBottomBar = currentRoute != NavigationDirections.welcome.destination
                 && currentRoute != NavigationDirections.search.destination
         val showSearchButton = currentRoute != NavigationDirections.search.destination

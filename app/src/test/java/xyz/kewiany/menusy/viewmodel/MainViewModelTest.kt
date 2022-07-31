@@ -98,7 +98,7 @@ class MainViewModelTest : BaseTest() {
     }
 
     @Test
-    fun when_currentRouteHistory_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+    fun when_currentRouteHistory_then_showBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
         val viewModel = viewModel()
         viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.history.destination))
 
@@ -107,7 +107,7 @@ class MainViewModelTest : BaseTest() {
         val actualShowBottomBar = state.showBottomBar
         val actualShowSearchButton = state.showSearchButton
         val actualShowSearchBar = state.showSearchBar
-        assertFalse(actualShowBackButton)
+        assertTrue(actualShowBackButton)
         assertTrue(actualShowBottomBar)
         assertTrue(actualShowSearchButton)
         assertFalse(actualShowSearchBar)
@@ -120,7 +120,7 @@ class MainViewModelTest : BaseTest() {
     }
 
     @Test
-    fun when_currentRouteSearch_then_doNotShowBackButton_and_showBottomBar_and_showSearchButton_and_doNotShowSearchBar() {
+    fun when_currentRouteSearch_then_showBackButton_and_doNotShwBottomBar_and_doNotShowSearchButton_and_howSearchBar() {
         val viewModel = viewModel()
         viewModel.eventHandler(Event.SetCurrentRoute(NavigationDirections.search.destination))
 
