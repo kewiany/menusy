@@ -1,7 +1,4 @@
-import xyz.kewiany.menusy.domain.model.HistoryOrder
-import xyz.kewiany.menusy.domain.model.HistoryProduct
-import xyz.kewiany.menusy.domain.model.OrderedProduct
-import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.domain.model.*
 import kotlin.random.Random
 
 //package xyz.kewiany.menusy
@@ -87,4 +84,22 @@ fun createOrderedProduct(
 ) = OrderedProduct(
     quantity = quantity,
     product = product
+)
+
+fun createMenu(
+    id: String = "id",
+    name: String = "name",
+    categories: List<Category> = listOf(createCategory(), createCategory())
+) = Menu(
+    id = id,
+    name = name,
+    categories = categories
+)
+
+fun createCategory(
+    id: String = "id",
+    name: String = "name"
+) = Category(
+    id = id,
+    name = name
 )

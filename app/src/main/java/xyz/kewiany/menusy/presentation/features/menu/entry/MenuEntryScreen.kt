@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,9 @@ fun MenuEntryScreen(
     state: State<MenuEntryViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        eventHandler(Event.TriggerLoadMenus)
+    }
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

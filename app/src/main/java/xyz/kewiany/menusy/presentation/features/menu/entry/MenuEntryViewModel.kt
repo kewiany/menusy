@@ -2,7 +2,6 @@ package xyz.kewiany.menusy.presentation.features.menu.entry
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.navigation.NavigationDirections
@@ -23,29 +22,24 @@ class MenuEntryViewModel @Inject constructor(
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
-    init {
-        viewModelScope.launch(dispatcherProvider.main()) {
-            loadMenus()
-        }
-    }
-
     override fun handleEvent(event: Event) = when (event) {
+        is Event.TriggerLoadMenus -> handleLoadMenusTriggered()
         is Event.MenuClicked -> navigator.navigate(NavigationDirections.menuItems(event.id))
     }
 
+    private fun handleLoadMenusTriggered() {
+        viewModelScope.launch { loadMenus() }
+    }
+
     private suspend fun loadMenus() {
-        try {
-            updateState { it.copy(showLoading = true) }
-            when (val result = getMenusUseCase()) {
-                is Result.Success -> {
-                    updateState { it.copy(menus = result.data, showLoading = false) }
-                }
-                is Result.Error -> {
-                    updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
-                }
+        updateState { it.copy(showLoading = true) }
+        when (val result = getMenusUseCase()) {
+            is Result.Success -> {
+                updateState { it.copy(menus = result.data, showLoading = false) }
             }
-        } catch (e: CancellationException) {
-            println(e)
+            is Result.Error -> {
+                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
+            }
         }
     }
 
@@ -56,6 +50,7 @@ class MenuEntryViewModel @Inject constructor(
     )
 
     sealed class Event {
+        object TriggerLoadMenus : Event()
         data class MenuClicked(val id: String) : Event()
     }
 }
