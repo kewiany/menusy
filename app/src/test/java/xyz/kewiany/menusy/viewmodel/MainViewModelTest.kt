@@ -4,7 +4,9 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
@@ -15,6 +17,7 @@ import xyz.kewiany.menusy.core.MainViewModel
 import xyz.kewiany.menusy.core.MainViewModel.Event
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
+import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.SetSearchTextUseCase
 import kotlin.random.Random
 
@@ -23,6 +26,10 @@ class MainViewModelTest : BaseTest() {
     private val navigator = mockk<Navigator>(relaxed = true)
     private val clearSearchTextUseCase = mockk<ClearSearchTextUseCase> {
         justRun { this@mockk.invoke() }
+    }
+    private val searchTextFlow = MutableStateFlow("")
+    private val getSearchTextUseCase = mockk<GetSearchTextUseCase> {
+        every { this@mockk.invoke() } returns searchTextFlow
     }
     private val orderedProductsFlow = emptyFlow<Int>()
     private val getOrderedProductsCountUseCase = mockk<GetOrderedProductsCountUseCase> {
@@ -35,6 +42,7 @@ class MainViewModelTest : BaseTest() {
     private fun viewModel() = MainViewModel(
         navigator,
         clearSearchTextUseCase,
+        getSearchTextUseCase,
         getOrderedProductsCountUseCase,
         setSearchTextUseCase
     )
@@ -153,7 +161,8 @@ class MainViewModelTest : BaseTest() {
     fun when_searchTextChanged_then_setSearchText() = testScope.runTest {
         val expectedSearchText = Random.nextLong().toString()
         val viewModel = viewModel()
-        viewModel.eventHandler(Event.SearchTextChanged(expectedSearchText))
+        searchTextFlow.value = expectedSearchText
+        runCurrent()
 
         val actualSearchText = viewModel.state.value.searchText
         assertEquals(expectedSearchText, actualSearchText)
