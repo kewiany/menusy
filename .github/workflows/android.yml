@@ -16,3 +16,9 @@ jobs:
           java-version: 11
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest
+      - name: Run kover
+        run: ./gradlew koverReport
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v2
+        with:
+          files: build/reports/kover/report.xml
