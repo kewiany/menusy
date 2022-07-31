@@ -66,6 +66,7 @@ dependencies {
     implementation(Library.AndroidX.navigationCompose)
     implementation(Library.AndroidX.hilt)
     implementation(Library.AndroidX.hiltNavigation)
+    implementation(Library.AndroidX.splashScreen)
     implementation(Library.AndroidX.room)
     annotationProcessor(Library.AndroidX.roomCompiler)
     kapt(Library.AndroidX.roomCompiler)
