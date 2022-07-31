@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,9 @@ fun OrderScreen(
     state: State<OrderViewModel.State>,
     eventHandler: (Event) -> Unit,
 ) {
-//    val res by remember { mutableStateOf(state.value.results) }
+    LaunchedEffect(Unit) {
+        eventHandler(Event.TriggerLoadOrder)
+    }
     Column {
         Box(modifier = Modifier.weight(1f)) {
             val results = state.value.results

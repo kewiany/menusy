@@ -17,15 +17,12 @@ class OrderViewModel @Inject constructor(
     private val finishOrderUseCase: FinishOrderUseCase
 ) : BaseViewModel<State, Event>(State()) {
 
-    init {
-        load()
-    }
-
     override fun handleEvent(event: Event) = when (event) {
+        Event.TriggerLoadOrder -> handleLoadOrderTriggered()
         Event.PayButtonClicked -> handlePayButtonClicked()
     }
 
-    private fun load() {
+    private fun handleLoadOrderTriggered() {
         val orderedProducts = getOrderedProductsUseCase()
         updateState { it.copy(results = orderedProducts) }
     }
@@ -42,6 +39,7 @@ class OrderViewModel @Inject constructor(
     )
 
     sealed class Event {
+        object TriggerLoadOrder : Event()
         object PayButtonClicked : Event()
     }
 }
