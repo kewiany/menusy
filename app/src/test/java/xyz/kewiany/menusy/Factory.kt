@@ -1,3 +1,6 @@
+import xyz.kewiany.menusy.domain.model.HistoryOrder
+import xyz.kewiany.menusy.domain.model.HistoryProduct
+import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 import kotlin.random.Random
 
@@ -45,4 +48,43 @@ fun createProduct(
     price = price,
     menuId = menuId,
     categoryId = categoryId,
+)
+
+fun createHistoryOrder(
+    orderId: Long = Random.nextLong(),
+    date: String = "date",
+    totalPrice: Float = 10.0f,
+    totalQuantity: Int = 1,
+    products: List<HistoryProduct> = listOf(
+        createHistoryProduct(),
+        createHistoryProduct()
+    )
+) = HistoryOrder(
+    orderId = orderId,
+    date = date,
+    totalPrice = totalPrice,
+    totalQuantity = totalQuantity,
+    products = products
+)
+
+fun createHistoryProduct(
+    productId: Long = Random.nextLong(),
+    name: String = "name",
+    description: String = "description",
+    price: Float = 10.0f,
+    quantity: Int = 1
+) = HistoryProduct(
+    productId,
+    name,
+    description,
+    price,
+    quantity
+)
+
+fun createOrderedProduct(
+    quantity: Int = 0,
+    product: Product = createProduct()
+) = OrderedProduct(
+    quantity = quantity,
+    product = product
 )

@@ -3,7 +3,6 @@ package xyz.kewiany.menusy.data.repository
 import kotlinx.coroutines.flow.Flow
 import xyz.kewiany.menusy.data.source.local.InMemoryDataHolder
 import xyz.kewiany.menusy.data.source.local.OrderDataSource
-import xyz.kewiany.menusy.data.source.local.entity.OrderWithProducts
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.OrderRepository
@@ -19,10 +18,6 @@ class OrderRepositoryImpl @Inject constructor(
 
     override fun getOrderedProducts(): List<OrderedProduct> {
         return inMemoryDataHolder.orderedProducts.value
-    }
-
-    override suspend fun getOrdersFromHistory(): List<OrderWithProducts> {
-        return orderDataStore.getAll()
     }
 
     override suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>) {

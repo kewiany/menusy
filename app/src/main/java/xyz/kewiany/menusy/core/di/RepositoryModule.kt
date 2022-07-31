@@ -14,6 +14,10 @@ interface RepositoryModule {
 
     @Singleton
     @Binds
+    fun bindsHistoryRepository(impl: HistoryRepositoryImpl): HistoryRepository
+
+    @Singleton
+    @Binds
     fun bindsSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
     @Singleton
@@ -23,7 +27,6 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindsMenuRepository(impl: MenuRepositoryImpl): MenuRepository
-
 
     @Singleton
     @Binds

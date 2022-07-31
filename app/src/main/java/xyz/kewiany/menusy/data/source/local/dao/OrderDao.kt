@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import xyz.kewiany.menusy.data.source.local.entity.OrderEntity
-import xyz.kewiany.menusy.data.source.local.entity.OrderWithProducts
+import xyz.kewiany.menusy.data.source.local.entity.OrderWithProductsEntity
 
 @Dao
 interface OrderDao {
@@ -15,5 +15,5 @@ interface OrderDao {
 
     @Transaction
     @Query("SELECT * FROM `${OrderEntity.TABLE_NAME}`")
-    suspend fun getAll(): List<OrderWithProducts>
+    suspend fun getAll(): List<OrderWithProductsEntity>
 }

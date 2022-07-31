@@ -3,12 +3,12 @@ package xyz.kewiany.menusy.presentation.features.history
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.domain.model.HistoryProduct
+import xyz.kewiany.menusy.domain.model.asUIItem
 import xyz.kewiany.menusy.domain.usecase.order.GetOrdersFromHistoryUseCase
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
-import xyz.kewiany.menusy.presentation.utils.HistoryOrderUiItem
-import xyz.kewiany.menusy.presentation.utils.HistoryProductUiItem
 import xyz.kewiany.menusy.presentation.utils.HistoryUiItem
 import javax.inject.Inject
 
@@ -17,39 +17,20 @@ class HistoryViewModel @Inject constructor(
     private val getOrdersFromHistoryUseCase: GetOrdersFromHistoryUseCase
 ) : BaseViewModel<State, Event>(State()) {
 
-    init {
-        viewModelScope.launch { load() }
+    override fun handleEvent(event: Event) = when (event) {
+        Event.TriggerLoadHistory -> handleLoadHistoryTriggered()
     }
 
-    override fun handleEvent(event: Event) {
-
+    private fun handleLoadHistoryTriggered() {
+        viewModelScope.launch { load() }
     }
 
     private suspend fun load() {
         val items = mutableListOf<HistoryUiItem>()
         val orders = getOrdersFromHistoryUseCase()
-        orders.map { orderWithProducts ->
-
-            with(orderWithProducts.order) {
-                HistoryOrderUiItem(
-                    id = id.toString(),
-                    date = date,
-                    totalPrice = totalPrice.toString(),
-                    totalQuantity = totalQuantity.toString()
-                ).also(items::add)
-            }
-
-            orderWithProducts.products.forEach { productEntity ->
-                with(productEntity) {
-                    HistoryProductUiItem(
-                        id = id.toString(),
-                        name = name,
-                        description = description,
-                        price = price,
-                        quantity = quantity.toString()
-                    ).also(items::add)
-                }
-            }
+        orders.map { order ->
+            order.asUIItem().also(items::add)
+            order.products.map(HistoryProduct::asUIItem).also(items::addAll)
         }
         updateState { it.copy(items = items) }
     }
@@ -58,5 +39,7 @@ class HistoryViewModel @Inject constructor(
         val items: List<HistoryUiItem> = emptyList()
     )
 
-    object Event
+    sealed class Event {
+        object TriggerLoadHistory : Event()
+    }
 }

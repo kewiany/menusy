@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.data.source.local
 import xyz.kewiany.menusy.data.source.local.dao.OrderDao
 import xyz.kewiany.menusy.data.source.local.dao.ProductDao
 import xyz.kewiany.menusy.data.source.local.entity.OrderEntity
-import xyz.kewiany.menusy.data.source.local.entity.OrderWithProducts
+import xyz.kewiany.menusy.data.source.local.entity.OrderWithProductsEntity
 import xyz.kewiany.menusy.data.source.local.entity.ProductEntity
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import javax.inject.Inject
@@ -16,7 +16,7 @@ interface OrderDataSource {
         totalQuantity: Int
     )
 
-    suspend fun getAll(): List<OrderWithProducts>
+    suspend fun getAll(): List<OrderWithProductsEntity>
 }
 
 class OrderDataSourceImpl @Inject constructor(
@@ -50,7 +50,7 @@ class OrderDataSourceImpl @Inject constructor(
         productDao.insertAll(productEntities)
     }
 
-    override suspend fun getAll(): List<OrderWithProducts> {
+    override suspend fun getAll(): List<OrderWithProductsEntity> {
         return orderDao.getAll()
     }
 }
