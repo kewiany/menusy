@@ -1,4 +1,7 @@
 import xyz.kewiany.menusy.domain.model.*
+import xyz.kewiany.menusy.presentation.features.common.Content
+import xyz.kewiany.menusy.presentation.features.menu.items.CategoryTab
+import xyz.kewiany.menusy.presentation.utils.UiItem
 import kotlin.random.Random
 
 //package xyz.kewiany.menusy
@@ -102,4 +105,29 @@ fun createCategory(
 ) = Category(
     id = id,
     name = name
+)
+
+fun createCategoryTab(
+    id: String = "id",
+    name: String = "name"
+) = CategoryTab(
+    id = id,
+    name = name
+)
+
+fun createCategoryUIItem(
+    category: Category = createCategory()
+) = category.asUIItem()
+
+fun createProductUIItem(
+    product: Product = createProduct(),
+    quantity: Int = 0
+) = product.asUIItem(quantity)
+
+fun createContent(
+    tabs: List<CategoryTab> = listOf(createCategoryTab(), createCategoryTab()),
+    items: List<UiItem> = listOf(createProductUIItem(), createProductUIItem())
+) = Content(
+    tabs = tabs,
+    items = items
 )

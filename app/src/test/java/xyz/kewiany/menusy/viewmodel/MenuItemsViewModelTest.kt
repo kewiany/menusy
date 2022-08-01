@@ -1,119 +1,158 @@
-//package xyz.kewiany.menusy.viewmodel
-//
-//import app.cash.turbine.test
-//import io.mockk.*
-//import kotlinx.coroutines.test.runCurrent
-//import kotlinx.coroutines.test.runTest
-//import org.junit.Assert.assertEquals
-//import org.junit.Assert.assertNotNull
-//import org.junit.Test
-//import xyz.kewiany.menusy.BaseTest
-//import xyz.kewiany.menusy.createMenu
-//import xyz.kewiany.menusy.createProduct
-//import xyz.kewiany.menusy.data.repository.OrderRepository
-//import xyz.kewiany.menusy.domain.usecase.menu.GetMenuError
-//import xyz.kewiany.menusy.domain.usecase.menu.GetMenuResponse
-//import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
-//import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
-//import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
-//import xyz.kewiany.menusy.presentation.utils.ProductUiItem
-//import xyz.kewiany.menusy.ui.menu.items.findCategoryId
-//import xyz.kewiany.menusy.ui.menu.items.obtainUiItems
-//
-//class MenuItemsViewModelTest : BaseTest() {
-//
-//    private val menuId: String = "id"
-//    private val menu = createMenu()
-//    private val products = listOf(
-//        createProduct(),
-//        createProduct(),
-//        createProduct()
-//    )
-//    private val uiItems = obtainUiItems(menu.categories, products)
-//    private val orderRepository = mockk<OrderRepository> {
-//        justRun { updateOrder(any(), any()) }
-//    }
-//    private val getMenuUseCase = mockk<GetMenuUseCase> {
-//        coEvery { this@mockk.invoke(menuId) } returns GetMenuResponse.Success(menu, products)
-//    }
-//
-//    private fun viewModel() = MenuItemsViewModel(
-//        getMenuUseCase,
-//        orderRepository,
-//        menuId,
-//        testDispatcherProvider
-//    )
-//
-//    @Test
-//    fun given_loadMenu_then_getMenu() = testScope.runTest {
-//        viewModel().state.test {
-//            skipItems(1); awaitItem()
-//            coVerify { getMenuUseCase(menuId) }
-//        }
-//    }
-//
-//    @Test
-//    fun given_loadMenu_when_getMenuSuccessful_then_showProducts() = testScope.runTest {
-//        viewModel().state.test {
-//            skipItems(1)
-//            assertEquals(uiItems, awaitItem().items)
-//        }
-//    }
-//
-//    @Test
-//    fun given_loadMenu_when_getMenuSuccessful_then_showTabs() = testScope.runTest {
-//        viewModel().state.test {
-//            skipItems(1)
-//            val expected = (menu.categories?.map { it.name } ?: emptyList())
-//            assertEquals(expected, awaitItem().tabs)
-//        }
-//    }
-//
-//    @Test
-//    fun given_loadMenu_when_getMenuFails_then_showError() = testScope.runTest {
-//        coEvery { getMenuUseCase.invoke(menuId) } returns GetMenuResponse.Error(GetMenuError.Unknown)
-//        viewModel().state.test {
-//            skipItems(1)
-//            assertNotNull(awaitItem().showError)
-//        }
-//    }
-//
-//    @Test
-//    fun when_tabClicked_then_showTab_and_showCategory() = testScope.runTest {
-//        val index = 2
-//        val viewModel = viewModel()
-//        viewModel.state.test {
-//            skipItems(2)
-//            viewModel.eventHandler(Event.TabClicked(index))
-//            val state = awaitItem()
-//            assertEquals(index, state.currentTab)
-//            assertEquals(findCategoryId(uiItems, index.toString()), state.currentCategory)
-//        }
-//    }
-//
-//    @Test
-//    fun when_decreaseQuantityClicked_then_changeQuantity_and_updateOrder() = testScope.runTest {
-//        val viewModel = viewModel()
-//        val index = 0
-//        runCurrent()
-//        val product = viewModel.state.value.items[index]
-//
-//        viewModel.eventHandler(Event.DecreaseQuantityClicked(product.id))
-//
-//        assertEquals(-1, (viewModel.state.value.items[index] as ProductUiItem).quantity)
-//        verify { orderRepository.updateOrder(product.id, -1) }
-//    }
-//
-//    @Test
-//    fun when_increaseQuantityClicked_then_updateItems_and_updateOrder() = testScope.runTest {
-//        val viewModel = viewModel()
-//        val index = 0
-//        runCurrent()
-//        val product = viewModel.state.value.items[index]
-//
-//        viewModel.eventHandler(Event.IncreaseQuantityClicked(product.id))
-//
-//        assertEquals(1, (viewModel.state.value.items[index] as ProductUiItem).quantity)
-//        verify { orderRepository.updateOrder(product.id, 1) }
-//    }
-//}
+package xyz.kewiany.menusy.viewmodel
+
+import createCategory
+import createCategoryTab
+import createCategoryUIItem
+import createContent
+import createProduct
+import createProductUIItem
+import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.coVerify
+import io.mockk.mockk
+import kotlinx.coroutines.test.runCurrent
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.*
+import org.junit.Test
+import xyz.kewiany.menusy.BaseTest
+import xyz.kewiany.menusy.common.Result
+import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
+import xyz.kewiany.menusy.presentation.features.common.GetMenuContentFacade
+import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
+import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
+
+class MenuItemsViewModelTest : BaseTest() {
+
+    private val menuId: String = "id"
+    private val tab = createCategoryTab("id1")
+    private val category = createCategoryUIItem(createCategory("id1"))
+    private val product = createProductUIItem(
+        product = createProduct(categoryId = "id1"),
+        quantity = 2
+    )
+    private val content = createContent(
+        tabs = listOf(
+            tab,
+            createCategoryTab("id2")
+        ),
+        items = listOf(
+            category,
+            product,
+            createCategoryUIItem(createCategory("id2")),
+            createProductUIItem(createProduct(categoryId = "id2"))
+        )
+    )
+    private val getMenuContentFacade = mockk<GetMenuContentFacade> {
+        coEvery { getContent(menuId) } returns Result.Success(content)
+    }
+    private val updateOrderUseCase = mockk<UpdateOrderUseCase> {
+        coJustRun { this@mockk.invoke(any(), any()) }
+    }
+
+    private fun viewModel() = MenuItemsViewModel(
+        getMenuContentFacade,
+        updateOrderUseCase,
+        menuId,
+        testDispatcherProvider
+    )
+
+    @Test
+    fun when_loadMenuTriggered_then_setLoading_and_setItems() = testScope.runTest {
+        val expectedCount = content.tabs.count() + content.items.count()
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        runCurrent()
+
+        val state = viewModel.state.value
+        val actualCount = state.tabs.count() + state.items.count()
+        coVerify { getMenuContentFacade.getContent(any()) }
+        assertEquals(expectedCount, actualCount)
+        assertFalse(state.showLoading)
+    }
+
+    @Test
+    fun when_triggerLoadMenusError_then_setLoading_and_showError() = testScope.runTest {
+        coEvery { getMenuContentFacade.getContent(any()) } returns Result.Error()
+        val expectedCount = 0
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        runCurrent()
+
+        val state = viewModel.state.value
+        val actualCount = state.items.count()
+        coVerify { getMenuContentFacade.getContent(any()) }
+        assertEquals(expectedCount, actualCount)
+        assertFalse(state.showLoading)
+        assertNotNull(state.showError)
+    }
+
+    @Test
+    fun given_showError_when_errorOkClicked_then_hideError() = testScope.runTest {
+        coEvery { getMenuContentFacade.getContent(menuId) } returns Result.Error()
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        viewModel.eventHandler(Event.ErrorOKClicked)
+
+        val state = viewModel.state.value
+        assertFalse(state.showError)
+    }
+
+    @Test
+    fun given_showError_when_errorDismissedTriggered_then_hideError() = testScope.runTest {
+        coEvery { getMenuContentFacade.getContent(menuId) } returns Result.Error()
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        viewModel.eventHandler(Event.TriggerDismissError)
+
+        val state = viewModel.state.value
+        assertFalse(state.showError)
+    }
+
+    @Test
+    fun when_tabClicked_then_showTab_and_showCategory() = testScope.runTest {
+        val expectedTabIndex = 1
+        val expectedCategoryIndex = 2
+        val tab = content.tabs[expectedTabIndex]
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        runCurrent()
+        viewModel.eventHandler(Event.TabClicked(tab.id))
+
+        val state = viewModel.state.value
+        assertEquals(expectedTabIndex, state.currentTab)
+        assertEquals(expectedCategoryIndex, state.currentCategory)
+    }
+
+    @Test
+    fun when_decreaseQuantityClicked_then_updateOrder_and_setItems() = testScope.runTest {
+        val id = product.id
+        val quantity = product.quantity
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        runCurrent()
+        viewModel.eventHandler(Event.DecreaseQuantityClicked(product.id))
+        runCurrent()
+
+        coVerify { updateOrderUseCase(quantity - 1, id) }
+    }
+
+    @Test
+    fun when_increaseQuantityClicked_then_updateOrder_and_setItems() = testScope.runTest {
+        val id = product.id
+        val quantity = product.quantity
+        val viewModel = viewModel()
+
+        viewModel.eventHandler(Event.TriggerLoadMenu)
+        runCurrent()
+        viewModel.eventHandler(Event.IncreaseQuantityClicked(id))
+        runCurrent()
+
+        coVerify { updateOrderUseCase(quantity + 1, id) }
+    }
+}
