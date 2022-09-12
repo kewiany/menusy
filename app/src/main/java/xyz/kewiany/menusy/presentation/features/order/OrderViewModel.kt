@@ -26,8 +26,7 @@ class OrderViewModel @Inject constructor(
     }
 
     private fun handleLoadOrderTriggered() {
-        val orderedProducts = getOrderedProductsUseCase()
-        updateState { it.copy(results = orderedProducts) }
+        loadOrderedProducts()
     }
 
     private fun handlePayButtonClicked() {
@@ -40,13 +39,21 @@ class OrderViewModel @Inject constructor(
     private fun handleDeleteProductClicked(event: Event.DeleteProductClicked) {
         viewModelScope.launch {
             deleteOrderedProductUseCase(event.productId)
-            val orderedProducts = getOrderedProductsUseCase()
-            updateState { it.copy(results = orderedProducts) }
+            loadOrderedProducts()
         }
     }
 
+    private fun loadOrderedProducts() {
+        val orderedProducts = getOrderedProductsUseCase()
+        val total = orderedProducts.sumOf { (it.quantity * it.product.price).toDouble() }.toString()
+        val quantity = orderedProducts.sumOf { it.quantity }.toString()
+        updateState { it.copy(results = orderedProducts, quantity = quantity, total = total) }
+    }
+
     data class State(
-        val results: List<OrderedProduct> = emptyList()
+        val results: List<OrderedProduct> = emptyList(),
+        val quantity: String? = null,
+        val total: String? = null
     )
 
     sealed class Event {

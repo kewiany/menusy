@@ -2,6 +2,7 @@ package xyz.kewiany.menusy.presentation.features.order
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -21,8 +22,8 @@ fun OrderScreen(
         eventHandler(Event.TriggerLoadOrder)
     }
     Column {
+        val items = state.value.results
         Box(modifier = Modifier.weight(1f)) {
-            val items = state.value.results
             if (items.isNotEmpty()) {
                 LazyColumn {
                     items(items) { item ->
@@ -42,8 +43,20 @@ fun OrderScreen(
                 Text(text = "No order")
             }
         }
-        Button(onClick = { eventHandler(Event.PayButtonClicked) }) {
-            Text("Pay")
+        if (items.isNotEmpty()) {
+            Row {
+                Text(
+                    text = "Total (${state.value.quantity.toString()})",
+                    modifier = Modifier.weight(0.8f)
+                )
+                Text(
+                    text = state.value.total.toString(),
+                    modifier = Modifier.weight(0.2f)
+                )
+            }
+            Button(onClick = { eventHandler(Event.PayButtonClicked) }) {
+                Text("Pay")
+            }
         }
     }
 }
