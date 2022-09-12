@@ -9,6 +9,18 @@ import javax.inject.Inject
 
 class MenuService @Inject constructor() : MenuApi {
 
+    override suspend fun getMenus(placeId: String): MenusResponse? {
+        return try {
+            val data = listOf(
+                Menu("m0", "menu of the day"),
+                Menu("m1", "main")
+            )
+            MenusResponse(data)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     override suspend fun getMenu(menuId: String): MenuResponse? {
         return try {
             val data = if (menuId == "m0") {
@@ -30,18 +42,6 @@ class MenuService @Inject constructor() : MenuApi {
                 )
             }
             MenuResponse(data)
-        } catch (e: Exception) {
-            throw e
-        }
-    }
-
-    override suspend fun getMenus(): MenusResponse? {
-        return try {
-            val data = listOf(
-                Menu("m0", "menu of the day"),
-                Menu("m1", "main")
-            )
-            MenusResponse(data)
         } catch (e: Exception) {
             throw e
         }

@@ -35,4 +35,8 @@ interface RepositoryModule {
     @Singleton
     @Binds
     fun bindsSearchRepository(impl: SearchRepositoryImpl): SearchRepository
+
+    @Singleton
+    @Binds
+    fun bindsPlaceRepository(impl: PlaceRepositoryImpl): PlaceRepository
 }

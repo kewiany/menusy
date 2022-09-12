@@ -4,15 +4,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.domain.model.Menu
-import xyz.kewiany.menusy.domain.repository.MenuRepository
+import xyz.kewiany.menusy.domain.model.Place
+import xyz.kewiany.menusy.domain.repository.PlaceRepository
 import javax.inject.Inject
 
-class GetMenusUseCase @Inject constructor(private val menuRepository: MenuRepository) {
+class GetPlaceUseCase @Inject constructor(private val placeRepository: PlaceRepository) {
 
-    suspend operator fun invoke(placeId: String): Result<List<Menu>> = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(id: String): Result<Place> = withContext(Dispatchers.IO) {
         try {
-            val data = menuRepository.getMenus(placeId)
+            val data = placeRepository.getPlace(id)
             delay(1500)
             Result.Success(data)
         } catch (e: Exception) {

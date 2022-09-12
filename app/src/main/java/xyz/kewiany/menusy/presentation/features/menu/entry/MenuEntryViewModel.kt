@@ -9,6 +9,7 @@ import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenusUseCase
+import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
@@ -18,9 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuEntryViewModel @Inject constructor(
     private val navigator: Navigator,
+    private val getPlaceUseCase: GetPlaceUseCase,
     private val getMenusUseCase: GetMenusUseCase,
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
+
+    private val placeId = "1"
 
     override fun handleEvent(event: Event) = when (event) {
         is Event.TriggerLoadMenus -> handleLoadMenusTriggered()
@@ -28,12 +32,25 @@ class MenuEntryViewModel @Inject constructor(
     }
 
     private fun handleLoadMenusTriggered() {
-        viewModelScope.launch { loadMenus() }
+        viewModelScope.launch { loadPlace(placeId) }
+        viewModelScope.launch { loadMenus(placeId) }
     }
 
-    private suspend fun loadMenus() {
+    private suspend fun loadPlace(placeId: String) {
         updateState { it.copy(showLoading = true) }
-        when (val result = getMenusUseCase()) {
+        when (val result = getPlaceUseCase(placeId)) {
+            is Result.Success -> {
+                println("place ${result.data}")
+            }
+            is Result.Error -> {
+                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
+            }
+        }
+    }
+
+    private suspend fun loadMenus(placeId: String) {
+        updateState { it.copy(showLoading = true) }
+        when (val result = getMenusUseCase(placeId)) {
             is Result.Success -> {
                 updateState { it.copy(menus = result.data, showLoading = false) }
             }

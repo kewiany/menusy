@@ -89,6 +89,16 @@ fun createOrderedProduct(
     product = product
 )
 
+fun createPlace(
+    id: String = "id",
+    name: String = "name",
+    address: String = "address"
+) = Place(
+    id = id,
+    name = name,
+    address = address
+)
+
 fun createMenu(
     id: String = "id",
     name: String = "name",
