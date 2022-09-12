@@ -22,17 +22,8 @@ fun WelcomeScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val showProgress = state.value.showProgress
-            Text(
-                text = showProgress.toString()
-            )
             Button(onClick = {
-                eventHandler(Event.ShowProgress(!showProgress))
-            }) {
-                Text(text = "Change")
-            }
-            Button(onClick = {
-                eventHandler(Event.FoodButtonClicked)
+                eventHandler(Event.MenuButtonClicked)
             }) {
                 Text(text = "Menu")
             }
