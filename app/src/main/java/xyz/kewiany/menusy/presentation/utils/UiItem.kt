@@ -44,11 +44,12 @@ private fun matchProductsWithOrderedProducts(
     orderedProducts: List<OrderedProduct>
 ): List<ProductUiItem> {
     return products.map { product ->
-        val matchedProductWithOrderedProduct = orderedProducts.firstOrNull { orderedProduct ->
-            orderedProduct.product.id == product.id
-        }
+        val matchedProductWithOrderedProduct = orderedProducts
+            .firstOrNull { orderedProduct -> orderedProduct.product.id == product.id }
+
         if (matchedProductWithOrderedProduct != null) {
             val orderedQuantity = matchedProductWithOrderedProduct.quantity
+            matchedProductWithOrderedProduct?.product
             product.asUIItem(orderedQuantity)
         } else {
             product.asUIItem()

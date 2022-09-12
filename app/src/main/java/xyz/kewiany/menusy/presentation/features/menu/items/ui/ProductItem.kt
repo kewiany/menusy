@@ -1,6 +1,7 @@
 package xyz.kewiany.menusy.presentation.features.menu.items.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,9 @@ fun ProductItem(
     name: String,
     description: String,
     price: String,
+    ordered: Boolean,
     quantity: Int,
+    onProductClicked: (String) -> Unit,
     onDecreaseQuantityClicked: (String) -> Unit,
     onIncreaseQuantityClicked: (String) -> Unit
 ) {
@@ -27,6 +30,7 @@ fun ProductItem(
         modifier = Modifier
             .background(Color.Green)
             .padding(10.dp)
+            .clickable { onProductClicked(id) }
     ) {
         Row {
             Text(
@@ -47,27 +51,29 @@ fun ProductItem(
                 text = description
             )
         }
-        Row {
-            Button(
-                modifier = Modifier.weight(0.2f),
-                onClick = {
-                    onDecreaseQuantityClicked(id)
+        if (ordered) {
+            Row {
+                Button(
+                    modifier = Modifier.weight(0.2f),
+                    onClick = {
+                        onDecreaseQuantityClicked(id)
+                    }
+                ) {
+                    Text(text = "-")
                 }
-            ) {
-                Text(text = "-")
-            }
-            Text(
-                text = quantity.toString(),
-                modifier = Modifier.weight(0.6f),
-                textAlign = TextAlign.Center
-            )
-            Button(
-                modifier = Modifier.weight(0.2f),
-                onClick = {
-                    onIncreaseQuantityClicked(id)
+                Text(
+                    text = quantity.toString(),
+                    modifier = Modifier.weight(0.6f),
+                    textAlign = TextAlign.Center
+                )
+                Button(
+                    modifier = Modifier.weight(0.2f),
+                    onClick = {
+                        onIncreaseQuantityClicked(id)
+                    }
+                ) {
+                    Text(text = "+")
                 }
-            ) {
-                Text(text = "+")
             }
         }
     }
@@ -81,7 +87,11 @@ fun ProductItemPreview() {
         name = "name",
         description = "description",
         price = "price",
+        ordered = false,
         quantity = 0,
+        onProductClicked = {
+
+        },
         onIncreaseQuantityClicked = {
 
         },

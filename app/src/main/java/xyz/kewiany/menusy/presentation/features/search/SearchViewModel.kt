@@ -62,7 +62,7 @@ class SearchViewModel @Inject constructor(
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
         val productId = event.productId
-        val items = try {
+        val (quantity, items) = try {
             ProductUItemModifier.decreaseQuantity(state.value.results, productId)
         } catch (e: ChangeQuantityException) {
             println(e)
@@ -70,12 +70,12 @@ class SearchViewModel @Inject constructor(
         }
         updateState { it.copy(results = items) }
 
-        viewModelScope.launch { updateOrder(items, productId) }
+        viewModelScope.launch { updateOrder(quantity, productId) }
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
         val productId = event.productId
-        val items = try {
+        val (quantity, items) = try {
             ProductUItemModifier.increaseQuantity(state.value.results, productId)
         } catch (e: ChangeQuantityException) {
             println(e)
@@ -83,13 +83,12 @@ class SearchViewModel @Inject constructor(
         }
         updateState { it.copy(results = items) }
 
-        viewModelScope.launch { updateOrder(items, productId) }
+        viewModelScope.launch { updateOrder(quantity, productId) }
     }
 
-    private suspend fun updateOrder(items: List<UiItem>, productId: String) {
+    private suspend fun updateOrder(quantity: Int, productId: String) {
         try {
-            val productQuantity = (items.first { it.id == productId } as ProductUiItem).quantity
-            updateOrderUseCase(productQuantity, productId)
+            updateOrderUseCase(quantity, productId)
         } catch (e: CancellationException) {
             println(e)
         }

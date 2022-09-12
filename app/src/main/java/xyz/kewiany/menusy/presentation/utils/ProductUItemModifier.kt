@@ -2,20 +2,45 @@ package xyz.kewiany.menusy.presentation.utils
 
 object ProductUItemModifier {
 
-    fun decreaseQuantity(items: List<UiItem>, productId: String): List<UiItem> {
-        val index = items.indexOfFirst { it.id == productId }
-        val product = items[index] as ProductUiItem
-        val quantity = product.quantity - 1
+    fun select(items: List<UiItem>, productId: String): Pair<Int, MutableList<UiItem>> {
+        val (index, product) = findProductById(items, productId)
+        val ordered = !product.ordered
+        val quantity = if (ordered) 1 else 0
 
-        return changeQuantity(items, index, product, quantity)
+        val newProduct = ProductUiItem(
+            id = product.id,
+            name = product.name,
+            description = product.description,
+            price = product.price,
+            ordered = ordered,
+            quantity = quantity
+        )
+        val itemsWithSelectedProduct = items.toMutableList().apply {
+            remove(product)
+            add(index, newProduct)
+        }
+        return quantity to itemsWithSelectedProduct
     }
 
-    fun increaseQuantity(items: List<UiItem>, productId: String): List<UiItem> {
-        val index = items.indexOfFirst { it.id == productId }
-        val product = items[index] as ProductUiItem
+    fun decreaseQuantity(items: List<UiItem>, productId: String): Pair<Int, List<UiItem>> {
+        val (index, product) = findProductById(items, productId)
+        val quantity = product.quantity - 1
+
+        val itemsWithUpdatedQuantity = changeQuantity(items, index, product, quantity)
+        return quantity to itemsWithUpdatedQuantity
+    }
+
+    fun increaseQuantity(items: List<UiItem>, productId: String): Pair<Int, List<UiItem>> {
+        val (index, product) = findProductById(items, productId)
         val quantity = product.quantity + 1
 
-        return changeQuantity(items, index, product, quantity)
+        val itemsWithUpdatedQuantity = changeQuantity(items, index, product, quantity)
+        return quantity to itemsWithUpdatedQuantity
+    }
+
+    private fun findProductById(items: List<UiItem>, productId: String): Pair<Int, ProductUiItem> {
+        val index = items.indexOfFirst { it.id == productId }
+        return index to items[index] as ProductUiItem
     }
 
     private fun changeQuantity(
@@ -30,6 +55,7 @@ object ProductUItemModifier {
             name = product.name,
             description = product.description,
             price = product.price,
+            ordered = if (quantity == 0) false else product.ordered,
             quantity = quantity
         )
         return items.toMutableList().apply {

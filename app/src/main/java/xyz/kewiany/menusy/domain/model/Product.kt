@@ -16,5 +16,6 @@ fun Product.asUIItem(quantity: Int = 0) = ProductUiItem(
     name = name,
     description = description,
     price = price.toString(),
+    ordered = quantity != 0,
     quantity = quantity
 )

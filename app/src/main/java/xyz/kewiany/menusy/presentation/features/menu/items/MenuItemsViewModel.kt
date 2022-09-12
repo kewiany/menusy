@@ -28,6 +28,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         is Event.ErrorOKClicked -> handleErrorOKClicked()
         is Event.TriggerLoadMenu -> handleLoadMenuTriggered()
         is Event.TabClicked -> handleTabClicked(event)
+        is Event.ProductClicked -> handleProductClicked(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
     }
@@ -53,9 +54,22 @@ class MenuItemsViewModel @AssistedInject constructor(
         updateState { it.copy(currentTab = indexOnTabs, currentCategory = indexOnList) }
     }
 
+    private fun handleProductClicked(event: Event.ProductClicked) {
+        val productId = event.id
+        val (quantity, items) = try {
+            ProductUItemModifier.select(state.value.items, productId)
+        } catch (e: ChangeQuantityException) {
+            println(e)
+            return
+        }
+        updateState { it.copy(items = items) }
+
+        viewModelScope.launch { updateOrder(quantity, productId) }
+    }
+
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
         val productId = event.productId
-        val items = try {
+        val (quantity, items) = try {
             ProductUItemModifier.decreaseQuantity(state.value.items, productId)
         } catch (e: ChangeQuantityException) {
             println(e)
@@ -63,12 +77,12 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
         updateState { it.copy(items = items) }
 
-        viewModelScope.launch { updateOrder(items, productId) }
+        viewModelScope.launch { updateOrder(quantity, productId) }
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
         val productId = event.productId
-        val items = try {
+        val (quantity, items) = try {
             ProductUItemModifier.increaseQuantity(state.value.items, productId)
         } catch (e: ChangeQuantityException) {
             println(e)
@@ -76,13 +90,12 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
         updateState { it.copy(items = items) }
 
-        viewModelScope.launch { updateOrder(items, productId) }
+        viewModelScope.launch { updateOrder(quantity, productId) }
     }
 
-    private suspend fun updateOrder(items: List<UiItem>, productId: String) {
+    private suspend fun updateOrder(quantity: Int, productId: String) {
         try {
-            val productQuantity = (items.first { it.id == productId } as ProductUiItem).quantity
-            updateOrderUseCase(productQuantity, productId)
+            updateOrderUseCase(quantity, productId)
         } catch (e: CancellationException) {
             println(e)
         }
@@ -116,6 +129,7 @@ class MenuItemsViewModel @AssistedInject constructor(
         object ErrorOKClicked : Event()
         object TriggerLoadMenu : Event()
         data class TabClicked(val id: String) : Event()
+        data class ProductClicked(val id: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()
     }

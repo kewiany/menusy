@@ -63,17 +63,17 @@ fun MenuItemsScreen(
                 items(state.value.items) { item ->
                     when (item) {
                         is CategoryUiItem -> CategoryItem(item.id)
-                        is ProductUiItem -> {
-                            ProductItem(
-                                item.id,
-                                item.name,
-                                item.description,
-                                item.price,
-                                item.quantity,
-                                { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
-                                { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
-                            )
-                        }
+                        is ProductUiItem -> ProductItem(
+                            item.id,
+                            item.name,
+                            item.description,
+                            item.price,
+                            item.ordered,
+                            item.quantity,
+                            { id -> eventHandler(Event.ProductClicked(id)) },
+                            { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
+                            { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
+                        )
                     }
                 }
             }
