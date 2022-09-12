@@ -22,6 +22,10 @@ object ProductUItemModifier {
         return quantity to itemsWithSelectedProduct
     }
 
+    fun delete(items: List<UiItem>, productId: String) {
+
+    }
+
     fun decreaseQuantity(items: List<UiItem>, productId: String): Pair<Int, List<UiItem>> {
         val (index, product) = findProductById(items, productId)
         val quantity = product.quantity - 1

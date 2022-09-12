@@ -9,5 +9,5 @@ interface OrderRepository {
     fun getOrderedProducts(): List<OrderedProduct>
     suspend fun updateOrder(quantity: Int, product: Product)
     suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>)
-    suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>)
+    suspend fun deleteOrder(productId: String)
 }

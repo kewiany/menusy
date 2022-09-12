@@ -8,6 +8,5 @@ class FinishOrderUseCase @Inject constructor(private val orderRepository: OrderR
     suspend operator fun invoke() {
         val orderedProducts = orderRepository.getOrderedProducts()
         orderRepository.saveOrderToHistory(orderedProducts)
-        orderRepository.updateOrderedProducts(emptyList())
     }
 }

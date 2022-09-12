@@ -1,9 +1,7 @@
 package xyz.kewiany.menusy.presentation.features.order
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -12,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 
 @Composable
@@ -26,17 +22,20 @@ fun OrderScreen(
     }
     Column {
         Box(modifier = Modifier.weight(1f)) {
-            val results = state.value.results
-            if (results.isNotEmpty()) {
+            val items = state.value.results
+            if (items.isNotEmpty()) {
                 LazyColumn {
-                    items(results) { item ->
-                        Column(
-                            modifier = Modifier
-                                .background(Color.Yellow)
-                                .padding(10.dp)
-                        ) {
-                            Text(text = "${item.product.id} ${item.quantity}")
-                        }
+                    items(items) { item ->
+                        val productId = item.product.id
+                        OrderItem(
+                            productId = productId,
+                            name = item.product.name,
+                            price = item.product.price.toString(),
+                            quantity = item.quantity,
+                            onDeleteClicked = {
+                                eventHandler(Event.DeleteProductClicked(productId))
+                            }
+                        )
                     }
                 }
             } else {

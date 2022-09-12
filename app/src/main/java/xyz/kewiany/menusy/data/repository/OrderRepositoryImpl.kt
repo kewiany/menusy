@@ -29,6 +29,7 @@ class OrderRepositoryImpl @Inject constructor(
             totalPrice = totalPrice,
             totalQuantity = totalQuantity
         )
+        inMemoryDataHolder.updateOrderedProducts(emptyList())
     }
 
     private fun calculateTotalPrice(products: List<OrderedProduct>): Float {
@@ -57,10 +58,13 @@ class OrderRepositoryImpl @Inject constructor(
             orderedProducts.add(OrderedProduct(quantity, product))
         }
 
-        updateOrderedProducts(orderedProducts)
+        inMemoryDataHolder.updateOrderedProducts(orderedProducts)
     }
 
-    override suspend fun updateOrderedProducts(orderedProducts: List<OrderedProduct>) {
+    override suspend fun deleteOrder(productId: String) {
+        val orderedProducts = getOrderedProducts().toMutableList()
+        val index = orderedProducts.indexOfFirst { it.product.id == productId }
+        orderedProducts.removeAt(index)
         inMemoryDataHolder.updateOrderedProducts(orderedProducts)
     }
 }
