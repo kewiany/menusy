@@ -40,7 +40,8 @@ class MenuEntryViewModel @Inject constructor(
         updateState { it.copy(showLoading = true) }
         when (val result = getPlaceUseCase(placeId)) {
             is Result.Success -> {
-                println("place ${result.data}")
+                val place = result.data
+                updateState { it.copy(name = place.name, address = place.address) }
             }
             is Result.Error -> {
                 updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
@@ -61,6 +62,8 @@ class MenuEntryViewModel @Inject constructor(
     }
 
     data class State(
+        val name: String? = null,
+        val address: String? = null,
         val menus: List<Menu> = emptyList(),
         val showLoading: Boolean = false,
         val showError: SingleEvent<Unit>? = null
