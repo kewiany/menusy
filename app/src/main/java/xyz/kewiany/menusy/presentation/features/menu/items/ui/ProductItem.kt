@@ -2,6 +2,7 @@ package xyz.kewiany.menusy.presentation.features.menu.items.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -26,53 +27,57 @@ fun ProductItem(
     onDecreaseQuantityClicked: (String) -> Unit,
     onIncreaseQuantityClicked: (String) -> Unit
 ) {
-    Column(
+    Box(
         modifier = Modifier
-            .background(Color.Green)
-            .padding(10.dp)
             .clickable { onProductClicked(id) }
     ) {
-        Row {
-            Text(
-                text = id,
-                modifier = Modifier.weight(0.2f)
-            )
-            Text(
-                text = name,
-                modifier = Modifier.weight(0.6f)
-            )
-            Text(
-                text = price,
-                modifier = Modifier.weight(0.2f)
-            )
-        }
-        Row {
-            Text(
-                text = description
-            )
-        }
-        if (ordered) {
+        Column(
+            modifier = Modifier
+                .background(if (ordered) Color.Green else Color.White)
+                .padding(10.dp)
+        ) {
             Row {
-                Button(
-                    modifier = Modifier.weight(0.2f),
-                    onClick = {
-                        onDecreaseQuantityClicked(id)
-                    }
-                ) {
-                    Text(text = "-")
-                }
                 Text(
-                    text = quantity.toString(),
-                    modifier = Modifier.weight(0.6f),
-                    textAlign = TextAlign.Center
+                    text = id,
+                    modifier = Modifier.weight(0.2f)
                 )
-                Button(
-                    modifier = Modifier.weight(0.2f),
-                    onClick = {
-                        onIncreaseQuantityClicked(id)
+                Text(
+                    text = name,
+                    modifier = Modifier.weight(0.6f)
+                )
+                Text(
+                    text = price,
+                    modifier = Modifier.weight(0.2f)
+                )
+            }
+            Row {
+                Text(
+                    text = description
+                )
+            }
+            if (ordered) {
+                Row {
+                    Button(
+                        modifier = Modifier.weight(0.2f),
+                        onClick = {
+                            onDecreaseQuantityClicked(id)
+                        }
+                    ) {
+                        Text(text = "-")
                     }
-                ) {
-                    Text(text = "+")
+                    Text(
+                        text = quantity.toString(),
+                        modifier = Modifier.weight(0.6f),
+                        textAlign = TextAlign.Center
+                    )
+                    Button(
+                        modifier = Modifier.weight(0.2f),
+                        onClick = {
+                            onIncreaseQuantityClicked(id)
+                        }
+                    ) {
+                        Text(text = "+")
+                    }
                 }
             }
         }

@@ -39,6 +39,7 @@ class SearchViewModel @Inject constructor(
         is Event.TriggerDismissError -> handleDismissErrorTriggered()
         is Event.ErrorOKClicked -> handleErrorOKClicked()
         is Event.SearchTextChanged -> handleSearchTextChanged(event)
+        is Event.ProductClicked -> handleProductClicked(event)
         is Event.DecreaseQuantityClicked -> handleDecreaseQuantity(event)
         is Event.IncreaseQuantityClicked -> handleIncreaseQuantity(event)
     }
@@ -58,6 +59,19 @@ class SearchViewModel @Inject constructor(
             return
         }
         viewModelScope.launch { searchProducts(text) }
+    }
+
+    private fun handleProductClicked(event: Event.ProductClicked) {
+        val productId = event.id
+        val (quantity, items) = try {
+            ProductUItemModifier.select(state.value.results, productId)
+        } catch (e: ChangeQuantityException) {
+            println(e)
+            return
+        }
+        updateState { it.copy(results = items) }
+
+        viewModelScope.launch { updateOrder(quantity, productId) }
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
@@ -126,6 +140,7 @@ class SearchViewModel @Inject constructor(
         object TriggerDismissError : Event()
         object ErrorOKClicked : Event()
         data class SearchTextChanged(val text: String) : Event()
+        data class ProductClicked(val id: String) : Event()
         data class IncreaseQuantityClicked(val productId: String) : Event()
         data class DecreaseQuantityClicked(val productId: String) : Event()
     }
