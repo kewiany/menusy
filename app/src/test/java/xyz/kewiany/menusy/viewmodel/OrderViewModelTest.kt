@@ -10,8 +10,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.domain.usecase.order.FinishOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
+import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 
@@ -24,13 +24,13 @@ class OrderViewModelTest : BaseTest() {
     private val getOrderedProductsUseCase = mockk<GetOrderedProductsUseCase> {
         coEvery { this@mockk.invoke() } returns orderedProducts
     }
-    private val finishOrderUseCase = mockk<FinishOrderUseCase> {
+    private val purchaseUseCase = mockk<PurchaseUseCase> {
         coJustRun { this@mockk.invoke() }
     }
 
     private fun viewModel() = OrderViewModel(
         getOrderedProductsUseCase,
-        finishOrderUseCase
+        purchaseUseCase
     )
 
     @Test
@@ -57,6 +57,6 @@ class OrderViewModelTest : BaseTest() {
 
         val actualCount = state.results.count()
         assertEquals(expectedCount, actualCount)
-        coVerify { finishOrderUseCase.invoke() }
+        coVerify { purchaseUseCase.invoke() }
     }
 }

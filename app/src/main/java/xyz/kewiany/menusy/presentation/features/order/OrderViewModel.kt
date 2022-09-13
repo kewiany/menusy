@@ -5,8 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.usecase.order.DeleteOrderedProductUseCase
-import xyz.kewiany.menusy.domain.usecase.order.FinishOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
+import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class OrderViewModel @Inject constructor(
     private val getOrderedProductsUseCase: GetOrderedProductsUseCase,
     private val deleteOrderedProductUseCase: DeleteOrderedProductUseCase,
-    private val finishOrderUseCase: FinishOrderUseCase
+    private val purchaseUseCase: PurchaseUseCase
 ) : BaseViewModel<State, Event>(State()) {
 
     override fun handleEvent(event: Event) = when (event) {
@@ -31,7 +31,7 @@ class OrderViewModel @Inject constructor(
 
     private fun handlePayButtonClicked() {
         viewModelScope.launch {
-            finishOrderUseCase()
+            purchaseUseCase()
             updateState { it.copy(results = emptyList()) }
         }
     }
