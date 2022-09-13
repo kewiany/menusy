@@ -6,16 +6,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.presentation.utils.HistoryOrderUiItem
 import xyz.kewiany.menusy.presentation.utils.HistoryProductUiItem
 
 @Composable
 fun HistoryScreen(
     state: State<HistoryViewModel.State>,
-    eventHandler: (HistoryViewModel.Event) -> Unit,
+    eventHandler: (Event) -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        eventHandler(Event.TriggerLoadHistory)
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         val items = state.value.items
         if (items.isNotEmpty()) {
