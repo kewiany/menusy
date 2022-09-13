@@ -8,13 +8,15 @@ import xyz.kewiany.menusy.domain.model.Place
 import xyz.kewiany.menusy.domain.repository.PlaceRepository
 import javax.inject.Inject
 
-class GetPlaceUseCase @Inject constructor(private val placeRepository: PlaceRepository) {
+class GetPlaceUseCase @Inject constructor(
+    private val placeRepository: PlaceRepository
+) {
 
     suspend operator fun invoke(id: String): Result<Place> = withContext(Dispatchers.IO) {
         try {
-            val data = placeRepository.getPlace(id)
+            val place = placeRepository.getPlace(id)
             delay(1500)
-            Result.Success(data)
+            Result.Success(place)
         } catch (e: Exception) {
             Result.Error(e)
         }

@@ -10,6 +10,7 @@ import java.math.BigDecimal
 import javax.inject.Inject
 
 interface OrderDataSource {
+
     suspend fun insert(
         orderedProducts: List<OrderedProduct>,
         date: String,

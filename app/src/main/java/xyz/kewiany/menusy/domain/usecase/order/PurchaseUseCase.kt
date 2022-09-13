@@ -8,14 +8,8 @@ class PurchaseUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke() {
-        val data = orderRepository.getOrderedProducts()
         orderRepository.saveOrderToHistory(
-            products = data.products,
             date = "date",
-            totalQuantity = data.totalQuantity,
-            totalPrice = data.totalPrice,
-            placeName = "place name",
-            placeAddress = "place address"
         )
     }
 }

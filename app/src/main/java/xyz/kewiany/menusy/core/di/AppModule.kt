@@ -7,6 +7,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -46,6 +48,12 @@ object AppModule {
         return database.build()
     }
 
+    @Singleton
+    @Provides
+    fun provideGson(): Gson = GsonBuilder()
+        .serializeNulls()
+        .create()
+
     private const val PREFERENCES = "preferences"
 
     @InstallIn(SingletonComponent::class)
@@ -54,6 +62,10 @@ object AppModule {
         @Singleton
         @Binds
         fun bindsDispatcherProvider(dispatcherProvider: DefaultDispatcherProvider): DispatcherProvider
+
+        @Singleton
+        @Binds
+        fun bindsCacheDataStore(impl: CacheDataStoreImpl): CacheDataStore
 
         @Singleton
         @Binds

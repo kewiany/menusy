@@ -1,7 +1,9 @@
 package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import xyz.kewiany.menusy.common.OrderedProductsData
+import xyz.kewiany.menusy.data.source.local.CacheDataStore
 import xyz.kewiany.menusy.data.source.local.InMemoryDataHolder
 import xyz.kewiany.menusy.data.source.local.OrderDataSource
 import xyz.kewiany.menusy.domain.model.OrderedProduct
@@ -13,6 +15,7 @@ import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
     private val inMemoryDataHolder: InMemoryDataHolder,
+    private val cacheDataStore: CacheDataStore,
     private val orderDataStore: OrderDataSource
 ) : OrderRepository {
 
@@ -38,21 +41,16 @@ class OrderRepositoryImpl @Inject constructor(
         return totalPrice.setScale(2, RoundingMode.FLOOR)
     }
 
-    override suspend fun saveOrderToHistory(
-        products: List<OrderedProduct>,
-        date: String,
-        totalQuantity: Int,
-        totalPrice: BigDecimal,
-        placeName: String,
-        placeAddress: String
-    ) {
+    override suspend fun saveOrderToHistory(date: String) {
+        val orderedProductsData = getOrderedProducts()
+        val cachedPlace = cacheDataStore.place.first()
         orderDataStore.insert(
-            orderedProducts = products,
+            orderedProducts = orderedProductsData.products,
             date = date,
-            totalQuantity = totalQuantity,
-            totalPrice = totalPrice,
-            placeName = placeName,
-            placeAddress = placeAddress
+            totalQuantity = orderedProductsData.totalQuantity,
+            totalPrice = orderedProductsData.totalPrice,
+            placeName = cachedPlace.name,
+            placeAddress = cachedPlace.address
         )
         inMemoryDataHolder.updateOrderedProducts(emptyList())
     }
