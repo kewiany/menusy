@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 interface OrderDataSource {
     suspend fun insert(
-        date: String,
         orderedProducts: List<OrderedProduct>,
+        date: String,
         totalPrice: Float,
         totalQuantity: Int
     )
@@ -25,8 +25,8 @@ class OrderDataSourceImpl @Inject constructor(
 ) : OrderDataSource {
 
     override suspend fun insert(
-        date: String,
         orderedProducts: List<OrderedProduct>,
+        date: String,
         totalPrice: Float,
         totalQuantity: Int
     ) {

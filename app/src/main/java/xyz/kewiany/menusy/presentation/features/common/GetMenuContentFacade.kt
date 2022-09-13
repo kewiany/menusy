@@ -18,7 +18,7 @@ class GetMenuContentFacade @Inject constructor(
     suspend fun getContent(menuId: String): Result<Content> {
         val menu = getMenu(menuId) ?: return Result.Error()
         val products = getMenuProducts(menuId) ?: return Result.Error()
-        val orderedProducts = getOrderedProductsUseCase()
+        val orderedProducts = getOrderedProductsUseCase().products
 
         val tabs = menu.categories.toCategoryTabs()
         val items = obtainMenuContentUIItems(menu, products, orderedProducts)

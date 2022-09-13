@@ -1,6 +1,7 @@
 package xyz.kewiany.menusy.data.repository
 
 import kotlinx.coroutines.flow.Flow
+import xyz.kewiany.menusy.common.OrderedProductsData
 import xyz.kewiany.menusy.data.source.local.InMemoryDataHolder
 import xyz.kewiany.menusy.data.source.local.OrderDataSource
 import xyz.kewiany.menusy.domain.model.OrderedProduct
@@ -16,36 +17,42 @@ class OrderRepositoryImpl @Inject constructor(
 
     override val orderedProductsCount: Flow<Int> = inMemoryDataHolder.orderedProductsCount
 
-    override fun getOrderedProducts(): List<OrderedProduct> {
-        return inMemoryDataHolder.orderedProducts.value
+    override fun getOrderedProducts(): OrderedProductsData {
+        val products = inMemoryDataHolder.orderedProducts.value
+        val totalPrice = calculateTotalPrice(products)
+        val totalQuantity = calculateTotalQuantity(products)
+        return OrderedProductsData(
+            products = products,
+            totalQuantity = totalQuantity,
+            totalPrice = totalPrice
+        )
     }
 
-    override suspend fun saveOrderToHistory(orderedProducts: List<OrderedProduct>) {
-        val totalPrice = calculateTotalPrice(orderedProducts)
-        val totalQuantity = calculateTotalQuantity(orderedProducts)
+    private fun calculateTotalPrice(products: List<OrderedProduct>): Float {
+        return products.sumOf { (it.quantity * it.product.price).toDouble() }.toFloat()
+    }
+
+    private fun calculateTotalQuantity(products: List<OrderedProduct>): Int {
+        return products.sumOf { it.quantity }
+    }
+
+    override suspend fun saveOrderToHistory(
+        products: List<OrderedProduct>,
+        date: String,
+        totalQuantity: Int,
+        totalPrice: Float
+    ) {
         orderDataStore.insert(
-            date = "",
-            orderedProducts = orderedProducts,
+            orderedProducts = products,
+            date = date,
             totalPrice = totalPrice,
             totalQuantity = totalQuantity
         )
         inMemoryDataHolder.updateOrderedProducts(emptyList())
     }
 
-    private fun calculateTotalPrice(products: List<OrderedProduct>): Float {
-        var totalPrice = 0f
-        products.map { it.product.price }.forEach { price -> totalPrice += price }
-        return totalPrice
-    }
-
-    private fun calculateTotalQuantity(products: List<OrderedProduct>): Int {
-        var totalQuantity = 0
-        products.map { it.quantity }.forEach { quantity -> totalQuantity += quantity }
-        return totalQuantity
-    }
-
     override suspend fun updateOrder(quantity: Int, product: Product) {
-        val orderedProducts = getOrderedProducts().toMutableList()
+        val orderedProducts = inMemoryDataHolder.orderedProducts.value.toMutableList()
         val inOrder = orderedProducts.firstOrNull { it.product.id == product.id }.run { this != null }
 
         if (inOrder) {
@@ -62,7 +69,7 @@ class OrderRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteOrder(productId: String) {
-        val orderedProducts = getOrderedProducts().toMutableList()
+        val orderedProducts = inMemoryDataHolder.orderedProducts.value.toMutableList()
         val index = orderedProducts.indexOfFirst { it.product.id == productId }
         orderedProducts.removeAt(index)
         inMemoryDataHolder.updateOrderedProducts(orderedProducts)

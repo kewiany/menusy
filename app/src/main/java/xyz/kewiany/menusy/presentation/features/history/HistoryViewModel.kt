@@ -29,8 +29,10 @@ class HistoryViewModel @Inject constructor(
         val items = mutableListOf<HistoryUiItem>()
         val orders = getOrdersFromHistoryUseCase()
         orders.map { order ->
-            order.asUIItem().also(items::add)
-            order.products.map(HistoryProduct::asUIItem).also(items::addAll)
+            val historyOrder = order.asUIItem()
+            items.add(historyOrder)
+            val historyProducts = order.products.map(HistoryProduct::asUIItem)
+            items.addAll(historyProducts)
         }
         updateState { it.copy(items = items) }
     }

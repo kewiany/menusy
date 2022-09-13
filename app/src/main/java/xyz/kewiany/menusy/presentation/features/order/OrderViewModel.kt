@@ -44,16 +44,20 @@ class OrderViewModel @Inject constructor(
     }
 
     private fun loadOrderedProducts() {
-        val orderedProducts = getOrderedProductsUseCase()
-        val total = orderedProducts.sumOf { (it.quantity * it.product.price).toDouble() }.toString()
-        val quantity = orderedProducts.sumOf { it.quantity }.toString()
-        updateState { it.copy(results = orderedProducts, quantity = quantity, total = total) }
+        val data = getOrderedProductsUseCase()
+        updateState {
+            it.copy(
+                results = data.products,
+                totalQuantity = data.totalQuantity.toString(),
+                totalPrice = data.totalPrice.toString()
+            )
+        }
     }
 
     data class State(
         val results: List<OrderedProduct> = emptyList(),
-        val quantity: String? = null,
-        val total: String? = null
+        val totalQuantity: String? = null,
+        val totalPrice: String? = null
     )
 
     sealed class Event {

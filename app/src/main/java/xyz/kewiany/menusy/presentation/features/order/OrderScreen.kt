@@ -45,11 +45,11 @@ fun OrderScreen(
         if (items.isNotEmpty()) {
             Row {
                 Text(
-                    text = "Total (${state.value.quantity.toString()})",
+                    text = "Total (${state.value.totalQuantity.toString()})",
                     modifier = Modifier.weight(0.8f)
                 )
                 Text(
-                    text = state.value.total.toString(),
+                    text = state.value.totalPrice.toString(),
                     modifier = Modifier.weight(0.2f)
                 )
             }

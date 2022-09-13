@@ -113,7 +113,7 @@ class SearchViewModel @Inject constructor(
         when (val result = getProductsByQueryUseCase(query)) {
             is Result.Success -> {
                 val products = result.data
-                val orderedProducts = getOrderedProductsUseCase()
+                val orderedProducts = getOrderedProductsUseCase().products
 
                 val items = obtainMenuContentUIItems(products, orderedProducts)
                 updateState { it.copy(showLoading = false, results = items) }
