@@ -8,12 +8,16 @@ data class HistoryOrder(
     val date: String,
     val totalQuantity: Int,
     val totalPrice: BigDecimal,
-    val products: List<HistoryProduct>
+    val products: List<HistoryProduct>,
+    val placeName: String,
+    val placeAddress: String
 )
 
 fun HistoryOrder.asUIItem() = HistoryOrderUiItem(
     id = orderId.toString(),
     date = date,
     totalPrice = totalPrice.toString(),
-    totalQuantity = totalQuantity.toString()
+    totalQuantity = totalQuantity.toString(),
+    placeName = placeName,
+    placeAddress = placeAddress
 )

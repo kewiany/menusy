@@ -12,10 +12,14 @@ data class OrderEntity(
     val id: Long = 0,
     @ColumnInfo(name = "date")
     val date: String,
+    @ColumnInfo(name = "total_quantity")
+    val totalQuantity: Int,
     @ColumnInfo(name = "total_price")
     val totalPrice: Float,
-    @ColumnInfo(name = "total_quantity")
-    val totalQuantity: Int
+    @ColumnInfo(name = "place_name")
+    val placeName: String,
+    @ColumnInfo(name = "place_address")
+    val placeAddress: String
 ) {
     companion object {
         const val TABLE_NAME = "order"

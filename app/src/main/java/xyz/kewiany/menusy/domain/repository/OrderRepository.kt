@@ -14,7 +14,9 @@ interface OrderRepository {
         products: List<OrderedProduct>,
         date: String,
         totalQuantity: Int,
-        totalPrice: BigDecimal
+        totalPrice: BigDecimal,
+        placeName: String,
+        placeAddress: String
     )
 
     suspend fun deleteOrder(productId: String)

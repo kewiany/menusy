@@ -11,7 +11,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import javax.inject.Inject
 
-
 class OrderRepositoryImpl @Inject constructor(
     private val inMemoryDataHolder: InMemoryDataHolder,
     private val orderDataStore: OrderDataSource
@@ -21,8 +20,8 @@ class OrderRepositoryImpl @Inject constructor(
 
     override fun getOrderedProducts(): OrderedProductsData {
         val products = inMemoryDataHolder.orderedProducts.value
-        val totalPrice = calculateTotalPrice(products)
         val totalQuantity = calculateTotalQuantity(products)
+        val totalPrice = calculateTotalPrice(products)
         return OrderedProductsData(
             products = products,
             totalQuantity = totalQuantity,
@@ -30,26 +29,30 @@ class OrderRepositoryImpl @Inject constructor(
         )
     }
 
+    private fun calculateTotalQuantity(products: List<OrderedProduct>): Int {
+        return products.sumOf { it.quantity }
+    }
+
     private fun calculateTotalPrice(products: List<OrderedProduct>): BigDecimal {
         val totalPrice = products.sumOf { it.product.price.multiply(it.quantity.toBigDecimal()) }
         return totalPrice.setScale(2, RoundingMode.FLOOR)
-    }
-
-    private fun calculateTotalQuantity(products: List<OrderedProduct>): Int {
-        return products.sumOf { it.quantity }
     }
 
     override suspend fun saveOrderToHistory(
         products: List<OrderedProduct>,
         date: String,
         totalQuantity: Int,
-        totalPrice: BigDecimal
+        totalPrice: BigDecimal,
+        placeName: String,
+        placeAddress: String
     ) {
         orderDataStore.insert(
             orderedProducts = products,
             date = date,
+            totalQuantity = totalQuantity,
             totalPrice = totalPrice,
-            totalQuantity = totalQuantity
+            placeName = placeName,
+            placeAddress = placeAddress
         )
         inMemoryDataHolder.updateOrderedProducts(emptyList())
     }

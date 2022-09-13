@@ -13,7 +13,9 @@ class PurchaseUseCase @Inject constructor(
             products = data.products,
             date = "date",
             totalQuantity = data.totalQuantity,
-            totalPrice = data.totalPrice
+            totalPrice = data.totalPrice,
+            placeName = "place name",
+            placeAddress = "place address"
         )
     }
 }

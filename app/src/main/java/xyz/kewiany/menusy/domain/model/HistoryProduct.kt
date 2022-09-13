@@ -8,7 +8,7 @@ data class HistoryProduct(
     val name: String,
     val description: String,
     val price: BigDecimal,
-    val quantity: Int
+    val quantity: Int,
 )
 
 fun HistoryProduct.asUIItem() = HistoryProductUiItem(

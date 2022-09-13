@@ -7,6 +7,8 @@ data class HistoryOrderUiItem(
     val date: String,
     val totalPrice: String,
     val totalQuantity: String,
+    val placeName: String,
+    val placeAddress: String
 ) : HistoryUiItem
 
 data class HistoryProductUiItem(

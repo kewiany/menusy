@@ -13,8 +13,10 @@ interface OrderDataSource {
     suspend fun insert(
         orderedProducts: List<OrderedProduct>,
         date: String,
+        totalQuantity: Int,
         totalPrice: BigDecimal,
-        totalQuantity: Int
+        placeName: String,
+        placeAddress: String
     )
 
     suspend fun getAll(): List<OrderWithProductsEntity>
@@ -28,13 +30,17 @@ class OrderDataSourceImpl @Inject constructor(
     override suspend fun insert(
         orderedProducts: List<OrderedProduct>,
         date: String,
+        totalQuantity: Int,
         totalPrice: BigDecimal,
-        totalQuantity: Int
+        placeName: String,
+        placeAddress: String
     ) {
         val orderEntity = OrderEntity(
             date = date,
+            totalQuantity = totalQuantity,
             totalPrice = totalPrice.toFloat(),
-            totalQuantity = totalQuantity
+            placeName = placeName,
+            placeAddress = placeAddress
         )
         val orderId = orderDao.insert(orderEntity)
         val productEntities = orderedProducts.map { orderedProduct ->

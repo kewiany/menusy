@@ -3,7 +3,6 @@ package xyz.kewiany.menusy.data.source.local.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 import xyz.kewiany.menusy.domain.model.HistoryOrder
-import xyz.kewiany.menusy.domain.model.HistoryProduct
 
 data class OrderWithProductsEntity(
     @Embedded val order: OrderEntity,
@@ -24,13 +23,7 @@ fun OrderWithProductsEntity.toHistoryOrder() = HistoryOrder(
     date = order.date,
     totalQuantity = order.totalQuantity,
     totalPrice = order.totalPrice.toBigDecimal(),
-    products = products.map(ProductEntity::toHistoryProduct)
-)
-
-fun ProductEntity.toHistoryProduct() = HistoryProduct(
-    productId = id,
-    name = name,
-    description = description,
-    price = price.toBigDecimal(),
-    quantity = quantity
+    products = products.map(ProductEntity::toHistoryProduct),
+    placeName = order.placeName,
+    placeAddress = order.placeAddress
 )

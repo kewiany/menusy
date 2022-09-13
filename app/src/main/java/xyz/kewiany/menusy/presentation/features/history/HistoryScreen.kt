@@ -33,7 +33,9 @@ fun HistoryScreen(
                             HistoryOrderItem(
                                 date = item.date,
                                 totalPrice = item.totalPrice,
-                                totalQuantity = item.totalQuantity
+                                totalQuantity = item.totalQuantity,
+                                placeName = item.placeName,
+                                placeAddress = item.placeAddress
                             )
                         }
                         is HistoryProductUiItem -> {

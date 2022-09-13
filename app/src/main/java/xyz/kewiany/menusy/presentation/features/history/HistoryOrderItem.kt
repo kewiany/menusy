@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
     date: String,
     totalPrice: String,
     totalQuantity: String,
+    placeName: String,
+    placeAddress: String
 ) {
     Column(
         modifier = Modifier
@@ -32,6 +34,16 @@ import androidx.compose.ui.unit.dp
             Text(
                 text = totalQuantity,
                 modifier = Modifier.weight(0.2f)
+            )
+        }
+        Row {
+            Text(
+                text = placeName,
+                modifier = Modifier.weight(0.5f)
+            )
+            Text(
+                text = placeAddress,
+                modifier = Modifier.weight(0.5f)
             )
         }
     }
