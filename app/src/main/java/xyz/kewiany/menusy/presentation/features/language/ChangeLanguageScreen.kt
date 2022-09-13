@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy.presentation.features.language
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -10,7 +10,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
@@ -35,19 +34,12 @@ fun ChangeLanguageScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 val currentLanguage = state.value.currentLanguage
-                val languages = state.value.languages
-                languages.forEach { language ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(if (currentLanguage == language) Color.Red else Color.Yellow)
-                            .clickable { eventHandler(Event.LanguageClicked(language)) },
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(20.dp),
-                            text = language.name
+                LazyColumn {
+                    items(state.value.languages) { item ->
+                        LanguageItem(
+                            name = item.name,
+                            isSelected = currentLanguage == item,
+                            onItemClicked = { eventHandler(Event.LanguageClicked(item)) }
                         )
                     }
                 }

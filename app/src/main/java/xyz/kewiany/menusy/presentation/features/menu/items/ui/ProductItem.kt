@@ -21,30 +21,25 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ProductItem(
-    id: String,
     name: String,
     description: String,
     price: String,
     ordered: Boolean,
     quantity: Int,
-    onProductClicked: (String) -> Unit,
-    onDecreaseQuantityClicked: (String) -> Unit,
-    onIncreaseQuantityClicked: (String) -> Unit
+    onItemClicked: () -> Unit,
+    onDecreaseQuantityClicked: () -> Unit,
+    onIncreaseQuantityClicked: () -> Unit
 ) {
     Box(
         modifier = Modifier
-            .clickable { onProductClicked(id) }
+            .clickable(onClick = onItemClicked)
     ) {
         Column(
             modifier = Modifier
-                .background(if (ordered) Color.Green else Color.White)
+                .background(if (ordered) Color.LightGray else Color.White)
                 .padding(10.dp)
         ) {
             Row {
-                Text(
-                    text = id,
-                    modifier = Modifier.weight(0.2f)
-                )
                 Text(
                     text = name,
                     modifier = Modifier.weight(0.6f)
@@ -77,9 +72,7 @@ fun ProductItem(
                 Row {
                     Button(
                         modifier = Modifier.weight(0.2f),
-                        onClick = {
-                            onDecreaseQuantityClicked(id)
-                        }
+                        onClick = onDecreaseQuantityClicked
                     ) {
                         Text(text = "-")
                     }
@@ -90,9 +83,7 @@ fun ProductItem(
                     )
                     Button(
                         modifier = Modifier.weight(0.2f),
-                        onClick = {
-                            onIncreaseQuantityClicked(id)
-                        }
+                        onClick = onIncreaseQuantityClicked
                     ) {
                         Text(text = "+")
                     }
@@ -106,13 +97,12 @@ fun ProductItem(
 @Composable
 fun ProductItemPreview() {
     ProductItem(
-        id = "id",
         name = "name",
         description = "description",
         price = "price",
         ordered = false,
         quantity = 0,
-        onProductClicked = {
+        onItemClicked = {
 
         },
         onIncreaseQuantityClicked = {

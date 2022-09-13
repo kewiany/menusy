@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun OrderItem(
-    productId: String,
     name: String,
     price: String,
     quantity: Int,
@@ -43,7 +42,8 @@ fun OrderItem(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Delete",
                 tint = Color.Black,
-                modifier = Modifier.clickable { onDeleteClicked() }
+                modifier = Modifier
+                    .clickable(onClick = onDeleteClicked)
             )
         }
     }
@@ -53,7 +53,6 @@ fun OrderItem(
 @Composable
 fun OrderItemPreview() {
     OrderItem(
-        productId = "id",
         name = "name",
         price = "price",
         quantity = 0,

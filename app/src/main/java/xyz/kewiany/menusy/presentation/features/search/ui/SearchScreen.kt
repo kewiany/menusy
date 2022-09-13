@@ -32,16 +32,16 @@ fun SearchScreen(
             ) {
                 items(state.value.results) { item ->
                     item as ProductUiItem
+                    val id = item.id
                     ProductItem(
-                        item.id,
-                        item.name,
-                        item.description,
-                        item.price,
-                        item.ordered,
-                        item.quantity,
-                        { id -> eventHandler(Event.ProductClicked(id)) },
-                        { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
-                        { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
+                        name = item.name,
+                        description = item.description,
+                        price = item.price,
+                        ordered = item.ordered,
+                        quantity = item.quantity,
+                        onItemClicked = { eventHandler(Event.ProductClicked(id)) },
+                        onDecreaseQuantityClicked = { eventHandler(Event.DecreaseQuantityClicked(id)) },
+                        onIncreaseQuantityClicked = { eventHandler(Event.IncreaseQuantityClicked(id)) }
                     )
                 }
             }

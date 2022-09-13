@@ -1,7 +1,8 @@
 package xyz.kewiany.menusy.presentation.features.menu.items.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -57,23 +58,26 @@ fun MenuItemsScreen(
                 coroutineScope.launch {
                     listState.animateScrollToItem(state.value.currentCategory)
                 }
-                item {
-                    Text(text = "menu id $menuId")
-                }
                 items(state.value.items) { item ->
                     when (item) {
-                        is CategoryUiItem -> CategoryItem(item.id)
-                        is ProductUiItem -> ProductItem(
-                            item.id,
-                            item.name,
-                            item.description,
-                            item.price,
-                            item.ordered,
-                            item.quantity,
-                            { id -> eventHandler(Event.ProductClicked(id)) },
-                            { id -> eventHandler(Event.DecreaseQuantityClicked(id)) },
-                            { id -> eventHandler(Event.IncreaseQuantityClicked(id)) }
-                        )
+                        is CategoryUiItem -> {
+                            CategoryItem(
+                                name = item.name
+                            )
+                        }
+                        is ProductUiItem -> {
+                            val id = item.id
+                            ProductItem(
+                                name = item.name,
+                                description = item.description,
+                                price = item.price,
+                                ordered = item.ordered,
+                                quantity = item.quantity,
+                                onItemClicked = { eventHandler(Event.ProductClicked(id)) },
+                                onDecreaseQuantityClicked = { eventHandler(Event.DecreaseQuantityClicked(id)) },
+                                onIncreaseQuantityClicked = { eventHandler(Event.IncreaseQuantityClicked(id)) }
+                            )
+                        }
                     }
                 }
             }
@@ -90,22 +94,6 @@ fun MenuItemsScreen(
     }
 }
 
-@Composable
-private fun CategoryItem(
-    id: String
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Blue)
-            .padding(20.dp),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = id,
-        )
-    }
-}
 
 @Composable
 private fun CategoriesScrollableTabRow(

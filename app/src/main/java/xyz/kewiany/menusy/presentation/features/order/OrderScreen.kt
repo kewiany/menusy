@@ -29,7 +29,6 @@ fun OrderScreen(
                     items(items) { item ->
                         val productId = item.product.id
                         OrderItem(
-                            productId = productId,
                             name = item.product.name,
                             price = item.product.price.toString(),
                             quantity = item.quantity,
