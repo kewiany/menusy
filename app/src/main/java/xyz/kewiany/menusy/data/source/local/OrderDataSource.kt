@@ -6,13 +6,14 @@ import xyz.kewiany.menusy.data.source.local.entity.OrderEntity
 import xyz.kewiany.menusy.data.source.local.entity.OrderWithProductsEntity
 import xyz.kewiany.menusy.data.source.local.entity.ProductEntity
 import xyz.kewiany.menusy.domain.model.OrderedProduct
+import java.math.BigDecimal
 import javax.inject.Inject
 
 interface OrderDataSource {
     suspend fun insert(
         orderedProducts: List<OrderedProduct>,
         date: String,
-        totalPrice: Float,
+        totalPrice: BigDecimal,
         totalQuantity: Int
     )
 
@@ -27,12 +28,12 @@ class OrderDataSourceImpl @Inject constructor(
     override suspend fun insert(
         orderedProducts: List<OrderedProduct>,
         date: String,
-        totalPrice: Float,
+        totalPrice: BigDecimal,
         totalQuantity: Int
     ) {
         val orderEntity = OrderEntity(
             date = date,
-            totalPrice = totalPrice,
+            totalPrice = totalPrice.toFloat(),
             totalQuantity = totalQuantity
         )
         val orderId = orderDao.insert(orderEntity)

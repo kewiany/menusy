@@ -22,8 +22,8 @@ data class OrderWithProductsEntity(
 fun OrderWithProductsEntity.toHistoryOrder() = HistoryOrder(
     orderId = order.id,
     date = order.date,
-    totalPrice = order.totalPrice,
     totalQuantity = order.totalQuantity,
+    totalPrice = order.totalPrice.toBigDecimal(),
     products = products.map(ProductEntity::toHistoryProduct)
 )
 
@@ -31,6 +31,6 @@ fun ProductEntity.toHistoryProduct() = HistoryProduct(
     productId = id,
     name = name,
     description = description,
-    price = price.toFloat(),
+    price = price.toBigDecimal(),
     quantity = quantity
 )

@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import xyz.kewiany.menusy.common.OrderedProductsData
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
+import java.math.BigDecimal
 
 interface OrderRepository {
     val orderedProductsCount: Flow<Int>
@@ -13,7 +14,7 @@ interface OrderRepository {
         products: List<OrderedProduct>,
         date: String,
         totalQuantity: Int,
-        totalPrice: Float
+        totalPrice: BigDecimal
     )
 
     suspend fun deleteOrder(productId: String)

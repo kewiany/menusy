@@ -1,12 +1,13 @@
 package xyz.kewiany.menusy.domain.model
 
 import xyz.kewiany.menusy.presentation.utils.ProductUiItem
+import java.math.BigDecimal
 
 data class Product(
     val id: String,
     val name: String,
     val description: String,
-    val price: Float,
+    val price: BigDecimal,
     val menuId: String,
     val categoryId: String? = null
 )

@@ -1,12 +1,13 @@
 package xyz.kewiany.menusy.domain.model
 
 import xyz.kewiany.menusy.presentation.utils.HistoryOrderUiItem
+import java.math.BigDecimal
 
 data class HistoryOrder(
     val orderId: Long = 0,
     val date: String,
-    val totalPrice: Float,
     val totalQuantity: Int,
+    val totalPrice: BigDecimal,
     val products: List<HistoryProduct>
 )
 

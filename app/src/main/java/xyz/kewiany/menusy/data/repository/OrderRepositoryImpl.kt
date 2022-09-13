@@ -7,6 +7,8 @@ import xyz.kewiany.menusy.data.source.local.OrderDataSource
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.OrderRepository
+import java.math.BigDecimal
+import java.math.RoundingMode
 import javax.inject.Inject
 
 
@@ -28,8 +30,9 @@ class OrderRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun calculateTotalPrice(products: List<OrderedProduct>): Float {
-        return products.sumOf { (it.quantity * it.product.price).toDouble() }.toFloat()
+    private fun calculateTotalPrice(products: List<OrderedProduct>): BigDecimal {
+        val totalPrice = products.sumOf { it.product.price.multiply(it.quantity.toBigDecimal()) }
+        return totalPrice.setScale(2, RoundingMode.FLOOR)
     }
 
     private fun calculateTotalQuantity(products: List<OrderedProduct>): Int {
@@ -40,7 +43,7 @@ class OrderRepositoryImpl @Inject constructor(
         products: List<OrderedProduct>,
         date: String,
         totalQuantity: Int,
-        totalPrice: Float
+        totalPrice: BigDecimal
     ) {
         orderDataStore.insert(
             orderedProducts = products,
