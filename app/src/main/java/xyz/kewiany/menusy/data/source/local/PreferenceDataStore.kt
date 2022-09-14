@@ -19,16 +19,16 @@ class PreferenceDataStoreImpl @Inject constructor(
 ) : PreferenceDataStore {
 
     override val language: Flow<Language> = dataStore.data.map { preferences ->
-        Language.valueOf(preferences[PreferencesKeys.LANGUAGE] ?: DEFAULT_LANGUAGE.name)
+        Language.valueOf(preferences[Keys.LANGUAGE] ?: DEFAULT_LANGUAGE.name)
     }
 
     override suspend fun setLanguage(language: Language) {
-        dataStore.edit { preferences -> preferences[PreferencesKeys.LANGUAGE] = language.name }
+        dataStore.edit { preferences -> preferences[Keys.LANGUAGE] = language.name }
     }
-}
 
-private object PreferencesKeys {
-    val LANGUAGE = stringPreferencesKey("language")
+    private object Keys {
+        val LANGUAGE = stringPreferencesKey("language")
+    }
 }
 
 private val DEFAULT_LANGUAGE = Language.ENGLISH

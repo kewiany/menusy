@@ -8,7 +8,6 @@ import xyz.kewiany.menusy.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
-import xyz.kewiany.menusy.domain.usecase.menu.GetMenusUseCase
 import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.State
@@ -20,7 +19,6 @@ import javax.inject.Inject
 class MenuEntryViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getPlaceUseCase: GetPlaceUseCase,
-    private val getMenusUseCase: GetMenusUseCase,
     dispatcherProvider: DispatcherProvider
 ) : BaseViewModel<State, Event>(State()) {
 
@@ -33,27 +31,22 @@ class MenuEntryViewModel @Inject constructor(
 
     private fun handleLoadMenusTriggered() {
         viewModelScope.launch { loadPlace(placeId) }
-        viewModelScope.launch { loadMenus(placeId) }
     }
 
     private suspend fun loadPlace(placeId: String) {
         updateState { it.copy(showLoading = true) }
         when (val result = getPlaceUseCase(placeId)) {
             is Result.Success -> {
-                val place = result.data
-                updateState { it.copy(name = place.name, address = place.address) }
-            }
-            is Result.Error -> {
-                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
-            }
-        }
-    }
-
-    private suspend fun loadMenus(placeId: String) {
-        updateState { it.copy(showLoading = true) }
-        when (val result = getMenusUseCase(placeId)) {
-            is Result.Success -> {
-                updateState { it.copy(menus = result.data, showLoading = false) }
+                val place = result.data.place
+                val menus = result.data.menus
+                updateState {
+                    it.copy(
+                        name = place.name,
+                        address = place.address,
+                        menus = menus,
+                        showLoading = false
+                    )
+                }
             }
             is Result.Error -> {
                 updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }

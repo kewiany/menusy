@@ -28,8 +28,8 @@ class PlaceDataStoreImpl @Inject constructor(
     override suspend fun savePlace(place: Place) {
         dataStore.edit { preferences -> preferences[Keys.PLACE] = gson.toJson(place) }
     }
-}
 
-private object Keys {
-    val PLACE = stringPreferencesKey("place")
+    private object Keys {
+        val PLACE = stringPreferencesKey("place")
+    }
 }
