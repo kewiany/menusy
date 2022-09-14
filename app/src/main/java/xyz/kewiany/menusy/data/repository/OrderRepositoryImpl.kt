@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import xyz.kewiany.menusy.common.OrderedProductsData
-import xyz.kewiany.menusy.data.source.local.OrderDataSource
+import xyz.kewiany.menusy.data.source.local.OrderDataStore
 import xyz.kewiany.menusy.data.source.local.OrderedProductsDataStore
 import xyz.kewiany.menusy.data.source.local.PlaceDataStore
 import xyz.kewiany.menusy.domain.model.OrderedProduct
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class OrderRepositoryImpl @Inject constructor(
     private val orderedProductsDataStore: OrderedProductsDataStore,
     private val placeDataStore: PlaceDataStore,
-    private val orderDataStore: OrderDataSource
+    private val orderDataStore: OrderDataStore
 ) : OrderRepository {
 
     override val orderedProductsCount: Flow<Int> = orderedProductsDataStore.orderedProductsCount

@@ -9,7 +9,7 @@ import xyz.kewiany.menusy.domain.model.OrderedProduct
 import java.math.BigDecimal
 import javax.inject.Inject
 
-interface OrderDataSource {
+interface OrderDataStore {
 
     suspend fun insert(
         orderedProducts: List<OrderedProduct>,
@@ -23,10 +23,10 @@ interface OrderDataSource {
     suspend fun getAll(): List<OrderWithProductsEntity>
 }
 
-class OrderDataSourceImpl @Inject constructor(
+class OrderDataStoreImpl @Inject constructor(
     private val productDao: ProductDao,
     private val orderDao: OrderDao
-) : OrderDataSource {
+) : OrderDataStore {
 
     override suspend fun insert(
         orderedProducts: List<OrderedProduct>,
