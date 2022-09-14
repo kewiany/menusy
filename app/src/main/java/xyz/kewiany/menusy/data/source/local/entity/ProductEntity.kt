@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import xyz.kewiany.menusy.data.source.local.entity.ProductEntity.Companion.TABLE_NAME
 import xyz.kewiany.menusy.domain.model.HistoryProduct
+import xyz.kewiany.menusy.domain.model.OrderedProduct
 
 @Entity(tableName = TABLE_NAME)
 data class ProductEntity(
@@ -18,7 +19,7 @@ data class ProductEntity(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "price")
-    val price: String,
+    val price: Float,
     @ColumnInfo(name = "quantity")
     val quantity: Int
 ) {
@@ -33,4 +34,12 @@ fun ProductEntity.toHistoryProduct() = HistoryProduct(
     description = description,
     price = price.toBigDecimal(),
     quantity = quantity
+)
+
+fun OrderedProduct.toProductEntity(orderId: Long) = ProductEntity(
+    orderId = orderId,
+    name = product.name,
+    description = product.description,
+    price = product.price.toFloat(),
+    quantity = quantity,
 )

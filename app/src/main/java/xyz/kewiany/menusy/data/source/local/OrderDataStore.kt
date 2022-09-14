@@ -4,7 +4,7 @@ import xyz.kewiany.menusy.data.source.local.dao.OrderDao
 import xyz.kewiany.menusy.data.source.local.dao.ProductDao
 import xyz.kewiany.menusy.data.source.local.entity.OrderEntity
 import xyz.kewiany.menusy.data.source.local.entity.OrderWithProductsEntity
-import xyz.kewiany.menusy.data.source.local.entity.ProductEntity
+import xyz.kewiany.menusy.data.source.local.entity.toProductEntity
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -44,17 +44,8 @@ class OrderDataStoreImpl @Inject constructor(
             placeAddress = placeAddress
         )
         val orderId = orderDao.insert(orderEntity)
-        val productEntities = orderedProducts.map { orderedProduct ->
-            with(orderedProduct) {
-                ProductEntity(
-                    orderId = orderId,
-                    name = product.name,
-                    description = product.description,
-                    price = product.price.toString(),
-                    quantity = quantity,
-                )
-            }
-        }
+        val productEntities = orderedProducts
+            .map { orderedProduct -> orderedProduct.toProductEntity(orderId) }
         productDao.insertAll(productEntities)
     }
 

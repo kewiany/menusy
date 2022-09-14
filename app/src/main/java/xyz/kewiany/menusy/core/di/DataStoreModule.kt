@@ -23,4 +23,8 @@ interface DataStoreModule {
     @Singleton
     @Binds
     fun bindsOrderDataStore(impl: OrderDataStoreImpl): OrderDataStore
+
+    @Singleton
+    @Binds
+    fun bindsOrderedProductsDataStore(impl: OrderedProductsDataStoreImpl): OrderedProductsDataStore
 }
