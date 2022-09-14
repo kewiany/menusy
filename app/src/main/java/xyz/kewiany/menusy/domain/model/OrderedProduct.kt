@@ -4,3 +4,4 @@ data class OrderedProduct(
     val quantity: Int,
     val product: Product
 )
+

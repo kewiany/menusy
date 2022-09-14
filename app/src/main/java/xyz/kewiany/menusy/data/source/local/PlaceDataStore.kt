@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.map
 import xyz.kewiany.menusy.domain.model.Place
 import javax.inject.Inject
 
-interface CacheDataStore {
+interface PlaceDataStore {
     val place: Flow<Place>
     suspend fun savePlace(place: Place)
 }
 
-class CacheDataStoreImpl @Inject constructor(
+class PlaceDataStoreImpl @Inject constructor(
     private val gson: Gson,
     private val dataStore: DataStore<Preferences>
-) : CacheDataStore {
+) : PlaceDataStore {
 
     override val place: Flow<Place> = dataStore.data.map { preferences ->
         val json = preferences[Keys.PLACE] ?: throw NullPointerException()

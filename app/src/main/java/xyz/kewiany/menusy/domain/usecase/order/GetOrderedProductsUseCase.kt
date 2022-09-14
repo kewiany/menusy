@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetOrderedProductsUseCase @Inject constructor(private val orderRepository: OrderRepository) {
 
-    operator fun invoke(): OrderedProductsData {
+    suspend operator fun invoke(): OrderedProductsData {
         return orderRepository.getOrderedProducts()
     }
 }

@@ -26,7 +26,9 @@ class OrderViewModel @Inject constructor(
     }
 
     private fun handleLoadOrderTriggered() {
-        loadOrderedProducts()
+        viewModelScope.launch {
+            loadOrderedProducts()
+        }
     }
 
     private fun handlePayButtonClicked() {
@@ -43,7 +45,7 @@ class OrderViewModel @Inject constructor(
         }
     }
 
-    private fun loadOrderedProducts() {
+    private suspend fun loadOrderedProducts() {
         val data = getOrderedProductsUseCase()
         updateState {
             it.copy(

@@ -3,9 +3,9 @@ package xyz.kewiany.menusy.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import xyz.kewiany.menusy.common.OrderedProductsData
-import xyz.kewiany.menusy.data.source.local.CacheDataStore
-import xyz.kewiany.menusy.data.source.local.InMemoryDataHolder
 import xyz.kewiany.menusy.data.source.local.OrderDataSource
+import xyz.kewiany.menusy.data.source.local.OrderedProductsDataStore
+import xyz.kewiany.menusy.data.source.local.PlaceDataStore
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.OrderRepository
@@ -14,15 +14,15 @@ import java.math.RoundingMode
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
-    private val inMemoryDataHolder: InMemoryDataHolder,
-    private val cacheDataStore: CacheDataStore,
+    private val orderedProductsDataStore: OrderedProductsDataStore,
+    private val placeDataStore: PlaceDataStore,
     private val orderDataStore: OrderDataSource
 ) : OrderRepository {
 
-    override val orderedProductsCount: Flow<Int> = inMemoryDataHolder.orderedProductsCount
+    override val orderedProductsCount: Flow<Int> = orderedProductsDataStore.orderedProductsCount
 
-    override fun getOrderedProducts(): OrderedProductsData {
-        val products = inMemoryDataHolder.orderedProducts.value
+    override suspend fun getOrderedProducts(): OrderedProductsData {
+        val products = orderedProductsDataStore.getOrderedProducts()
         val totalQuantity = calculateTotalQuantity(products)
         val totalPrice = calculateTotalPrice(products)
         return OrderedProductsData(
@@ -43,7 +43,7 @@ class OrderRepositoryImpl @Inject constructor(
 
     override suspend fun saveOrderToHistory(date: String) {
         val orderedProductsData = getOrderedProducts()
-        val cachedPlace = cacheDataStore.place.first()
+        val cachedPlace = placeDataStore.place.first()
         orderDataStore.insert(
             orderedProducts = orderedProductsData.products,
             date = date,
@@ -52,11 +52,11 @@ class OrderRepositoryImpl @Inject constructor(
             placeName = cachedPlace.name,
             placeAddress = cachedPlace.address
         )
-        inMemoryDataHolder.updateOrderedProducts(emptyList())
+        orderedProductsDataStore.updateOrderedProducts(emptyList())
     }
 
     override suspend fun updateOrder(quantity: Int, product: Product) {
-        val orderedProducts = inMemoryDataHolder.orderedProducts.value.toMutableList()
+        val orderedProducts = orderedProductsDataStore.getOrderedProducts().toMutableList()
         val inOrder = orderedProducts.firstOrNull { it.product.id == product.id }.run { this != null }
 
         if (inOrder) {
@@ -69,13 +69,13 @@ class OrderRepositoryImpl @Inject constructor(
             orderedProducts.add(OrderedProduct(quantity, product))
         }
 
-        inMemoryDataHolder.updateOrderedProducts(orderedProducts)
+        orderedProductsDataStore.updateOrderedProducts(orderedProducts)
     }
 
     override suspend fun deleteOrder(productId: String) {
-        val orderedProducts = inMemoryDataHolder.orderedProducts.value.toMutableList()
+        val orderedProducts = orderedProductsDataStore.getOrderedProducts().toMutableList()
         val index = orderedProducts.indexOfFirst { it.product.id == productId }
         orderedProducts.removeAt(index)
-        inMemoryDataHolder.updateOrderedProducts(orderedProducts)
+        orderedProductsDataStore.updateOrderedProducts(orderedProducts)
     }
 }

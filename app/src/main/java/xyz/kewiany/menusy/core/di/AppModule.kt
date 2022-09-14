@@ -65,7 +65,7 @@ object AppModule {
 
         @Singleton
         @Binds
-        fun bindsCacheDataStore(impl: CacheDataStoreImpl): CacheDataStore
+        fun bindsPlaceDataStore(impl: PlaceDataStoreImpl): PlaceDataStore
 
         @Singleton
         @Binds
@@ -73,7 +73,7 @@ object AppModule {
 
         @Singleton
         @Binds
-        fun bindsInMemoryDataHolder(impl: InMemoryDataHolderImpl): InMemoryDataHolder
+        fun bindsOrderedProductsDataStore(impl: OrderedProductsDataStoreImpl): OrderedProductsDataStore
 
         @Singleton
         @Binds
