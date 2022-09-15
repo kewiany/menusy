@@ -11,7 +11,7 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun getProduct(id: String): Product {
         val response = productsApi.getProduct(id)
-        val product = response?.product; requireNotNull(product)
+        val product = response?.product; checkNotNull(product)
         return product
     }
 

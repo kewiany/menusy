@@ -13,8 +13,8 @@ class PlaceRepositoryImpl @Inject constructor(
 
     override suspend fun getPlace(id: String): Place {
         val response = placeApi.getPlace(id)
-        val data = response?.place; requireNotNull(data)
-        placeDataStore.savePlace(data)
-        return data
+        val place = response?.place; checkNotNull(place)
+        placeDataStore.savePlace(place)
+        return place
     }
 }

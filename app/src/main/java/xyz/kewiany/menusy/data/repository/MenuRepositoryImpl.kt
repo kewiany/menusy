@@ -16,7 +16,7 @@ class MenuRepositoryImpl @Inject constructor(
 
     override suspend fun getMenu(menuId: String): Menu {
         val response = menuApi.getMenu(menuId)
-        val menu = response?.menu; requireNotNull(menu)
+        val menu = response?.menu; checkNotNull(menu)
         return menu
     }
 }
