@@ -1,6 +1,8 @@
 package xyz.kewiany.menusy.domain.usecase.menu
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withContext
+import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.model.Menu
@@ -14,6 +16,7 @@ class GetMenuProductsUseCase @Inject constructor(
     private val productRepository: ProductRepository,
     private val dispatcherProvider: DispatcherProvider
 ) {
+    private val logger = LoggerFactory.getLogger(GetMenuProductsUseCase::class.java)
 
     suspend operator fun invoke(menuId: String): Result<List<Product>> = try {
         val products = mutableListOf<Product>()
@@ -29,6 +32,8 @@ class GetMenuProductsUseCase @Inject constructor(
         }
         Result.Success(products)
     } catch (e: Exception) {
+        if (e is CancellationException) throw e
+        logger.warn(e.stackTraceToString(), e)
         Result.Error(e)
     }
 

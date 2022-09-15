@@ -1,8 +1,9 @@
 package xyz.kewiany.menusy.domain.usecase.menu
 
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.Place
@@ -15,6 +16,8 @@ class GetPlaceUseCase @Inject constructor(
     private val menuRepository: MenuRepository
 ) {
 
+    private val logger = LoggerFactory.getLogger(GetPlaceUseCase::class.java)
+
     suspend operator fun invoke(id: String): Result<PlaceData> = withContext(Dispatchers.IO) {
         try {
             val place = getPlace(id)
@@ -23,9 +26,10 @@ class GetPlaceUseCase @Inject constructor(
                 place = place,
                 menus = menus
             )
-            delay(1500)
             Result.Success(data)
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            logger.warn(e.stackTraceToString(), e)
             Result.Error(e)
         }
     }

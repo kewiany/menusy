@@ -13,6 +13,7 @@ import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.SetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
+import xyz.kewiany.menusy.presentation.utils.Loggable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -99,8 +100,8 @@ class MainViewModel @Inject constructor(
         object SearchClicked : Event()
         object ChangeLanguageClicked : Event()
         object ClearSearchClicked : Event()
-        data class SetCurrentRoute(val route: String?) : Event()
-        data class SearchFocused(val isFocused: Boolean) : Event()
-        data class SearchTextChanged(val text: String) : Event()
+        data class SetCurrentRoute(val route: String?) : Event(), Loggable
+        data class SearchFocused(val isFocused: Boolean) : Event(), Loggable
+        data class SearchTextChanged(val text: String) : Event(), Loggable
     }
 }

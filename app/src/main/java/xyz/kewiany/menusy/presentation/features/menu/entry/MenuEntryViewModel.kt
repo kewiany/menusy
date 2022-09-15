@@ -12,6 +12,7 @@ import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
+import xyz.kewiany.menusy.presentation.utils.Loggable
 import xyz.kewiany.menusy.presentation.utils.SingleEvent
 import javax.inject.Inject
 
@@ -37,13 +38,12 @@ class MenuEntryViewModel @Inject constructor(
         updateState { it.copy(showLoading = true) }
         when (val result = getPlaceUseCase(placeId)) {
             is Result.Success -> {
-                val place = result.data.place
-                val menus = result.data.menus
+                val data = result.data
                 updateState {
                     it.copy(
-                        name = place.name,
-                        address = place.address,
-                        menus = menus,
+                        name = data.place.name,
+                        address = data.place.address,
+                        menus = data.menus,
                         showLoading = false
                     )
                 }
@@ -64,6 +64,6 @@ class MenuEntryViewModel @Inject constructor(
 
     sealed class Event {
         object TriggerLoadMenus : Event()
-        data class MenuClicked(val id: String) : Event()
+        data class MenuClicked(val id: String) : Event(), Loggable
     }
 }

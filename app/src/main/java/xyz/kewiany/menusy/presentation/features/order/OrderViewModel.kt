@@ -10,6 +10,7 @@ import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
+import xyz.kewiany.menusy.presentation.utils.Loggable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,6 +66,6 @@ class OrderViewModel @Inject constructor(
     sealed class Event {
         object TriggerLoadOrder : Event()
         object PayButtonClicked : Event()
-        data class DeleteProductClicked(val productId: String) : Event()
+        data class DeleteProductClicked(val productId: String) : Event(), Loggable
     }
 }

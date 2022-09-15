@@ -139,9 +139,9 @@ class SearchViewModel @Inject constructor(
     sealed class Event {
         object TriggerDismissError : Event()
         object ErrorOKClicked : Event()
-        data class SearchTextChanged(val text: String) : Event()
-        data class ProductClicked(val id: String) : Event()
-        data class IncreaseQuantityClicked(val productId: String) : Event()
-        data class DecreaseQuantityClicked(val productId: String) : Event()
+        data class SearchTextChanged(val text: String) : Event(), Loggable
+        data class ProductClicked(val id: String) : Event(), Loggable
+        data class IncreaseQuantityClicked(val productId: String) : Event(), Loggable
+        data class DecreaseQuantityClicked(val productId: String) : Event(), Loggable
     }
 }

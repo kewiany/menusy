@@ -75,6 +75,7 @@ dependencies {
     implementation(Library.hilt)
     kapt(Library.hiltCompiler)
     implementation(Library.gson)
+    implementation(Library.slf4j)
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.coroutines)
     testImplementation(TestLibrary.mockk)

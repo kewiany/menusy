@@ -12,6 +12,7 @@ import xyz.kewiany.menusy.domain.usecase.language.SetLanguageUseCase
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
+import xyz.kewiany.menusy.presentation.utils.Loggable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,7 +58,7 @@ class ChangeLanguageViewModel @Inject constructor(
     )
 
     sealed class Event {
-        data class LanguageClicked(val language: Language) : Event()
+        data class LanguageClicked(val language: Language) : Event(), Loggable
         object OutsideClicked : Event()
         object CancelClicked : Event()
         object OKClicked : Event()

@@ -128,10 +128,10 @@ class MenuItemsViewModel @AssistedInject constructor(
         object TriggerDismissError : Event()
         object ErrorOKClicked : Event()
         object TriggerLoadMenu : Event()
-        data class TabClicked(val id: String) : Event()
-        data class ProductClicked(val id: String) : Event()
-        data class IncreaseQuantityClicked(val productId: String) : Event()
-        data class DecreaseQuantityClicked(val productId: String) : Event()
+        data class TabClicked(val id: String) : Event(), Loggable
+        data class ProductClicked(val id: String) : Event(), Loggable
+        data class IncreaseQuantityClicked(val productId: String) : Event(), Loggable
+        data class DecreaseQuantityClicked(val productId: String) : Event(), Loggable
     }
 
     @AssistedFactory

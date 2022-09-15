@@ -1,7 +1,11 @@
 package xyz.kewiany.menusy.presentation.features.common
 
+import kotlinx.coroutines.CancellationException
+import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.model.Category
+import xyz.kewiany.menusy.domain.model.Menu
+import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
@@ -15,34 +19,34 @@ class GetMenuContentFacade @Inject constructor(
     private val getMenuProductsUseCase: GetMenuProductsUseCase,
     private val getOrderedProductsUseCase: GetOrderedProductsUseCase
 ) {
+
+    private val logger = LoggerFactory.getLogger(GetMenuContentFacade::class.java)
+
     suspend fun getContent(menuId: String): Result<Content> {
-        val menu = getMenu(menuId) ?: return Result.Error()
-        val products = getMenuProducts(menuId) ?: return Result.Error()
-        val orderedProducts = getOrderedProductsUseCase().products
+        return try {
+            val menu = getMenu(menuId)
+            val products = getMenuProducts(menuId)
+            val orderedProducts = getOrderedProductsUseCase().products
 
-        val tabs = menu.categories.toCategoryTabs()
-        val items = obtainMenuContentUIItems(menu, products, orderedProducts)
-        val content = Content(tabs, items)
-
-        return Result.Success(content)
-    }
-
-    private suspend fun getMenu(menuId: String) = when (val result = getMenuUseCase(menuId)) {
-        is Result.Success -> {
-            result.data
-        }
-        is Result.Error -> {
-            null
+            val tabs = menu.categories.toCategoryTabs()
+            val items = obtainMenuContentUIItems(menu, products, orderedProducts)
+            val content = Content(tabs, items)
+            Result.Success(content)
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            logger.warn(e.stackTraceToString(), e)
+            Result.Error(e)
         }
     }
 
-    private suspend fun getMenuProducts(menuId: String) = when (val result = getMenuProductsUseCase(menuId)) {
-        is Result.Success -> {
-            result.data
-        }
-        is Result.Error -> {
-            null
-        }
+    private suspend fun getMenu(menuId: String): Menu {
+        val result = getMenuUseCase(menuId) as Result.Success
+        return result.data
+    }
+
+    private suspend fun getMenuProducts(menuId: String): List<Product> {
+        val result = getMenuProductsUseCase(menuId) as Result.Success
+        return result.data
     }
 
     private fun List<Category>?.toCategoryTabs(): List<CategoryTab> {
