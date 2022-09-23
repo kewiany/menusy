@@ -13,7 +13,6 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
@@ -24,6 +23,7 @@ import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
 import xyz.kewiany.menusy.presentation.utils.ProductUiItem
+import xyz.kewiany.menusy.test.common.BaseTest
 import kotlin.random.Random
 
 class SearchViewModelTest : BaseTest() {

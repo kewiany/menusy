@@ -10,7 +10,6 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
-import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.core.MainViewModel
@@ -19,6 +18,7 @@ import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.SetSearchTextUseCase
+import xyz.kewiany.menusy.test.common.BaseTest
 import kotlin.random.Random
 
 class MainViewModelTest : BaseTest() {

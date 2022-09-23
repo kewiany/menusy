@@ -17,8 +17,8 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import xyz.kewiany.menusy.core.DefaultDispatcherProvider
-import xyz.kewiany.menusy.core.DispatcherProvider
+import xyz.kewiany.menusy.common.DefaultDispatcherProvider
+import xyz.kewiany.menusy.common.DispatcherProvider
 import xyz.kewiany.menusy.data.source.local.SearchTextHolder
 import xyz.kewiany.menusy.data.source.local.SearchTextHolderImpl
 import xyz.kewiany.menusy.data.source.local.db.AppDatabase

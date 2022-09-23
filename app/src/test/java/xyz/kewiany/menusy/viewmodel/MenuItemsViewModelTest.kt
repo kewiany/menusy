@@ -14,12 +14,11 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
-import xyz.kewiany.menusy.BaseTest
-import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.presentation.features.common.GetMenuContentFacade
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
+import xyz.kewiany.menusy.test.common.BaseTest
 
 class MenuItemsViewModelTest : BaseTest() {
 

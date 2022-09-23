@@ -9,12 +9,12 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
-import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
+import xyz.kewiany.menusy.test.common.BaseTest
 
 class MenuEntryViewModelTest : BaseTest() {
 

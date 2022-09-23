@@ -45,7 +45,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerExtensionVersion = "1.3.1"
     }
     packagingOptions {
         resources {
@@ -55,6 +55,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":common"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
     implementation(Library.AndroidX.core)
     implementation(Library.AndroidX.composeUi)
     implementation(Library.AndroidX.composeMaterial)
@@ -64,7 +68,6 @@ dependencies {
     implementation(Library.AndroidX.activityCompose)
     implementation(Library.AndroidX.navigationRuntime)
     implementation(Library.AndroidX.navigationCompose)
-    implementation(Library.AndroidX.hilt)
     implementation(Library.AndroidX.hiltNavigation)
     implementation(Library.AndroidX.splashScreen)
     implementation(Library.AndroidX.room)
@@ -76,6 +79,7 @@ dependencies {
     kapt(Library.hiltCompiler)
     implementation(Library.gson)
     implementation(Library.slf4j)
+    testImplementation(project(":test-common"))
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.coroutines)
     testImplementation(TestLibrary.mockk)

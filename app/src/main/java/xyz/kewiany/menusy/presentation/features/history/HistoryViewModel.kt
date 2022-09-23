@@ -4,12 +4,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.domain.model.HistoryProduct
-import xyz.kewiany.menusy.domain.model.asUIItem
 import xyz.kewiany.menusy.domain.usecase.order.GetOrdersFromHistoryUseCase
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.State
 import xyz.kewiany.menusy.presentation.utils.BaseViewModel
 import xyz.kewiany.menusy.presentation.utils.HistoryUiItem
+import xyz.kewiany.menusy.presentation.utils.asUIItem
 import javax.inject.Inject
 
 @HiltViewModel

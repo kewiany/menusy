@@ -9,11 +9,11 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import xyz.kewiany.menusy.BaseTest
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
+import xyz.kewiany.menusy.test.common.BaseTest
 
 class OrderViewModelTest : BaseTest() {
 

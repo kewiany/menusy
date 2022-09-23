@@ -2,6 +2,7 @@ import xyz.kewiany.menusy.domain.model.*
 import xyz.kewiany.menusy.presentation.features.common.Content
 import xyz.kewiany.menusy.presentation.features.menu.items.CategoryTab
 import xyz.kewiany.menusy.presentation.utils.UiItem
+import xyz.kewiany.menusy.presentation.utils.asUIItem
 import kotlin.random.Random
 
 //package xyz.kewiany.menusy

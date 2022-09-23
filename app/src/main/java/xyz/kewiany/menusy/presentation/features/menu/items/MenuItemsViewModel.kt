@@ -8,8 +8,8 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.common.DispatcherProvider
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.core.DispatcherProvider
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.presentation.features.common.GetMenuContentFacade
 import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event

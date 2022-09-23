@@ -1,5 +1,8 @@
 package xyz.kewiany.menusy.presentation.utils
 
+import xyz.kewiany.menusy.domain.model.HistoryOrder
+import xyz.kewiany.menusy.domain.model.HistoryProduct
+
 interface HistoryUiItem : UiItem
 
 data class HistoryOrderUiItem(
@@ -18,3 +21,20 @@ data class HistoryProductUiItem(
     val price: String,
     val quantity: String
 ) : HistoryUiItem
+
+fun HistoryProduct.asUIItem() = HistoryProductUiItem(
+    id = productId.toString(),
+    name = name,
+    description = description,
+    price = price.toString(),
+    quantity = quantity.toString()
+)
+
+fun HistoryOrder.asUIItem() = HistoryOrderUiItem(
+    id = orderId.toString(),
+    date = date,
+    totalPrice = totalPrice.toString(),
+    totalQuantity = totalQuantity.toString(),
+    placeName = placeName,
+    placeAddress = placeAddress
+)

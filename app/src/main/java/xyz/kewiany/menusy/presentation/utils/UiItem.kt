@@ -3,7 +3,6 @@ package xyz.kewiany.menusy.presentation.utils
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
-import xyz.kewiany.menusy.domain.model.asUIItem
 
 interface UiItem {
     val id: String
