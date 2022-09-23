@@ -1,5 +1,6 @@
 package xyz.kewiany.menusy.presentation.utils
 
+import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.domain.model.Product
 
 data class ProductUiItem(

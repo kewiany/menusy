@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.history
+package xyz.kewiany.menusy.feature.history.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel.Event
-import xyz.kewiany.menusy.presentation.utils.HistoryOrderUiItem
-import xyz.kewiany.menusy.presentation.utils.HistoryProductUiItem
+import xyz.kewiany.menusy.feature.history.*
+import xyz.kewiany.menusy.feature.history.HistoryViewModel.Event
 
 @Composable
 fun HistoryScreen(
@@ -22,12 +21,12 @@ fun HistoryScreen(
         eventHandler(Event.TriggerLoadHistory)
     }
     Box(modifier = Modifier.fillMaxSize()) {
-        val items = state.value.items
-        if (items.isNotEmpty()) {
+        val data = state.value.items
+        if (data.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(1f),
             ) {
-                items(state.value.items) { item ->
+                items(data) { item ->
                     when (item) {
                         is HistoryOrderUiItem -> {
                             HistoryOrderItem(

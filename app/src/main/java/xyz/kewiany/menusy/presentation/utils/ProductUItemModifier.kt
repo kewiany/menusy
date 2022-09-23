@@ -1,5 +1,7 @@
 package xyz.kewiany.menusy.presentation.utils
 
+import xyz.kewiany.menusy.common.UiItem
+
 object ProductUItemModifier {
 
     fun select(items: List<UiItem>, productId: String): Pair<Int, MutableList<UiItem>> {
@@ -20,10 +22,6 @@ object ProductUItemModifier {
             add(index, newProduct)
         }
         return quantity to itemsWithSelectedProduct
-    }
-
-    fun delete(items: List<UiItem>, productId: String) {
-
     }
 
     fun decreaseQuantity(items: List<UiItem>, productId: String): Pair<Int, List<UiItem>> {

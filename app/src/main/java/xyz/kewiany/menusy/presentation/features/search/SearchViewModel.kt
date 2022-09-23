@@ -7,7 +7,10 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.android.common.BaseViewModel
+import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.common.Result
+import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
@@ -15,7 +18,9 @@ import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.State
-import xyz.kewiany.menusy.presentation.utils.*
+import xyz.kewiany.menusy.presentation.utils.ChangeQuantityException
+import xyz.kewiany.menusy.presentation.utils.ProductUItemModifier
+import xyz.kewiany.menusy.presentation.utils.obtainMenuContentUIItems
 import javax.inject.Inject
 
 @HiltViewModel

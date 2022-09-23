@@ -1,6 +1,8 @@
 plugins {
     id(BuildPlugin.androidLibrary)
     id(BuildPlugin.kotlinAndroid)
+    id(BuildPlugin.kotlinKapt)
+    id(BuildPlugin.hilt)
 }
 
 android {
@@ -18,7 +20,11 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":domain"))
-    implementation(Library.AndroidX.dataStore)
-    implementation(Library.gson)
+    implementation(Library.AndroidX.core)
+    implementation(Library.AndroidX.lifecycle)
+    implementation(Library.AndroidX.viewModel)
+    implementation(Library.AndroidX.hiltNavigation)
+    kapt(Library.AndroidX.hiltCompiler)
+    api(Library.hilt)
+    kapt(Library.hiltCompiler)
 }

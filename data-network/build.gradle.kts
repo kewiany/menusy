@@ -10,8 +10,5 @@ java {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
-    implementation(Library.coroutines)
     implementation(Library.gson)
-    implementation(Library.slf4j)
-    implementation(Library.javaxinject)
 }

@@ -9,9 +9,6 @@ java {
 
 dependencies {
     implementation(project(":common"))
-    implementation(Library.coroutines)
-    implementation(Library.slf4j)
-    implementation(Library.javaxinject)
     testImplementation(project(":test-common"))
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.coroutines)

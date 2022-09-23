@@ -15,10 +15,12 @@ dependencyResolutionManagement {
 }
 
 include(":app")
+include(":android-common")
+include(":common")
+include(":test-common")
 include(":data")
 include(":data-database")
 include(":data-network")
 include(":data-datastore")
 include(":domain")
-include(":common")
-include(":test-common")
+include(":feature-history")

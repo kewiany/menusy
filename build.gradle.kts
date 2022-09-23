@@ -3,6 +3,7 @@ plugins {
     id(BuildPlugin.androidLibrary) version "7.3.0-alpha01" apply false
     id(BuildPlugin.kotlinAndroid) version Versions.kotlin apply false
     id(BuildPlugin.koverPlugin) version "0.4.3"
+    id("org.jetbrains.kotlin.jvm") version "1.7.0" apply false
 }
 
 buildscript {

@@ -32,7 +32,4 @@ dependencies {
     implementation(Library.AndroidX.roomKtx)
     annotationProcessor(Library.AndroidX.roomCompiler)
     kapt(Library.AndroidX.roomCompiler)
-    implementation(Library.coroutines)
-    implementation(Library.slf4j)
-    implementation(Library.javaxinject)
 }

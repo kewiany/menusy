@@ -3,6 +3,7 @@ package xyz.kewiany.menusy.presentation.features.common
 import kotlinx.coroutines.CancellationException
 import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.common.Result
+import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.domain.model.Category
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.Product
@@ -10,7 +11,6 @@ import xyz.kewiany.menusy.domain.usecase.menu.GetMenuProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.presentation.features.menu.items.CategoryTab
-import xyz.kewiany.menusy.presentation.utils.UiItem
 import xyz.kewiany.menusy.presentation.utils.obtainMenuContentUIItems
 import javax.inject.Inject
 

@@ -33,6 +33,7 @@ object Library {
         const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
         const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
         const val splashScreen = "androidx.core:core-splashscreen:1.0.0-beta01"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     }
 }
 

@@ -21,7 +21,6 @@ import xyz.kewiany.menusy.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.presentation.utils.BottomBar
 import xyz.kewiany.menusy.presentation.utils.TopBar
-import xyz.kewiany.menusy.ui.NavGraph
 
 @HiltAndroidApp
 class App : Application()

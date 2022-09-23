@@ -3,7 +3,9 @@ package xyz.kewiany.menusy.presentation.features.language
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.android.common.BaseViewModel
 import xyz.kewiany.menusy.common.DispatcherProvider
+import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.domain.usecase.language.GetCurrentLanguageUseCase
@@ -11,8 +13,6 @@ import xyz.kewiany.menusy.domain.usecase.language.GetLanguagesUseCase
 import xyz.kewiany.menusy.domain.usecase.language.SetLanguageUseCase
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.State
-import xyz.kewiany.menusy.presentation.utils.BaseViewModel
-import xyz.kewiany.menusy.presentation.utils.Loggable
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.history
+package xyz.kewiany.menusy.feature.history
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,35 +10,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-@Composable fun HistoryProductItem(
-    name: String,
-    description: String,
-    price: String,
-    quantity: String
+@Composable fun HistoryOrderItem(
+    date: String,
+    totalPrice: String,
+    totalQuantity: String,
+    placeName: String,
+    placeAddress: String
 ) {
     Column(
         modifier = Modifier
-            .background(Color.Yellow)
+            .background(Color.Magenta)
             .padding(10.dp)
     ) {
         Row {
             Text(
-                text = name,
+                text = date,
                 modifier = Modifier.weight(0.8f)
             )
             Text(
-                text = price,
+                text = totalPrice,
+                modifier = Modifier.weight(0.2f)
+            )
+            Text(
+                text = totalQuantity,
                 modifier = Modifier.weight(0.2f)
             )
         }
         Row {
             Text(
-                text = quantity
+                text = placeName,
+                modifier = Modifier.weight(0.5f)
             )
-        }
-        Row {
             Text(
-                text = description
+                text = placeAddress,
+                modifier = Modifier.weight(0.5f)
             )
         }
     }

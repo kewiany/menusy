@@ -1,12 +1,9 @@
 package xyz.kewiany.menusy.presentation.utils
 
+import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.model.Product
-
-interface UiItem {
-    val id: String
-}
 
 fun obtainMenuContentUIItems(
     products: List<Product>,
@@ -29,7 +26,6 @@ fun obtainMenuContentUIItems(
     val groupedProductsByCategory = products.groupBy { it.categoryId }.entries
     groupedProductsByCategory.forEach { (categoryId, products) ->
         val category = menu.categories?.find { it.id == categoryId }
-
         category?.asUIItem()?.also(items::add)
 
         val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
@@ -48,7 +44,7 @@ private fun matchProductsWithOrderedProducts(
 
         if (matchedProductWithOrderedProduct != null) {
             val orderedQuantity = matchedProductWithOrderedProduct.quantity
-            matchedProductWithOrderedProduct?.product
+            matchedProductWithOrderedProduct.product
             product.asUIItem(orderedQuantity)
         } else {
             product.asUIItem()

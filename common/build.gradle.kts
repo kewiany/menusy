@@ -8,6 +8,7 @@ java {
 }
 
 dependencies {
-    implementation(Library.coroutines)
-    implementation(Library.javaxinject)
+    api(Library.coroutines)
+    api(Library.javaxinject)
+    api(Library.slf4j)
 }

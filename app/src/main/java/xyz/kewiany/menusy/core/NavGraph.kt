@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.ui
+package xyz.kewiany.menusy.core
 
 import android.app.Activity
 import androidx.compose.runtime.Composable
@@ -13,9 +13,8 @@ import androidx.navigation.compose.dialog
 import dagger.hilt.android.EntryPointAccessors
 import xyz.kewiany.menusy.common.navigation.MENU_ID
 import xyz.kewiany.menusy.common.navigation.NavigationDirections
-import xyz.kewiany.menusy.core.MainActivity
-import xyz.kewiany.menusy.presentation.features.history.HistoryScreen
-import xyz.kewiany.menusy.presentation.features.history.HistoryViewModel
+import xyz.kewiany.menusy.feature.history.HistoryViewModel
+import xyz.kewiany.menusy.feature.history.ui.HistoryScreen
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageScreen
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryScreen

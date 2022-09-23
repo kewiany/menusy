@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.utils
+package xyz.kewiany.menusy.common
 
 import org.slf4j.Logger
 

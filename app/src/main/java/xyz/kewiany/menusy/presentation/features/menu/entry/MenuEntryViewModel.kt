@@ -3,7 +3,9 @@ package xyz.kewiany.menusy.presentation.features.menu.entry
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.android.common.BaseViewModel
 import xyz.kewiany.menusy.common.DispatcherProvider
+import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.common.navigation.Navigator
@@ -11,8 +13,6 @@ import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.State
-import xyz.kewiany.menusy.presentation.utils.BaseViewModel
-import xyz.kewiany.menusy.presentation.utils.Loggable
 import xyz.kewiany.menusy.presentation.utils.SingleEvent
 import javax.inject.Inject
 

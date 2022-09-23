@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.utils
+package xyz.kewiany.menusy.android.common
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import xyz.kewiany.menusy.common.userEvent
 
 abstract class BaseViewModel<State : Any, Event : Any>(initialState: State) : ViewModel() {
 

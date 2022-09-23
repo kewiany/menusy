@@ -3,14 +3,14 @@ package xyz.kewiany.menusy.presentation.features.order
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import xyz.kewiany.menusy.android.common.BaseViewModel
+import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.usecase.order.DeleteOrderedProductUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.State
-import xyz.kewiany.menusy.presentation.utils.BaseViewModel
-import xyz.kewiany.menusy.presentation.utils.Loggable
 import javax.inject.Inject
 
 @HiltViewModel
