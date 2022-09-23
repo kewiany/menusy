@@ -19,9 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import xyz.kewiany.menusy.common.DefaultDispatcherProvider
 import xyz.kewiany.menusy.common.DispatcherProvider
-import xyz.kewiany.menusy.data.source.local.SearchTextHolder
-import xyz.kewiany.menusy.data.source.local.SearchTextHolderImpl
-import xyz.kewiany.menusy.data.source.local.db.AppDatabase
+import xyz.kewiany.menusy.data.datastore.SearchTextHolder
+import xyz.kewiany.menusy.data.datastore.SearchTextHolderImpl
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -44,8 +43,12 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(context: Context): AppDatabase {
-        val database = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "database")
+    fun provideDatabase(context: Context): xyz.kewiany.menusy.data.database.AppDatabase {
+        val database = Room.databaseBuilder(
+            context.applicationContext,
+            xyz.kewiany.menusy.data.database.AppDatabase::class.java,
+            "database"
+        )
         return database.build()
     }
 

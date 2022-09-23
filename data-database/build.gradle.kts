@@ -1,14 +1,18 @@
 plugins {
     id(BuildPlugin.androidLibrary)
     id(BuildPlugin.kotlinAndroid)
+    id(BuildPlugin.kotlinKapt)
 }
 
 android {
     compileSdk = AndroidSdkVersions.compile
 
     defaultConfig {
-        minSdk = AndroidSdkVersions.min
-        targetSdk = AndroidSdkVersions.target
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     compileOptions {
@@ -24,16 +28,11 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
-    api(project(":data-database"))
-    api(project(":data-datastore"))
-    api(project(":data-network"))
-    implementation(Library.AndroidX.core)
+    implementation(Library.AndroidX.room)
+    implementation(Library.AndroidX.roomKtx)
+    annotationProcessor(Library.AndroidX.roomCompiler)
+    kapt(Library.AndroidX.roomCompiler)
     implementation(Library.coroutines)
     implementation(Library.slf4j)
     implementation(Library.javaxinject)
-    testImplementation(project(":test-common"))
-    testImplementation(TestLibrary.junit)
-    testImplementation(TestLibrary.coroutines)
-    testImplementation(TestLibrary.mockk)
-    testImplementation(TestLibrary.turbine)
 }

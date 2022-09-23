@@ -4,7 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import xyz.kewiany.menusy.data.source.local.*
+import xyz.kewiany.menusy.data.datastore.PlaceDataStore
+import xyz.kewiany.menusy.data.datastore.PlaceDataStoreImpl
+import xyz.kewiany.menusy.data.datastore.PreferenceDataStore
+import xyz.kewiany.menusy.data.datastore.PreferenceDataStoreImpl
 import javax.inject.Singleton
 
 
@@ -19,12 +22,4 @@ interface DataStoreModule {
     @Singleton
     @Binds
     fun bindsPreferenceDataStore(impl: PreferenceDataStoreImpl): PreferenceDataStore
-
-    @Singleton
-    @Binds
-    fun bindsOrderDataStore(impl: OrderDataStoreImpl): OrderDataStore
-
-    @Singleton
-    @Binds
-    fun bindsOrderedProductsDataStore(impl: OrderedProductsDataStoreImpl): OrderedProductsDataStore
 }

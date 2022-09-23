@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import xyz.kewiany.menusy.data.source.local.dao.CacheDao
-import xyz.kewiany.menusy.data.source.local.dao.OrderDao
-import xyz.kewiany.menusy.data.source.local.dao.ProductDao
-import xyz.kewiany.menusy.data.source.local.db.AppDatabase
+import xyz.kewiany.menusy.data.database.AppDatabase
+import xyz.kewiany.menusy.data.database.dao.CacheDao
+import xyz.kewiany.menusy.data.database.dao.OrderDao
+import xyz.kewiany.menusy.data.database.dao.ProductDao
 
 @Module
 @InstallIn(SingletonComponent::class)

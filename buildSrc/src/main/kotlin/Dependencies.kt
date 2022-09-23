@@ -2,7 +2,6 @@ object BuildPlugin {
     const val androidApplication = "com.android.application"
     const val androidLibrary = "com.android.library"
     const val kotlinAndroid = "org.jetbrains.kotlin.android"
-    const val kotlinAndroidExtensions = "kotlin-android-extensions"
     const val kotlinKapt = "kotlin-kapt"
     const val hilt = "dagger.hilt.android.plugin"
     const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"

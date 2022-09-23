@@ -4,12 +4,12 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import xyz.kewiany.menusy.data.source.remote.MenuService
-import xyz.kewiany.menusy.data.source.remote.PlaceService
-import xyz.kewiany.menusy.data.source.remote.ProductService
-import xyz.kewiany.menusy.data.source.remote.api.MenuApi
-import xyz.kewiany.menusy.data.source.remote.api.PlaceApi
-import xyz.kewiany.menusy.data.source.remote.api.ProductApi
+import xyz.kewiany.menusy.data.network.MenuService
+import xyz.kewiany.menusy.data.network.PlaceService
+import xyz.kewiany.menusy.data.network.ProductService
+import xyz.kewiany.menusy.data.network.api.MenuApi
+import xyz.kewiany.menusy.data.network.api.PlaceApi
+import xyz.kewiany.menusy.data.network.api.ProductApi
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
