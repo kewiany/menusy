@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.order
+package xyz.kewiany.menusy.feature.order
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
+import xyz.kewiany.menusy.feature.order.OrderViewModel.Event
 
 @Composable
 fun OrderScreen(

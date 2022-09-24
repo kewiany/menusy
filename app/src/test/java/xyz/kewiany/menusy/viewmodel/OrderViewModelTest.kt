@@ -11,8 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
-import xyz.kewiany.menusy.presentation.features.order.OrderViewModel
-import xyz.kewiany.menusy.presentation.features.order.OrderViewModel.Event
+import xyz.kewiany.menusy.feature.order.OrderViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
 
 class OrderViewModelTest : BaseTest() {
@@ -28,7 +27,7 @@ class OrderViewModelTest : BaseTest() {
         coJustRun { this@mockk.invoke() }
     }
 
-    private fun viewModel() = OrderViewModel(
+    private fun viewModel() = xyz.kewiany.menusy.feature.order.OrderViewModel(
         getOrderedProductsUseCase,
         purchaseUseCase
     )

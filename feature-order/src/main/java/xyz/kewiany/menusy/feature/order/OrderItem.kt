@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.order
+package xyz.kewiany.menusy.feature.order
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
