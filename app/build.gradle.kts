@@ -65,8 +65,6 @@ dependencies {
     implementation(project(":feature-menu"))
 
     implementation(Library.AndroidX.dataStore)
-    implementation(Library.AndroidX.lifecycle)
-    implementation(Library.AndroidX.activityCompose)
     implementation(Library.AndroidX.navigationRuntime)
     implementation(Library.AndroidX.navigationCompose)
     implementation(Library.AndroidX.hiltNavigation)

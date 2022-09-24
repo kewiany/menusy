@@ -37,13 +37,6 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
 
-    implementation(Library.AndroidX.core)
-    implementation(Library.AndroidX.composeUi)
-    implementation(Library.AndroidX.composeMaterial)
-    implementation(Library.AndroidX.composeUiTooling)
-    implementation(Library.AndroidX.lifecycle)
-    implementation(Library.AndroidX.activityCompose)
-
     kapt(Library.AndroidX.hiltCompiler)
     kapt(Library.hiltCompiler)
 

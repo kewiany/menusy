@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":model"))
     api(Library.AndroidX.core)
     api(Library.AndroidX.lifecycle)
-
     api(Library.AndroidX.composeUi)
     api(Library.AndroidX.composeMaterial)
     api(Library.AndroidX.composeUiTooling)
