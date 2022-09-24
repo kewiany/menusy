@@ -9,11 +9,10 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
+import xyz.kewiany.menusy.android.common.navigation.Navigator
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
-import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel
-import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel.Event
+import xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
 
 class MenuEntryViewModelTest : BaseTest() {
@@ -28,12 +27,13 @@ class MenuEntryViewModelTest : BaseTest() {
         coEvery { this@mockk.invoke(any()) } returns Result.Success(menus)
     }
 
-    private fun viewModel(): MenuEntryViewModel = MenuEntryViewModel(
-        navigator,
-        getPlaceUseCase,
-        getMenusUseCase,
-        testDispatcherProvider
-    )
+    private fun viewModel(): xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel =
+        xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel(
+            navigator,
+            getPlaceUseCase,
+            getMenusUseCase,
+            testDispatcherProvider
+        )
 
     @Test
     fun when_triggerLoadMenusSuccess_then_setMenus_and_setLoading() = testScope.runTest {

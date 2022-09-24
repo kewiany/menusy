@@ -5,8 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.domain.model.Menu
 import xyz.kewiany.menusy.domain.repository.MenuRepository
+import xyz.kewiany.menusy.model.Menu
 import javax.inject.Inject
 
 class GetMenuUseCase @Inject constructor(private val menuRepository: MenuRepository) {

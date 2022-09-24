@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.common
 
-import xyz.kewiany.menusy.domain.model.OrderedProduct
+import xyz.kewiany.menusy.model.OrderedProduct
 import java.math.BigDecimal
 
 data class OrderedProductsData(

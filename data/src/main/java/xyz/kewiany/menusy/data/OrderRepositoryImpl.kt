@@ -11,10 +11,10 @@ import xyz.kewiany.menusy.data.database.entity.toCachedOrderedProduct
 import xyz.kewiany.menusy.data.database.entity.toOrderedProduct
 import xyz.kewiany.menusy.data.database.entity.toProductEntity
 import xyz.kewiany.menusy.data.datastore.PlaceDataStore
-import xyz.kewiany.menusy.domain.model.OrderedProduct
-import xyz.kewiany.menusy.domain.model.OrderedProductsData
-import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.OrderRepository
+import xyz.kewiany.menusy.model.OrderedProduct
+import xyz.kewiany.menusy.model.OrderedProductsData
+import xyz.kewiany.menusy.model.Product
 import java.math.BigDecimal
 import java.math.RoundingMode
 import javax.inject.Inject

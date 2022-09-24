@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.domain.repository
 
-import xyz.kewiany.menusy.domain.model.HistoryOrder
+import xyz.kewiany.menusy.model.HistoryOrder
 
 interface HistoryRepository {
     suspend fun getHistoryOrders(): List<HistoryOrder>

@@ -1,7 +1,7 @@
 package xyz.kewiany.menusy.domain.usecase.language
 
-import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.domain.repository.SettingsRepository
+import xyz.kewiany.menusy.model.Language
 import javax.inject.Inject
 
 class SetLanguageUseCase @Inject constructor(private val settingsRepository: SettingsRepository) {

@@ -2,8 +2,8 @@ package xyz.kewiany.menusy.data
 
 import xyz.kewiany.menusy.data.datastore.PlaceDataStore
 import xyz.kewiany.menusy.data.network.api.PlaceApi
-import xyz.kewiany.menusy.domain.model.Place
 import xyz.kewiany.menusy.domain.repository.PlaceRepository
+import xyz.kewiany.menusy.model.Place
 import javax.inject.Inject
 
 class PlaceRepositoryImpl @Inject constructor(

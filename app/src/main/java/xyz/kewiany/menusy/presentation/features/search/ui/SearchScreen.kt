@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import xyz.kewiany.menusy.common.ui.ErrorDialog
-import xyz.kewiany.menusy.presentation.features.menu.items.ui.ProductItem
+import xyz.kewiany.menusy.android.common.ProductUiItem
+import xyz.kewiany.menusy.android.common.ui.ErrorDialog
+import xyz.kewiany.menusy.android.common.ui.ProgressBar
+import xyz.kewiany.menusy.feature.menu.items.ui.ProductItem
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
-import xyz.kewiany.menusy.presentation.utils.ProductUiItem
-import xyz.kewiany.menusy.presentation.utils.ProgressBar
 
 @Composable
 fun SearchScreen(

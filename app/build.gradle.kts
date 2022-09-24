@@ -62,11 +62,8 @@ dependencies {
     implementation(project(":domain"))
 
     implementation(project(":feature-history"))
+    implementation(project(":feature-menu"))
 
-    implementation(Library.AndroidX.core)
-    implementation(Library.AndroidX.composeUi)
-    implementation(Library.AndroidX.composeMaterial)
-    implementation(Library.AndroidX.composeUiTooling)
     implementation(Library.AndroidX.dataStore)
     implementation(Library.AndroidX.lifecycle)
     implementation(Library.AndroidX.activityCompose)

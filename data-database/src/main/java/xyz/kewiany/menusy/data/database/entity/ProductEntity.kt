@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import xyz.kewiany.menusy.data.database.entity.ProductEntity.Companion.TABLE_NAME
-import xyz.kewiany.menusy.domain.model.HistoryProduct
-import xyz.kewiany.menusy.domain.model.OrderedProduct
+import xyz.kewiany.menusy.model.HistoryProduct
+import xyz.kewiany.menusy.model.OrderedProduct
 
 @Entity(tableName = TABLE_NAME)
 data class ProductEntity(

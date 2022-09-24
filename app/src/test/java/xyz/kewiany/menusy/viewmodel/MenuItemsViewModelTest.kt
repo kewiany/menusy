@@ -15,9 +15,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
+import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.presentation.features.common.GetMenuContentFacade
-import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
-import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
 
 class MenuItemsViewModelTest : BaseTest() {
@@ -48,7 +47,7 @@ class MenuItemsViewModelTest : BaseTest() {
         coJustRun { this@mockk.invoke(any(), any()) }
     }
 
-    private fun viewModel() = MenuItemsViewModel(
+    private fun viewModel() = xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel(
         getMenuContentFacade,
         updateOrderUseCase,
         menuId,

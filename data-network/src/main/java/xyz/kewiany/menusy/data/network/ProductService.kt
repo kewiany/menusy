@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.data.network
 import xyz.kewiany.menusy.data.network.api.ProductApi
 import xyz.kewiany.menusy.data.network.response.ProductResponse
 import xyz.kewiany.menusy.data.network.response.ProductsResponse
-import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.model.Product
 import javax.inject.Inject
 
 class ProductService @Inject constructor() : ProductApi {

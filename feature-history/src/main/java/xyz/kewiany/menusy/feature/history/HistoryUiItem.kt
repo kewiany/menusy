@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy.feature.history
 
 import xyz.kewiany.menusy.common.UiItem
-import xyz.kewiany.menusy.domain.model.HistoryOrder
-import xyz.kewiany.menusy.domain.model.HistoryProduct
+import xyz.kewiany.menusy.model.HistoryOrder
+import xyz.kewiany.menusy.model.HistoryProduct
 
 interface HistoryUiItem : UiItem
 

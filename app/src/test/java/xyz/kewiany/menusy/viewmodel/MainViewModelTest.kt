@@ -10,8 +10,8 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
-import xyz.kewiany.menusy.common.navigation.NavigationDirections
-import xyz.kewiany.menusy.common.navigation.Navigator
+import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
+import xyz.kewiany.menusy.android.common.navigation.Navigator
 import xyz.kewiany.menusy.core.MainViewModel
 import xyz.kewiany.menusy.core.MainViewModel.Event
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase

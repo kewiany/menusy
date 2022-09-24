@@ -1,8 +1,8 @@
 package xyz.kewiany.menusy.data
 
 import xyz.kewiany.menusy.data.network.api.ProductApi
-import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.ProductRepository
+import xyz.kewiany.menusy.model.Product
 import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(

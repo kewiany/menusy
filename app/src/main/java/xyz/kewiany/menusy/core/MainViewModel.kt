@@ -5,9 +5,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import xyz.kewiany.menusy.android.common.BaseViewModel
+import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
+import xyz.kewiany.menusy.android.common.navigation.Navigator
 import xyz.kewiany.menusy.common.Loggable
-import xyz.kewiany.menusy.common.navigation.NavigationDirections
-import xyz.kewiany.menusy.common.navigation.Navigator
 import xyz.kewiany.menusy.core.MainViewModel.Event
 import xyz.kewiany.menusy.core.MainViewModel.State
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsCountUseCase

@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.domain.repository
 
-import xyz.kewiany.menusy.domain.model.Menu
+import xyz.kewiany.menusy.model.Menu
 
 interface MenuRepository {
     suspend fun getMenus(placeId: String): List<Menu>

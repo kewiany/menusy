@@ -1,6 +1,6 @@
 package xyz.kewiany.menusy.domain.repository
 
-import xyz.kewiany.menusy.domain.model.Product
+import xyz.kewiany.menusy.model.Product
 
 interface ProductRepository {
     suspend fun getProduct(id: String): Product

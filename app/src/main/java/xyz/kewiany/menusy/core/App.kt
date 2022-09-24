@@ -17,8 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import xyz.kewiany.menusy.common.navigation.NavigationDirections
-import xyz.kewiany.menusy.common.navigation.Navigator
+import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
+import xyz.kewiany.menusy.android.common.navigation.Navigator
 import xyz.kewiany.menusy.presentation.utils.BottomBar
 import xyz.kewiany.menusy.presentation.utils.TopBar
 

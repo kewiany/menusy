@@ -3,8 +3,8 @@ package xyz.kewiany.menusy.data.network
 import xyz.kewiany.menusy.data.network.api.MenuApi
 import xyz.kewiany.menusy.data.network.response.MenuResponse
 import xyz.kewiany.menusy.data.network.response.MenusResponse
-import xyz.kewiany.menusy.domain.model.Category
-import xyz.kewiany.menusy.domain.model.Menu
+import xyz.kewiany.menusy.model.Category
+import xyz.kewiany.menusy.model.Menu
 import javax.inject.Inject
 
 class MenuService @Inject constructor() : MenuApi {

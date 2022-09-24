@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import xyz.kewiany.menusy.domain.model.Place
+import xyz.kewiany.menusy.model.Place
 import javax.inject.Inject
 
 interface PlaceDataStore {

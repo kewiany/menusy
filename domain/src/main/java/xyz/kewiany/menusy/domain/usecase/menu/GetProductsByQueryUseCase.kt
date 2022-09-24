@@ -5,8 +5,8 @@ import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.common.DispatcherProvider
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.domain.model.Product
 import xyz.kewiany.menusy.domain.repository.ProductRepository
+import xyz.kewiany.menusy.model.Product
 import javax.inject.Inject
 
 class GetProductsByQueryUseCase @Inject constructor(

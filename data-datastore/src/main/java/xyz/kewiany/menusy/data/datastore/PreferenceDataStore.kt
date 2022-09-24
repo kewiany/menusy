@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import xyz.kewiany.menusy.domain.model.Language
+import xyz.kewiany.menusy.model.Language
 import javax.inject.Inject
 
 interface PreferenceDataStore {

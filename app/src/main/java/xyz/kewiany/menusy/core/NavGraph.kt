@@ -11,16 +11,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import dagger.hilt.android.EntryPointAccessors
-import xyz.kewiany.menusy.common.navigation.MENU_ID
-import xyz.kewiany.menusy.common.navigation.NavigationDirections
+import xyz.kewiany.menusy.android.common.navigation.MENU_ID
+import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.feature.history.HistoryViewModel
 import xyz.kewiany.menusy.feature.history.ui.HistoryScreen
+import xyz.kewiany.menusy.feature.menu.entry.ui.MenuEntryScreen
+import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel
+import xyz.kewiany.menusy.feature.menu.items.ui.MenuItemsScreen
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageScreen
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
-import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryScreen
-import xyz.kewiany.menusy.presentation.features.menu.entry.MenuEntryViewModel
-import xyz.kewiany.menusy.presentation.features.menu.items.MenuItemsViewModel
-import xyz.kewiany.menusy.presentation.features.menu.items.ui.MenuItemsScreen
 import xyz.kewiany.menusy.presentation.features.order.OrderScreen
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel
 import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
@@ -89,7 +88,7 @@ private fun WelcomeDestination() {
 
 @Composable
 private fun MenuEntryDestination() {
-    val viewModel: MenuEntryViewModel = hiltViewModel()
+    val viewModel: xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel = hiltViewModel()
     MenuEntryScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler,
@@ -105,7 +104,12 @@ private fun MenuItemsDestination(
         MainActivity.ViewModelFactoryProvider::class.java
     ).menuItemsViewModelFactory()
 
-    val viewModel = viewModel<MenuItemsViewModel>(factory = MenuItemsViewModel.provideFactory(factory, menuId))
+    val viewModel = viewModel<MenuItemsViewModel>(
+        factory = MenuItemsViewModel.provideFactory(
+            factory,
+            menuId
+        )
+    )
     MenuItemsScreen(
         menuId = menuId,
         state = viewModel.state.collectAsState(),

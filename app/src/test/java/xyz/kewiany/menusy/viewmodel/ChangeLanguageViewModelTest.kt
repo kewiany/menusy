@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import xyz.kewiany.menusy.common.navigation.Navigator
+import xyz.kewiany.menusy.android.common.navigation.Navigator
 import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.domain.usecase.language.GetCurrentLanguageUseCase
 import xyz.kewiany.menusy.domain.usecase.language.GetLanguagesUseCase

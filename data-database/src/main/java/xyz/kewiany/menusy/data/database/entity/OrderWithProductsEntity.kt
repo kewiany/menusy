@@ -2,7 +2,7 @@ package xyz.kewiany.menusy.data.database.entity
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import xyz.kewiany.menusy.domain.model.HistoryOrder
+import xyz.kewiany.menusy.model.HistoryOrder
 
 data class OrderWithProductsEntity(
     @Embedded val order: OrderEntity,

@@ -2,7 +2,7 @@ package xyz.kewiany.menusy.data.network
 
 import xyz.kewiany.menusy.data.network.api.PlaceApi
 import xyz.kewiany.menusy.data.network.response.PlaceResponse
-import xyz.kewiany.menusy.domain.model.Place
+import xyz.kewiany.menusy.model.Place
 import javax.inject.Inject
 import kotlin.random.Random
 

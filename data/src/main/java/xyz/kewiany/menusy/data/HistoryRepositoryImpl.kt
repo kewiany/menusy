@@ -3,8 +3,8 @@ package xyz.kewiany.menusy.data
 import xyz.kewiany.menusy.data.database.dao.OrderDao
 import xyz.kewiany.menusy.data.database.entity.OrderWithProductsEntity
 import xyz.kewiany.menusy.data.database.entity.toHistoryOrder
-import xyz.kewiany.menusy.domain.model.HistoryOrder
 import xyz.kewiany.menusy.domain.repository.HistoryRepository
+import xyz.kewiany.menusy.model.HistoryOrder
 import javax.inject.Inject
 
 class HistoryRepositoryImpl @Inject constructor(

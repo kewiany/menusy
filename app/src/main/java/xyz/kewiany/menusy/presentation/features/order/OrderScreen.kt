@@ -22,11 +22,11 @@ fun OrderScreen(
         eventHandler(Event.TriggerLoadOrder)
     }
     Column {
-        val items = state.value.results
+        val data = state.value.results
         Box(modifier = Modifier.weight(1f)) {
-            if (items.isNotEmpty()) {
+            if (data.isNotEmpty()) {
                 LazyColumn {
-                    items(items) { item ->
+                    items(data) { item ->
                         val productId = item.product.id
                         OrderItem(
                             name = item.product.name,
@@ -42,7 +42,7 @@ fun OrderScreen(
                 Text(text = "No order")
             }
         }
-        if (items.isNotEmpty()) {
+        if (data.isNotEmpty()) {
             Row {
                 Text(
                     text = "Total (${state.value.totalQuantity.toString()})",
