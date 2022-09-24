@@ -22,8 +22,6 @@ import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageScreen
 import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
 import xyz.kewiany.menusy.presentation.features.order.OrderScreen
 import xyz.kewiany.menusy.presentation.features.order.OrderViewModel
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
-import xyz.kewiany.menusy.presentation.features.search.ui.SearchScreen
 import xyz.kewiany.menusy.presentation.features.welcome.WelcomeScreen
 import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel
 
@@ -139,8 +137,8 @@ private fun HistoryDestination() {
 
 @Composable
 private fun SearchDestination() {
-    val viewModel: SearchViewModel = hiltViewModel()
-    SearchScreen(
+    val viewModel: xyz.kewiany.menusy.feature.search.SearchViewModel = hiltViewModel()
+    xyz.kewiany.menusy.feature.search.ui.SearchScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
     )

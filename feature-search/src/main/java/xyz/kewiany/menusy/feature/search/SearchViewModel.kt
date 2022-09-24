@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.search
+package xyz.kewiany.menusy.feature.search
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +19,8 @@ import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.State
+import xyz.kewiany.menusy.feature.search.SearchViewModel.Event
+import xyz.kewiany.menusy.feature.search.SearchViewModel.State
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.feature.menu.items.ui
+package xyz.kewiany.menusy.android.common.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

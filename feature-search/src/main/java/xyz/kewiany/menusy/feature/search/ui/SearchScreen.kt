@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.search.ui
+package xyz.kewiany.menusy.feature.search.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import xyz.kewiany.menusy.android.common.ProductUiItem
 import xyz.kewiany.menusy.android.common.ui.ErrorDialog
+import xyz.kewiany.menusy.android.common.ui.ProductItem
 import xyz.kewiany.menusy.android.common.ui.ProgressBar
-import xyz.kewiany.menusy.feature.menu.items.ui.ProductItem
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
+import xyz.kewiany.menusy.feature.search.SearchViewModel
+import xyz.kewiany.menusy.feature.search.SearchViewModel.Event
 
 @Composable
 fun SearchScreen(

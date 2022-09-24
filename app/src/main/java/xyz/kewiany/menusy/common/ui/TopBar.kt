@@ -16,7 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import xyz.kewiany.menusy.core.MainViewModel
 import xyz.kewiany.menusy.core.MainViewModel.Event
-import xyz.kewiany.menusy.presentation.features.search.ui.SearchBar
+import xyz.kewiany.menusy.feature.search.ui.SearchBar
 
 @Composable
 fun TopBar(

@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.android.common.CategoryUiItem
 import xyz.kewiany.menusy.android.common.ProductUiItem
 import xyz.kewiany.menusy.android.common.ui.ErrorDialog
+import xyz.kewiany.menusy.android.common.ui.ProductItem
 import xyz.kewiany.menusy.android.common.ui.ProgressBar
 import xyz.kewiany.menusy.feature.menu.items.CategoryTab
 import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel

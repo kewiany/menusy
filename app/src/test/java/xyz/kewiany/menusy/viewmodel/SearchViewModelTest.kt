@@ -20,8 +20,7 @@ import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel
-import xyz.kewiany.menusy.presentation.features.search.SearchViewModel.Event
+import xyz.kewiany.menusy.feature.search.SearchViewModel.Event
 import xyz.kewiany.menusy.presentation.utils.ProductUiItem
 import xyz.kewiany.menusy.test.common.BaseTest
 import kotlin.random.Random
@@ -55,7 +54,7 @@ class SearchViewModelTest : BaseTest() {
         coJustRun { this@mockk.invoke(any(), any()) }
     }
 
-    private fun viewModel() = SearchViewModel(
+    private fun viewModel() = xyz.kewiany.menusy.feature.search.SearchViewModel(
         clearSearchTextUseCase,
         getOrderedProductsUseCase,
         getProductsByQueryUseCase,
