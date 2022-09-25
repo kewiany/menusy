@@ -21,6 +21,8 @@ import xyz.kewiany.menusy.common.DefaultDispatcherProvider
 import xyz.kewiany.menusy.common.DispatcherProvider
 import xyz.kewiany.menusy.data.datastore.SearchTextHolder
 import xyz.kewiany.menusy.data.datastore.SearchTextHolderImpl
+import java.time.Clock
+import java.util.*
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -32,6 +34,10 @@ object AppModule {
     fun provideContext(application: Application): Context {
         return application.applicationContext
     }
+
+    @Singleton
+    @Provides
+    fun provideClock(): Clock = Clock.systemDefaultZone()
 
     @Singleton
     @Provides
@@ -57,6 +63,9 @@ object AppModule {
     fun provideGson(): Gson = GsonBuilder()
         .serializeNulls()
         .create()
+
+    @Provides
+    fun provideLocale(): Locale = Locale.ENGLISH
 
     private const val PREFERENCES = "preferences"
 

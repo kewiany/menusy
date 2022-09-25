@@ -13,6 +13,7 @@ import xyz.kewiany.menusy.model.OrderedProduct
 import xyz.kewiany.menusy.model.OrderedProductsData
 import xyz.kewiany.menusy.model.Product
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
@@ -35,12 +36,12 @@ class OrderRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun saveOrderToHistory(date: String) {
+    override suspend fun saveOrderToHistory(date: LocalDateTime) {
         val orderedProductsData = getOrderedProductsData()
         val place = placeDataStore.place.first()
 
         val orderEntity = OrderEntity(
-            date = date,
+            date = date.toString(),
             totalQuantity = orderedProductsData.totalQuantity,
             totalPrice = orderedProductsData.totalPrice.toFloat(),
             placeName = place.name,

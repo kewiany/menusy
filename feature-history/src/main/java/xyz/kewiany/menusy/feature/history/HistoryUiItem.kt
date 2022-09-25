@@ -1,5 +1,6 @@
 package xyz.kewiany.menusy.feature.history
 
+import xyz.kewiany.menusy.common.DateTimeFormatter
 import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.model.HistoryOrder
 import xyz.kewiany.menusy.model.HistoryProduct
@@ -31,9 +32,9 @@ fun HistoryProduct.asUIItem() = HistoryProductUiItem(
     quantity = quantity.toString()
 )
 
-fun HistoryOrder.asUIItem() = HistoryOrderUiItem(
+fun HistoryOrder.asUIItem(dateTimeFormatter: DateTimeFormatter) = HistoryOrderUiItem(
     id = orderId.toString(),
-    date = date,
+    date = dateTimeFormatter.formatShortDateTimeWithDayOfWeek(date),
     totalPrice = totalPrice.toString(),
     totalQuantity = totalQuantity.toString(),
     placeName = placeName,
