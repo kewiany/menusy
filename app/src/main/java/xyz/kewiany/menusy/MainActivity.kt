@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.core
+package xyz.kewiany.menusy
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
 import xyz.kewiany.menusy.android.common.navigation.Navigator
-import xyz.kewiany.menusy.common.theme.AppTheme
+import xyz.kewiany.menusy.theme.AppTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint

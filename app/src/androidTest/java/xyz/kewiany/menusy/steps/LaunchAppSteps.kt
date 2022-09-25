@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.test.platform.app.InstrumentationRegistry
 import io.cucumber.java.en.Given
 import xyz.kewiany.menusy.ActivityScenarioHolder
-import xyz.kewiany.menusy.core.MainActivity
+import xyz.kewiany.menusy.MainActivity
 
 class LaunchAppSteps {
 

@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.common.theme
+package xyz.kewiany.menusy.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

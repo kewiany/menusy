@@ -12,8 +12,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import xyz.kewiany.menusy.core.MainViewModel
-import xyz.kewiany.menusy.core.MainViewModel.Event
+import xyz.kewiany.menusy.MainViewModel
+import xyz.kewiany.menusy.MainViewModel.Event
 
 
 @Composable

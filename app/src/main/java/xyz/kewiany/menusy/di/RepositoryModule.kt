@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.core.di
+package xyz.kewiany.menusy.di
 
 import dagger.Binds
 import dagger.Module

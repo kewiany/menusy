@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.core
+package xyz.kewiany.menusy
 
 import android.app.Activity
 import androidx.compose.runtime.Composable

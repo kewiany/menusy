@@ -14,8 +14,8 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import xyz.kewiany.menusy.core.MainViewModel
-import xyz.kewiany.menusy.core.MainViewModel.Event
+import xyz.kewiany.menusy.MainViewModel
+import xyz.kewiany.menusy.MainViewModel.Event
 import xyz.kewiany.menusy.feature.search.ui.SearchBar
 
 @Composable
