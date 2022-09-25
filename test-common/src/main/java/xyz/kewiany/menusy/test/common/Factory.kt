@@ -1,36 +1,9 @@
-import xyz.kewiany.menusy.domain.model.*
-import xyz.kewiany.menusy.presentation.features.common.Content
-import xyz.kewiany.menusy.presentation.utils.UiItem
-import xyz.kewiany.menusy.presentation.utils.asUIItem
-import kotlin.random.Random
+package xyz.kewiany.menusy.test.common
 
-//package xyz.kewiany.menusy
-//
-//import xyz.kewiany.menusy.domain.model.Category
-//import xyz.kewiany.menusy.domain.model.Menu
-//import xyz.kewiany.menusy.domain.model.Product
-//
-//fun createCategory(
-//    id: String = "id",
-//    name: String = "name"
-//) = Category(
-//    id = id,
-//    name = name
-//)
-//
-//fun createMenu(
-//    id: String = "id",
-//    name: String = "name",
-//    categories: List<Category> = listOf(
-//        createCategory(),
-//        createCategory()
-//    )
-//) = Menu(
-//    id = id,
-//    name = name,
-//    categories = categories
-//)
-//
+import xyz.kewiany.menusy.common.CategoryTab
+import xyz.kewiany.menusy.model.*
+import java.math.BigDecimal
+import kotlin.random.Random
 
 fun createText(): String = Random.nextLong().toString()
 
@@ -38,7 +11,7 @@ fun createProduct(
     id: String = "id",
     name: String = "name",
     description: String = "description",
-    price: Float = 0f,
+    price: BigDecimal = BigDecimal.valueOf(0.0),
     menuId: String = "menuId",
     categoryId: String = "categoryId",
 ) = Product(
@@ -53,25 +26,29 @@ fun createProduct(
 fun createHistoryOrder(
     orderId: Long = Random.nextLong(),
     date: String = "date",
-    totalPrice: Float = 10.0f,
+    totalPrice: BigDecimal = BigDecimal.valueOf(0.0),
     totalQuantity: Int = 1,
     products: List<HistoryProduct> = listOf(
         createHistoryProduct(),
         createHistoryProduct()
-    )
+    ),
+    placeName: String = "placeName",
+    placeAddress: String = "placeAddress"
 ) = HistoryOrder(
     orderId = orderId,
     date = date,
     totalPrice = totalPrice,
     totalQuantity = totalQuantity,
-    products = products
+    products = products,
+    placeName = placeName,
+    placeAddress = placeAddress
 )
 
 fun createHistoryProduct(
     productId: Long = Random.nextLong(),
     name: String = "name",
     description: String = "description",
-    price: Float = 10.0f,
+    price: BigDecimal = BigDecimal.valueOf(0.0),
     quantity: Int = 1
 ) = HistoryProduct(
     productId,
@@ -120,24 +97,24 @@ fun createCategory(
 fun createCategoryTab(
     id: String = "id",
     name: String = "name"
-) = xyz.kewiany.menusy.feature.menu.items.CategoryTab(
+) = CategoryTab(
     id = id,
     name = name
 )
 
-fun createCategoryUIItem(
-    category: Category = createCategory()
-) = category.asUIItem()
-
-fun createProductUIItem(
-    product: Product = createProduct(),
-    quantity: Int = 0
-) = product.asUIItem(quantity)
-
-fun createContent(
-    tabs: List<xyz.kewiany.menusy.feature.menu.items.CategoryTab> = listOf(createCategoryTab(), createCategoryTab()),
-    items: List<UiItem> = listOf(createProductUIItem(), createProductUIItem())
-) = Content(
-    tabs = tabs,
-    items = items
-)
+//fun createCategoryUIItem(
+//    category: Category = createCategory()
+//) = category.asUIItem()
+//
+//fun createProductUIItem(
+//    product: Product = createProduct(),
+//    quantity: Int = 0
+//) = product.asUIItem(quantity)
+//
+//fun createContent(
+//    tabs: List<xyz.kewiany.menusy.feature.menu.items.CategoryTab> = listOf(createCategoryTab(), createCategoryTab()),
+//    items: List<UiItem> = listOf(createProductUIItem(), createProductUIItem())
+//) = Content(
+//    tabs = tabs,
+//    items = items
+//)

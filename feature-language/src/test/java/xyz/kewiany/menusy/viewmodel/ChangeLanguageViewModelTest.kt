@@ -6,12 +6,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.android.common.navigation.Navigator
-import xyz.kewiany.menusy.domain.model.Language
 import xyz.kewiany.menusy.domain.usecase.language.GetCurrentLanguageUseCase
 import xyz.kewiany.menusy.domain.usecase.language.GetLanguagesUseCase
 import xyz.kewiany.menusy.domain.usecase.language.SetLanguageUseCase
-import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
-import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
+import xyz.kewiany.menusy.feature.language.ChangeLanguageViewModel
+import xyz.kewiany.menusy.feature.language.ChangeLanguageViewModel.Event
+import xyz.kewiany.menusy.model.Language
 import xyz.kewiany.menusy.test.common.BaseTest
 
 class ChangeLanguageViewModelTest : BaseTest() {

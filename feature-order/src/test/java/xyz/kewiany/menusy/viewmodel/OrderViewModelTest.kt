@@ -1,6 +1,5 @@
 package xyz.kewiany.menusy.viewmodel
 
-import createOrderedProduct
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -11,8 +10,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.PurchaseUseCase
+import xyz.kewiany.menusy.feature.order.OrderViewModel
 import xyz.kewiany.menusy.feature.order.OrderViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
+import xyz.kewiany.menusy.test.common.createOrderedProduct
 
 class OrderViewModelTest : BaseTest() {
 
@@ -27,7 +28,7 @@ class OrderViewModelTest : BaseTest() {
         coJustRun { this@mockk.invoke() }
     }
 
-    private fun viewModel() = xyz.kewiany.menusy.feature.order.OrderViewModel(
+    private fun viewModel() = OrderViewModel(
         getOrderedProductsUseCase,
         purchaseUseCase
     )

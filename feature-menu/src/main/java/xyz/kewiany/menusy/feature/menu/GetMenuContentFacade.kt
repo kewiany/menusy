@@ -3,12 +3,12 @@ package xyz.kewiany.menusy.feature.menu
 import kotlinx.coroutines.CancellationException
 import org.slf4j.LoggerFactory
 import xyz.kewiany.menusy.android.common.obtainMenuContentUIItems
+import xyz.kewiany.menusy.common.CategoryTab
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
-import xyz.kewiany.menusy.feature.menu.items.CategoryTab
 import xyz.kewiany.menusy.model.Category
 import xyz.kewiany.menusy.model.Menu
 import xyz.kewiany.menusy.model.Product

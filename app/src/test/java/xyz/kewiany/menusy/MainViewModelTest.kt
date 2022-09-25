@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.viewmodel
+package xyz.kewiany.menusy
 
 import io.mockk.coVerify
 import io.mockk.every
@@ -10,7 +10,6 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
-import xyz.kewiany.menusy.MainViewModel
 import xyz.kewiany.menusy.MainViewModel.Event
 import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.android.common.navigation.Navigator

@@ -1,7 +1,5 @@
 package xyz.kewiany.menusy.viewmodel
 
-import createMenu
-import createPlace
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -14,6 +12,8 @@ import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
 import xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
+import xyz.kewiany.menusy.test.common.createMenu
+import xyz.kewiany.menusy.test.common.createPlace
 
 class MenuEntryViewModelTest : BaseTest() {
 

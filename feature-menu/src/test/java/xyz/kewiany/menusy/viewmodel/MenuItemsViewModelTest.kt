@@ -1,11 +1,5 @@
 package xyz.kewiany.menusy.viewmodel
 
-import createCategory
-import createCategoryTab
-import createCategoryUIItem
-import createContent
-import createProduct
-import createProductUIItem
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -14,10 +8,14 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
+import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
+import xyz.kewiany.menusy.feature.menu.GetMenuContentFacade
 import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel.Event
-import xyz.kewiany.menusy.presentation.features.common.GetMenuContentFacade
 import xyz.kewiany.menusy.test.common.BaseTest
+import xyz.kewiany.menusy.test.common.createCategory
+import xyz.kewiany.menusy.test.common.createCategoryTab
+import xyz.kewiany.menusy.test.common.createProduct
 
 class MenuItemsViewModelTest : BaseTest() {
 

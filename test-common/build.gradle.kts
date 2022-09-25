@@ -9,6 +9,7 @@ java {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":model"))
     api(TestLibrary.junit)
     api(TestLibrary.coroutines)
     api(TestLibrary.mockk)

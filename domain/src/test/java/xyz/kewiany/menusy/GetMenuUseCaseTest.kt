@@ -8,9 +8,9 @@ package xyz.kewiany.menusy//package xyz.kewiany.menusy.usecase
 //import org.junit.Assert.assertTrue
 //import org.junit.Test
 //import xyz.kewiany.menusy.BaseTest
-//import xyz.kewiany.menusy.createCategory
-//import xyz.kewiany.menusy.createMenu
-//import xyz.kewiany.menusy.createProduct
+//import xyz.kewiany.menusy.test.common.createCategory
+//import xyz.kewiany.menusy.test.common.createMenu
+//import xyz.kewiany.menusy.test.common.createProduct
 //import xyz.kewiany.menusy.data.source.remote.api.MenuApi
 //import xyz.kewiany.menusy.data.source.remote.api.MenuResponse
 //import xyz.kewiany.menusy.data.source.remote.api.ProductApi

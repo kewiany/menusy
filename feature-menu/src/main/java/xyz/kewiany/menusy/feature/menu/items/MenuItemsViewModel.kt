@@ -12,10 +12,7 @@ import xyz.kewiany.menusy.android.common.BaseViewModel
 import xyz.kewiany.menusy.android.common.CategoryUiItem
 import xyz.kewiany.menusy.android.common.ChangeQuantityException
 import xyz.kewiany.menusy.android.common.ProductUItemModifier
-import xyz.kewiany.menusy.common.DispatcherProvider
-import xyz.kewiany.menusy.common.Loggable
-import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.common.UiItem
+import xyz.kewiany.menusy.common.*
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.feature.menu.GetMenuContentFacade
 import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel.Event
@@ -155,5 +152,3 @@ class MenuItemsViewModel @AssistedInject constructor(
         }
     }
 }
-
-data class CategoryTab(val id: String, val name: String)

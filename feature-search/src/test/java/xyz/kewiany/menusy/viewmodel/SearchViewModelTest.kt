@@ -1,8 +1,5 @@
 package xyz.kewiany.menusy.viewmodel
 
-import createOrderedProduct
-import createProduct
-import createText
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
@@ -13,16 +10,20 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import xyz.kewiany.menusy.android.common.ProductUiItem
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.domain.model.OrderedProduct
 import xyz.kewiany.menusy.domain.usecase.menu.GetProductsByQueryUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
+import xyz.kewiany.menusy.feature.search.SearchViewModel
 import xyz.kewiany.menusy.feature.search.SearchViewModel.Event
-import xyz.kewiany.menusy.presentation.utils.ProductUiItem
+import xyz.kewiany.menusy.model.OrderedProduct
 import xyz.kewiany.menusy.test.common.BaseTest
+import xyz.kewiany.menusy.test.common.createOrderedProduct
+import xyz.kewiany.menusy.test.common.createProduct
+import xyz.kewiany.menusy.test.common.createText
 import kotlin.random.Random
 
 class SearchViewModelTest : BaseTest() {
@@ -54,7 +55,7 @@ class SearchViewModelTest : BaseTest() {
         coJustRun { this@mockk.invoke(any(), any()) }
     }
 
-    private fun viewModel() = xyz.kewiany.menusy.feature.search.SearchViewModel(
+    private fun viewModel() = SearchViewModel(
         clearSearchTextUseCase,
         getOrderedProductsUseCase,
         getProductsByQueryUseCase,
