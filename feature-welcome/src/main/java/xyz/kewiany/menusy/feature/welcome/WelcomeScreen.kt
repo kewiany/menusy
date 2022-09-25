@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.welcome
+package xyz.kewiany.menusy.feature.welcome
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel.Event
+import xyz.kewiany.menusy.feature.welcome.WelcomeViewModel.Event
 
 @Composable
 fun WelcomeScreen(

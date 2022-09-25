@@ -1,12 +1,12 @@
-package xyz.kewiany.menusy.presentation.features.welcome
+package xyz.kewiany.menusy.feature.welcome
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import xyz.kewiany.menusy.android.common.BaseViewModel
 import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.android.common.navigation.Navigator
-import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel.Event
-import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel.Event.MenuButtonClicked
-import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel.State
+import xyz.kewiany.menusy.feature.welcome.WelcomeViewModel.Event
+import xyz.kewiany.menusy.feature.welcome.WelcomeViewModel.Event.MenuButtonClicked
+import xyz.kewiany.menusy.feature.welcome.WelcomeViewModel.State
 import javax.inject.Inject
 
 @HiltViewModel

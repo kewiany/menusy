@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.language
+package xyz.kewiany.menusy.feature.language.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

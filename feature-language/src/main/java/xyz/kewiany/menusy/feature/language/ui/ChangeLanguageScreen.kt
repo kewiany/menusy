@@ -1,4 +1,4 @@
-package xyz.kewiany.menusy.presentation.features.language
+package xyz.kewiany.menusy.feature.language.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,7 +12,8 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel.Event
+import xyz.kewiany.menusy.feature.language.ChangeLanguageViewModel
+import xyz.kewiany.menusy.feature.language.ChangeLanguageViewModel.Event
 
 @Composable
 fun ChangeLanguageScreen(

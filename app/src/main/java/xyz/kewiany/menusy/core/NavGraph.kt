@@ -15,6 +15,9 @@ import xyz.kewiany.menusy.android.common.navigation.MENU_ID
 import xyz.kewiany.menusy.android.common.navigation.NavigationDirections
 import xyz.kewiany.menusy.feature.history.HistoryViewModel
 import xyz.kewiany.menusy.feature.history.ui.HistoryScreen
+import xyz.kewiany.menusy.feature.language.ChangeLanguageViewModel
+import xyz.kewiany.menusy.feature.language.ui.ChangeLanguageScreen
+import xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel
 import xyz.kewiany.menusy.feature.menu.entry.ui.MenuEntryScreen
 import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel
 import xyz.kewiany.menusy.feature.menu.items.ui.MenuItemsScreen
@@ -22,10 +25,7 @@ import xyz.kewiany.menusy.feature.order.OrderScreen
 import xyz.kewiany.menusy.feature.order.OrderViewModel
 import xyz.kewiany.menusy.feature.search.SearchViewModel
 import xyz.kewiany.menusy.feature.search.ui.SearchScreen
-import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageScreen
-import xyz.kewiany.menusy.presentation.features.language.ChangeLanguageViewModel
-import xyz.kewiany.menusy.presentation.features.welcome.WelcomeScreen
-import xyz.kewiany.menusy.presentation.features.welcome.WelcomeViewModel
+import xyz.kewiany.menusy.feature.welcome.WelcomeViewModel
 
 @Composable
 fun NavGraph(
@@ -80,7 +80,7 @@ fun NavGraph(
 @Composable
 private fun WelcomeDestination() {
     val viewModel: WelcomeViewModel = hiltViewModel()
-    WelcomeScreen(
+    xyz.kewiany.menusy.feature.welcome.WelcomeScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler
     )
@@ -88,7 +88,7 @@ private fun WelcomeDestination() {
 
 @Composable
 private fun MenuEntryDestination() {
-    val viewModel: xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel = hiltViewModel()
+    val viewModel: MenuEntryViewModel = hiltViewModel()
     MenuEntryScreen(
         state = viewModel.state.collectAsState(),
         eventHandler = viewModel.eventHandler,

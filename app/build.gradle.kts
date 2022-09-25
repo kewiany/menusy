@@ -62,9 +62,11 @@ dependencies {
     implementation(project(":domain"))
 
     implementation(project(":feature-history"))
+    implementation(project(":feature-language"))
     implementation(project(":feature-menu"))
     implementation(project(":feature-order"))
     implementation(project(":feature-search"))
+    implementation(project(":feature-welcome"))
 
     implementation(Library.AndroidX.dataStore)
     implementation(Library.AndroidX.navigationRuntime)
