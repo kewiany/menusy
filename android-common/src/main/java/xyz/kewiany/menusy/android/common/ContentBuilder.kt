@@ -9,17 +9,6 @@ import javax.inject.Inject
 class ContentBuilder @Inject constructor() {
 
     fun buildContent(
-        products: List<Product>,
-        orderedProducts: List<OrderedProduct>
-    ): List<UiItem> {
-        val items = mutableListOf<UiItem>()
-
-        val matchedProducts = matchProductsWithOrderedProducts(products, orderedProducts)
-        items.addAll(matchedProducts)
-        return items
-    }
-
-    fun buildContent(
         categories: List<Category>,
         products: List<Product>,
         orderedProducts: List<OrderedProduct>

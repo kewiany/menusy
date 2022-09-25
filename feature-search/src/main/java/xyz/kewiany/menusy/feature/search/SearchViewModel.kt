@@ -121,7 +121,11 @@ class SearchViewModel @Inject constructor(
                 val products = result.data
                 val orderedProducts = getOrderedProductsUseCase().products
 
-                val items = contentBuilder.buildContent(products, orderedProducts)
+                val items = contentBuilder.buildContent(
+                    categories = emptyList(),
+                    products = products,
+                    orderedProducts = orderedProducts
+                )
                 updateState { it.copy(showLoading = false, results = items) }
             }
             is Result.Error -> {

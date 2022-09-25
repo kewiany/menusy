@@ -48,4 +48,6 @@ dependencies {
     kapt(Library.AndroidX.hiltCompiler)
     api(Library.hilt)
     kapt(Library.hiltCompiler)
+
+    testImplementation(project(":test-common"))
 }
