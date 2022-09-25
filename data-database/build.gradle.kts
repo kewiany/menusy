@@ -28,6 +28,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
+
     implementation(Library.AndroidX.room)
     implementation(Library.AndroidX.roomKtx)
     annotationProcessor(Library.AndroidX.roomCompiler)

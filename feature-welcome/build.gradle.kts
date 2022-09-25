@@ -33,7 +33,6 @@ android {
 
 dependencies {
     implementation(project(":android-common"))
-
     implementation(project(":common"))
     implementation(project(":domain"))
 
@@ -41,10 +40,6 @@ dependencies {
     kapt(Library.hiltCompiler)
 
     testImplementation(project(":test-common"))
-    testImplementation(TestLibrary.junit)
-    testImplementation(TestLibrary.coroutines)
-    testImplementation(TestLibrary.mockk)
-    testImplementation(TestLibrary.turbine)
     androidTestImplementation(TestLibrary.AndroidX.runner)
     androidTestImplementation(TestLibrary.AndroidX.rules)
     androidTestImplementation(TestLibrary.AndroidX.extJunit)

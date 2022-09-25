@@ -27,7 +27,9 @@ dependencies {
     api(project(":data-database"))
     api(project(":data-datastore"))
     api(project(":data-network"))
+
     implementation(Library.AndroidX.core)
+
     testImplementation(project(":test-common"))
     testImplementation(TestLibrary.junit)
     testImplementation(TestLibrary.coroutines)

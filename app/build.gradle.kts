@@ -56,7 +56,6 @@ android {
 
 dependencies {
     implementation(project(":android-common"))
-
     implementation(project(":common"))
     implementation(project(":data"))
     implementation(project(":domain"))
@@ -74,18 +73,13 @@ dependencies {
     implementation(Library.AndroidX.hiltNavigation)
     implementation(Library.AndroidX.splashScreen)
     implementation(Library.AndroidX.room)
-    annotationProcessor(Library.AndroidX.roomCompiler)
-    kapt(Library.AndroidX.roomCompiler)
-    implementation(Library.AndroidX.roomKtx)
     kapt(Library.AndroidX.hiltCompiler)
+
     implementation(Library.hilt)
     kapt(Library.hiltCompiler)
     implementation(Library.gson)
+
     testImplementation(project(":test-common"))
-    testImplementation(TestLibrary.junit)
-    testImplementation(TestLibrary.coroutines)
-    testImplementation(TestLibrary.mockk)
-    testImplementation(TestLibrary.turbine)
     androidTestImplementation(TestLibrary.AndroidX.runner)
     androidTestImplementation(TestLibrary.AndroidX.rules)
     androidTestImplementation(TestLibrary.AndroidX.extJunit)

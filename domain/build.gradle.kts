@@ -11,8 +11,4 @@ dependencies {
     implementation(project(":common"))
     api(project(":model"))
     testImplementation(project(":test-common"))
-    testImplementation(TestLibrary.junit)
-    testImplementation(TestLibrary.coroutines)
-    testImplementation(TestLibrary.mockk)
-    testImplementation(TestLibrary.turbine)
 }

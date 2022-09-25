@@ -9,6 +9,8 @@ java {
 
 dependencies {
     implementation(project(":common"))
-    implementation(TestLibrary.junit)
-    implementation(TestLibrary.coroutines)
+    api(TestLibrary.junit)
+    api(TestLibrary.coroutines)
+    api(TestLibrary.mockk)
+    api(TestLibrary.turbine)
 }

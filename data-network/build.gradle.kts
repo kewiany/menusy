@@ -10,5 +10,6 @@ java {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
+
     implementation(Library.gson)
 }
