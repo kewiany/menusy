@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.android.common.BaseViewModel
 import xyz.kewiany.menusy.android.common.ChangeQuantityException
+import xyz.kewiany.menusy.android.common.ContentBuilder
 import xyz.kewiany.menusy.android.common.ProductUItemModifier
-import xyz.kewiany.menusy.android.common.obtainMenuContentUIItems
 import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.UiItem
@@ -29,7 +29,8 @@ class SearchViewModel @Inject constructor(
     private val getOrderedProductsUseCase: GetOrderedProductsUseCase,
     private val getProductsByQueryUseCase: GetProductsByQueryUseCase,
     private val getSearchTextUseCase: GetSearchTextUseCase,
-    private val updateOrderUseCase: UpdateOrderUseCase
+    private val updateOrderUseCase: UpdateOrderUseCase,
+    private val contentBuilder: ContentBuilder
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
@@ -120,7 +121,7 @@ class SearchViewModel @Inject constructor(
                 val products = result.data
                 val orderedProducts = getOrderedProductsUseCase().products
 
-                val items = obtainMenuContentUIItems(products, orderedProducts)
+                val items = contentBuilder.buildContent(products, orderedProducts)
                 updateState { it.copy(showLoading = false, results = items) }
             }
             is Result.Error -> {

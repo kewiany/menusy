@@ -5,8 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import xyz.kewiany.menusy.data.database.AppDatabase
-import xyz.kewiany.menusy.data.database.dao.CacheDao
 import xyz.kewiany.menusy.data.database.dao.OrderDao
+import xyz.kewiany.menusy.data.database.dao.OrderedProductDao
 import xyz.kewiany.menusy.data.database.dao.ProductDao
 
 @Module
@@ -20,6 +20,5 @@ object DaosModule {
     fun providesOrderDao(database: AppDatabase): OrderDao = database.orderDao()
 
     @Provides
-    fun providesCachedDao(database: AppDatabase): CacheDao = database.cacheDao()
-
+    fun providesOrderedProductDao(database: AppDatabase): OrderedProductDao = database.orderedProduct()
 }

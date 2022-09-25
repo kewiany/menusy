@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import xyz.kewiany.menusy.data.database.entity.CachedOrderedProductEntity
 
 @Dao
-interface CacheDao {
+interface OrderedProductDao {
 
     @Query("SELECT `quantity` FROM `${CachedOrderedProductEntity.TABLE_NAME}`")
     fun getQuantity(): Flow<List<Int>>

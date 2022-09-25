@@ -2,10 +2,9 @@ package xyz.kewiany.menusy.feature.menu
 
 import kotlinx.coroutines.CancellationException
 import org.slf4j.LoggerFactory
-import xyz.kewiany.menusy.android.common.obtainMenuContentUIItems
+import xyz.kewiany.menusy.android.common.ContentBuilder
 import xyz.kewiany.menusy.common.CategoryTab
 import xyz.kewiany.menusy.common.Result
-import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuProductsUseCase
 import xyz.kewiany.menusy.domain.usecase.menu.GetMenuUseCase
 import xyz.kewiany.menusy.domain.usecase.order.GetOrderedProductsUseCase
@@ -17,21 +16,27 @@ import javax.inject.Inject
 class GetMenuContentFacade @Inject constructor(
     private val getMenuUseCase: GetMenuUseCase,
     private val getMenuProductsUseCase: GetMenuProductsUseCase,
-    private val getOrderedProductsUseCase: GetOrderedProductsUseCase
+    private val getOrderedProductsUseCase: GetOrderedProductsUseCase,
+    private val contentBuilder: ContentBuilder
 ) {
 
     private val logger = LoggerFactory.getLogger(GetMenuContentFacade::class.java)
 
-    suspend fun getContent(menuId: String): Result<Content> {
+    suspend fun getContent(menuId: String): Result<MenuContentData> {
         return try {
             val menu = getMenu(menuId)
+            val categories = menu.categories ?: emptyList()
             val products = getMenuProducts(menuId)
             val orderedProducts = getOrderedProductsUseCase().products
 
-            val tabs = menu.categories.toCategoryTabs()
-            val items = obtainMenuContentUIItems(menu, products, orderedProducts)
-            val content = Content(tabs, items)
-            Result.Success(content)
+            val tabs = categories.toCategoryTabs()
+            val items = contentBuilder.buildContent(
+                categories = categories,
+                products = products,
+                orderedProducts = orderedProducts
+            )
+            val menuContentData = MenuContentData(tabs, items)
+            Result.Success(menuContentData)
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             logger.warn(e.stackTraceToString(), e)
@@ -54,5 +59,3 @@ class GetMenuContentFacade @Inject constructor(
             ?: emptyList()
     }
 }
-
-data class Content(val tabs: List<CategoryTab>, val items: List<UiItem>)
