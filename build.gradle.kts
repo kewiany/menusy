@@ -1,9 +1,10 @@
+import kotlinx.kover.api.KoverExtension
+
 plugins {
     id(BuildPlugin.androidApplication) version "7.4.0-alpha08" apply false
     id(BuildPlugin.androidLibrary) version "7.3.0-alpha01" apply false
     id(BuildPlugin.kotlinAndroid) version Versions.kotlin apply false
     id(BuildPlugin.koverPlugin) version "0.4.3"
-    id("org.jetbrains.kotlin.jvm") version "1.7.0" apply false
 }
 
 buildscript {
@@ -21,7 +22,7 @@ tasks.koverVerify {
     }
 }
 
-extensions.configure<kotlinx.kover.api.KoverExtension> {
+extensions.configure<KoverExtension> {
     intellijEngineVersion.set("1.0.639")
     jacocoEngineVersion.set("0.8.7")
 }

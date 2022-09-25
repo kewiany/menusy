@@ -8,6 +8,8 @@ android {
     compileSdk = AndroidSdkVersions.compile
 
     defaultConfig {
+        minSdk = AndroidSdkVersions.min
+
         kapt {
             arguments {
                 arg("room.schemaLocation", "$projectDir/schemas")

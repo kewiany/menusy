@@ -9,8 +9,8 @@ android {
 
     defaultConfig {
         minSdk = AndroidSdkVersions.min
-        targetSdk = AndroidSdkVersions.target
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
