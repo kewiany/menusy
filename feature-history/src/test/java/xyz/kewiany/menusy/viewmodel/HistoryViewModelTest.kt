@@ -1,6 +1,5 @@
 package xyz.kewiany.menusy.viewmodel
 
-import createHistoryOrder
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runCurrent
@@ -10,6 +9,7 @@ import org.junit.Test
 import xyz.kewiany.menusy.domain.usecase.order.GetOrdersFromHistoryUseCase
 import xyz.kewiany.menusy.feature.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
+import xyz.kewiany.menusy.test.common.createHistoryOrder
 
 class HistoryViewModelTest : BaseTest() {
 
