@@ -11,4 +11,6 @@ dependencies {
     api(Library.coroutines)
     api(Library.javaxinject)
     api(Library.slf4j)
+
+    testImplementation(project((":test-common")))
 }

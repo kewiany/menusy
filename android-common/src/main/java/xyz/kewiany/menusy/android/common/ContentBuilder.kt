@@ -1,12 +1,15 @@
 package xyz.kewiany.menusy.android.common
 
+import xyz.kewiany.menusy.common.PriceFormatter
 import xyz.kewiany.menusy.common.UiItem
 import xyz.kewiany.menusy.model.Category
 import xyz.kewiany.menusy.model.OrderedProduct
 import xyz.kewiany.menusy.model.Product
 import javax.inject.Inject
 
-class ContentBuilder @Inject constructor() {
+class ContentBuilder @Inject constructor(
+    private val priceFormatter: PriceFormatter
+) {
 
     fun buildContent(
         categories: List<Category>,
@@ -38,9 +41,12 @@ class ContentBuilder @Inject constructor() {
 
             if (matchedProductWithOrderedProduct != null) {
                 val orderedQuantity = matchedProductWithOrderedProduct.quantity
-                product.asUIItem(orderedQuantity)
+                product.asUIItem(
+                    quantity = orderedQuantity,
+                    priceFormatter = priceFormatter
+                )
             } else {
-                product.asUIItem()
+                product.asUIItem(priceFormatter = priceFormatter)
             }
         }
     }

@@ -13,7 +13,6 @@ import xyz.kewiany.menusy.model.OrderedProduct
 import xyz.kewiany.menusy.model.OrderedProductsData
 import xyz.kewiany.menusy.model.Product
 import java.math.BigDecimal
-import java.math.RoundingMode
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
@@ -103,7 +102,6 @@ class OrderRepositoryImpl @Inject constructor(
     }
 
     private fun calculateTotalPrice(products: List<OrderedProduct>): BigDecimal {
-        val totalPrice = products.sumOf { it.product.price.multiply(it.quantity.toBigDecimal()) }
-        return totalPrice.setScale(2, RoundingMode.FLOOR)
+        return products.sumOf { it.product.price.multiply(it.quantity.toBigDecimal()) }
     }
 }
