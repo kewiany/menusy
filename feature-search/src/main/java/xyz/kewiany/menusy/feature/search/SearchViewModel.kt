@@ -21,6 +21,7 @@ import xyz.kewiany.menusy.domain.usecase.search.ClearSearchTextUseCase
 import xyz.kewiany.menusy.domain.usecase.search.GetSearchTextUseCase
 import xyz.kewiany.menusy.feature.search.SearchViewModel.Event
 import xyz.kewiany.menusy.feature.search.SearchViewModel.State
+import xyz.kewiany.menusy.model.Product
 import javax.inject.Inject
 
 @HiltViewModel
@@ -117,21 +118,24 @@ class SearchViewModel @Inject constructor(
     private suspend fun searchProducts(query: String) {
         updateState { it.copy(showLoading = true) }
         when (val result = getProductsByQueryUseCase(query)) {
-            is Result.Success -> {
-                val products = result.data
-                val orderedProducts = getOrderedProductsUseCase().products
-
-                val items = contentBuilder.buildContent(
-                    categories = emptyList(),
-                    products = products,
-                    orderedProducts = orderedProducts
-                )
-                updateState { it.copy(showLoading = false, results = items) }
-            }
-            is Result.Error -> {
-                updateState { it.copy(showError = true, showLoading = false) }
-            }
+            is Result.Success -> handleProducts(result.data)
+            is Result.Error -> handleError()
         }
+    }
+
+    private suspend fun handleProducts(products: List<Product>) {
+        val orderedProducts = getOrderedProductsUseCase().products
+
+        val items = contentBuilder.buildContent(
+            categories = emptyList(),
+            products = products,
+            orderedProducts = orderedProducts
+        )
+        updateState { it.copy(showLoading = false, results = items) }
+    }
+
+    private fun handleError() {
+        updateState { it.copy(showError = true, showLoading = false) }
     }
 
     override fun onCleared() {

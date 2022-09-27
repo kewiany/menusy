@@ -11,6 +11,7 @@ import xyz.kewiany.menusy.common.DispatcherProvider
 import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.domain.usecase.menu.GetPlaceUseCase
+import xyz.kewiany.menusy.domain.usecase.menu.PlaceData
 import xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel.Event
 import xyz.kewiany.menusy.feature.menu.entry.MenuEntryViewModel.State
 import xyz.kewiany.menusy.model.Menu
@@ -37,21 +38,24 @@ class MenuEntryViewModel @Inject constructor(
     private suspend fun loadPlace(placeId: String) {
         updateState { it.copy(showLoading = true) }
         when (val result = getPlaceUseCase(placeId)) {
-            is Result.Success -> {
-                val data = result.data
-                updateState {
-                    it.copy(
-                        name = data.place.name,
-                        address = data.place.address,
-                        menus = data.menus,
-                        showLoading = false
-                    )
-                }
-            }
-            is Result.Error -> {
-                updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
-            }
+            is Result.Success -> handlePlace(result.data)
+            is Result.Error -> handleError()
         }
+    }
+
+    private fun handlePlace(data: PlaceData) {
+        updateState {
+            it.copy(
+                name = data.place.name,
+                address = data.place.address,
+                menus = data.menus,
+                showLoading = false
+            )
+        }
+    }
+
+    private fun handleError() {
+        updateState { it.copy(showError = SingleEvent(Unit), showLoading = false) }
     }
 
     data class State(

@@ -15,6 +15,7 @@ import xyz.kewiany.menusy.android.common.ProductUItemModifier
 import xyz.kewiany.menusy.common.*
 import xyz.kewiany.menusy.domain.usecase.order.UpdateOrderUseCase
 import xyz.kewiany.menusy.feature.menu.GetMenuContentFacade
+import xyz.kewiany.menusy.feature.menu.MenuContentData
 import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel.Event
 import xyz.kewiany.menusy.feature.menu.items.MenuItemsViewModel.State
 
@@ -106,15 +107,19 @@ class MenuItemsViewModel @AssistedInject constructor(
     private suspend fun loadMenu(menuId: String) {
         updateState { it.copy(showLoading = true) }
         when (val result = getMenuContentFacade.getContent(menuId)) {
-            is Result.Success -> {
-                val tabs = result.data.tabs
-                val items = result.data.items
-                updateState { it.copy(tabs = tabs, items = items, showLoading = false) }
-            }
-            is Result.Error -> {
-                updateState { it.copy(showError = true, showLoading = false) }
-            }
+            is Result.Success -> handleMenuContentData(result.data)
+            is Result.Error -> handleError()
         }
+    }
+
+    private fun handleMenuContentData(data: MenuContentData) {
+        val tabs = data.tabs
+        val items = data.items
+        updateState { it.copy(tabs = tabs, items = items, showLoading = false) }
+    }
+
+    private fun handleError() {
+        updateState { it.copy(showError = true, showLoading = false) }
     }
 
     data class State(
