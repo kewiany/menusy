@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.android.common.BaseViewModel
-import xyz.kewiany.menusy.android.common.ChangeQuantityException
 import xyz.kewiany.menusy.android.common.ContentBuilder
-import xyz.kewiany.menusy.android.common.ProductUItemModifier
+import xyz.kewiany.menusy.android.common.ProductQuantityModifier
+import xyz.kewiany.menusy.android.common.ProductSelectionModifier
 import xyz.kewiany.menusy.common.Loggable
 import xyz.kewiany.menusy.common.Result
 import xyz.kewiany.menusy.common.UiItem
@@ -31,7 +31,9 @@ class SearchViewModel @Inject constructor(
     private val getProductsByQueryUseCase: GetProductsByQueryUseCase,
     private val getSearchTextUseCase: GetSearchTextUseCase,
     private val updateOrderUseCase: UpdateOrderUseCase,
-    private val contentBuilder: ContentBuilder
+    private val contentBuilder: ContentBuilder,
+    private val productSelectionModifier: ProductSelectionModifier,
+    private val productQuantityModifier: ProductQuantityModifier,
 ) : BaseViewModel<State, Event>(State()) {
 
     init {
@@ -69,42 +71,33 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun handleProductClicked(event: Event.ProductClicked) {
+        val items = state.value.results
         val productId = event.id
-        val (quantity, items) = try {
-            ProductUItemModifier.select(state.value.results, productId)
-        } catch (e: ChangeQuantityException) {
-            println(e)
-            return
-        }
-        updateState { it.copy(results = items) }
 
-        viewModelScope.launch { updateOrder(quantity, productId) }
+        val (newQuantity, newItems) = productSelectionModifier.select(items, productId)
+        updateState { it.copy(results = newItems) }
+
+        viewModelScope.launch { updateOrder(newQuantity, productId) }
     }
 
     private fun handleDecreaseQuantity(event: Event.DecreaseQuantityClicked) {
         val productId = event.productId
-        val (quantity, items) = try {
-            ProductUItemModifier.decreaseQuantity(state.value.results, productId)
-        } catch (e: ChangeQuantityException) {
-            println(e)
-            return
-        }
-        updateState { it.copy(results = items) }
+        val items = state.value.results
 
-        viewModelScope.launch { updateOrder(quantity, productId) }
+        val (newQuantity, newItems) = productQuantityModifier.decreaseQuantity(items, productId) ?: return
+        updateState { it.copy(results = newItems) }
+
+        viewModelScope.launch { updateOrder(newQuantity, productId) }
     }
 
     private fun handleIncreaseQuantity(event: Event.IncreaseQuantityClicked) {
         val productId = event.productId
-        val (quantity, items) = try {
-            ProductUItemModifier.increaseQuantity(state.value.results, productId)
-        } catch (e: ChangeQuantityException) {
-            println(e)
-            return
-        }
-        updateState { it.copy(results = items) }
+        val items = state.value.results
 
-        viewModelScope.launch { updateOrder(quantity, productId) }
+        val (newQuantity, newItems) = productQuantityModifier.increaseQuantity(items, productId) ?: return
+        updateState { it.copy(results = newItems) }
+
+        viewModelScope.launch { updateOrder(newQuantity, productId) }
     }
 
     private suspend fun updateOrder(quantity: Int, productId: String) {
