@@ -29,7 +29,9 @@ class HistoryViewModel @Inject constructor(
         val items = mutableListOf<HistoryUiItem>()
         val orders = getOrdersFromHistoryUseCase()
         orders.map { order ->
-            val historyOrder = order.asUIItem(dateTimeFormatter)
+            val historyOrder = order.asUIItem {
+                dateTimeFormatter.formatShortDateTimeWithDayOfWeek(it)
+            }
             items.add(historyOrder)
             val historyProducts = order.products.map(HistoryProduct::asUIItem)
             items.addAll(historyProducts)

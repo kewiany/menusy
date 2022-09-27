@@ -26,7 +26,7 @@ fun createProduct(
 
 fun createHistoryOrder(
     orderId: Long = Random.nextLong(),
-    date: LocalDateTime = LocalDateTime.parse("2019-03-20T15:58:00+01:00"),
+    date: LocalDateTime = LocalDateTime.parse("2019-03-20T15:58:00"),
     totalPrice: BigDecimal = BigDecimal.valueOf(0.0),
     totalQuantity: Int = 1,
     products: List<HistoryProduct> = listOf(
