@@ -35,7 +35,7 @@ class ProductQuantityModifier @Inject constructor() : ProductModifier() {
             name = product.name,
             description = product.description,
             price = product.price,
-            ordered = if (quantity == 0) false else product.ordered,
+            ordered = quantity != 0,
             quantity = quantity
         )
         return items.toMutableList().apply {

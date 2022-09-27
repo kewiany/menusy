@@ -38,7 +38,8 @@ class ProductQuantityModifierTest {
         )
 
         assertEquals(1, newQuantity)
-        assertTrue((newItems.first { it.id == product.id } as ProductUiItem).quantity == 1)
+        assertTrue((newItems.first { it.id == product.id } as ProductUiItem).ordered)
+        assertEquals(1, (newItems.first { it.id == product.id } as ProductUiItem).quantity)
     }
 
     @Test
@@ -69,11 +70,12 @@ class ProductQuantityModifierTest {
         )
 
         assertEquals(2, newQuantity)
-        assertTrue((newItems.first { it.id == product.id } as ProductUiItem).quantity == 2)
+        assertTrue((newItems.first { it.id == product.id } as ProductUiItem).ordered)
+        assertEquals(2, (newItems.first { it.id == product.id } as ProductUiItem).quantity)
     }
 
     @Test
-    fun decreaseQuantityOnOneProductQuantity() {
+    fun decreaseQuantityOnZeroProductQuantity() {
         val product = createProductUiItem(
             quantity = 0,
             product = createProduct(
@@ -97,6 +99,38 @@ class ProductQuantityModifierTest {
         )
         val pair = productQuantityModifier.decreaseQuantity(products, product.id)
         assertNull(pair)
+    }
+
+    @Test
+    fun decreaseQuantityOnOneProductQuantity() {
+        val product = createProductUiItem(
+            quantity = 1,
+            product = createProduct(
+                id = "id2"
+            )
+        )
+        val products = listOf(
+            createProductUiItem(
+                quantity = 0,
+                product = createProduct(
+                    id = "id1",
+                ),
+            ),
+            product,
+            createProductUiItem(
+                quantity = 0,
+                product = createProduct(
+                    id = "id3"
+                )
+            ),
+        )
+        val (newQuantity, newItems) = requireNotNull(
+            productQuantityModifier.decreaseQuantity(products, product.id)
+        )
+
+        assertEquals(0, newQuantity)
+        assertFalse((newItems.first { it.id == product.id } as ProductUiItem).ordered)
+        assertEquals(0, (newItems.first { it.id == product.id } as ProductUiItem).quantity)
     }
 
     @Test
@@ -127,6 +161,7 @@ class ProductQuantityModifierTest {
         )
 
         assertEquals(1, newQuantity)
-        assertTrue((newItems.first { it.id == product.id } as ProductUiItem).quantity == 1)
+        assertTrue((newItems.first { it.id == product.id } as ProductUiItem).ordered)
+        assertEquals(1, (newItems.first { it.id == product.id } as ProductUiItem).quantity)
     }
 }
