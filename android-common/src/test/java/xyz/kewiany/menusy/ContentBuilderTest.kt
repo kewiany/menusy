@@ -1,11 +1,14 @@
 package xyz.kewiany.menusy
 
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import xyz.kewiany.menusy.android.common.CategoryUiItem
 import xyz.kewiany.menusy.android.common.ContentBuilder
 import xyz.kewiany.menusy.android.common.ProductUiItem
+import xyz.kewiany.menusy.common.PriceFormatter
 import xyz.kewiany.menusy.model.Category
 import xyz.kewiany.menusy.model.OrderedProduct
 import xyz.kewiany.menusy.model.Product
@@ -15,7 +18,10 @@ import xyz.kewiany.menusy.test.common.createProduct
 
 class ContentBuilderTest {
 
-    private val contentBuilder = ContentBuilder()
+    private val priceFormatter = mockk<PriceFormatter> {
+        every { format(any(), any()) } returns "price"
+    }
+    private val contentBuilder = ContentBuilder(priceFormatter)
 
     @Test
     fun buildEmptyList() {

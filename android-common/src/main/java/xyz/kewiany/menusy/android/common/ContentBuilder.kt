@@ -43,10 +43,12 @@ class ContentBuilder @Inject constructor(
                 val orderedQuantity = matchedProductWithOrderedProduct.quantity
                 product.asUIItem(
                     quantity = orderedQuantity,
-                    priceFormatter = priceFormatter
+                    formatPrice = { priceFormatter.format(it, "PLN") }
                 )
             } else {
-                product.asUIItem(priceFormatter = priceFormatter)
+                product.asUIItem(
+                    formatPrice = { priceFormatter.format(it, "PLN") }
+                )
             }
         }
     }

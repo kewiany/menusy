@@ -3,6 +3,7 @@ package xyz.kewiany.menusy.test.common
 import xyz.kewiany.menusy.common.CategoryTab
 import xyz.kewiany.menusy.model.*
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import kotlin.random.Random
 
 fun createText(): String = Random.nextLong().toString()
@@ -25,7 +26,7 @@ fun createProduct(
 
 fun createHistoryOrder(
     orderId: Long = Random.nextLong(),
-    date: String = "date",
+    date: LocalDateTime = LocalDateTime.parse("2019-03-20T15:58:00+01:00"),
     totalPrice: BigDecimal = BigDecimal.valueOf(0.0),
     totalQuantity: Int = 1,
     products: List<HistoryProduct> = listOf(
