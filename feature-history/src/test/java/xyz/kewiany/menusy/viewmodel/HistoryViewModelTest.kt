@@ -1,14 +1,13 @@
 package xyz.kewiany.menusy.viewmodel
 
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import xyz.kewiany.menusy.common.DateTimeFormatter
 import xyz.kewiany.menusy.domain.usecase.order.GetOrdersFromHistoryUseCase
+import xyz.kewiany.menusy.feature.history.HistoryOrderMapper
 import xyz.kewiany.menusy.feature.history.HistoryViewModel
 import xyz.kewiany.menusy.feature.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.test.common.BaseTest
@@ -23,13 +22,11 @@ class HistoryViewModelTest : BaseTest() {
     private val getOrdersFromHistoryUseCase = mockk<GetOrdersFromHistoryUseCase> {
         coEvery { this@mockk.invoke() } returns historyOrders
     }
-    private val dateTimeFormatter = mockk<DateTimeFormatter> {
-        every { formatShortDateTimeWithDayOfWeek(any()) } returns "date"
-    }
+    private val historyOrderMapper = mockk<HistoryOrderMapper>(relaxed = true)
 
     private fun viewModel() = HistoryViewModel(
         getOrdersFromHistoryUseCase,
-        dateTimeFormatter
+        historyOrderMapper
     )
 
     @Test

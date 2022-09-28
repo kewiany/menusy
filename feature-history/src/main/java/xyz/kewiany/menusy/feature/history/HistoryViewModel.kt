@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import xyz.kewiany.menusy.android.common.BaseViewModel
-import xyz.kewiany.menusy.common.DateTimeFormatter
 import xyz.kewiany.menusy.domain.usecase.order.GetOrdersFromHistoryUseCase
 import xyz.kewiany.menusy.feature.history.HistoryViewModel.Event
 import xyz.kewiany.menusy.feature.history.HistoryViewModel.State
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val getOrdersFromHistoryUseCase: GetOrdersFromHistoryUseCase,
-    private val dateTimeFormatter: DateTimeFormatter,
+    private val historyOrderMapper: HistoryOrderMapper
 ) : BaseViewModel<State, Event>(State()) {
 
     override fun handleEvent(event: Event) = when (event) {
@@ -29,9 +28,7 @@ class HistoryViewModel @Inject constructor(
         val items = mutableListOf<HistoryUiItem>()
         val orders = getOrdersFromHistoryUseCase()
         orders.map { order ->
-            val historyOrder = order.asUIItem {
-                dateTimeFormatter.formatShortDateTimeWithDayOfWeek(it)
-            }
+            val historyOrder = historyOrderMapper.asUIItem(order)
             items.add(historyOrder)
             val historyProducts = order.products.map(HistoryProduct::asUIItem)
             items.addAll(historyProducts)
