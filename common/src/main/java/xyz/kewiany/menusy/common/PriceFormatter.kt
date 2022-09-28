@@ -3,7 +3,6 @@ package xyz.kewiany.menusy.common
 import org.slf4j.LoggerFactory
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.util.*
 import javax.inject.Inject
 
 class PriceFormatter @Inject constructor() {

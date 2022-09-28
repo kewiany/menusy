@@ -7,6 +7,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import xyz.kewiany.menusy.android.common.CategoryUiItem
 import xyz.kewiany.menusy.android.common.ContentBuilder
+import xyz.kewiany.menusy.android.common.ProductMapper
 import xyz.kewiany.menusy.android.common.ProductUiItem
 import xyz.kewiany.menusy.common.PriceFormatter
 import xyz.kewiany.menusy.model.Category
@@ -21,7 +22,8 @@ class ContentBuilderTest {
     private val priceFormatter = mockk<PriceFormatter> {
         every { format(any(), any()) } returns "price"
     }
-    private val contentBuilder = ContentBuilder(priceFormatter)
+    private val productMapper = ProductMapper(priceFormatter)
+    private val contentBuilder = ContentBuilder(productMapper)
 
     @Test
     fun buildEmptyList() {
