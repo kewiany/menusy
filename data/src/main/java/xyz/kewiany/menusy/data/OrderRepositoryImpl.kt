@@ -3,7 +3,7 @@ package xyz.kewiany.menusy.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import xyz.kewiany.menusy.data.database.dao.OrderDao
+import xyz.kewiany.menusy.data.database.OrderLocalDataSource
 import xyz.kewiany.menusy.data.database.dao.OrderedProductDao
 import xyz.kewiany.menusy.data.database.dao.ProductDao
 import xyz.kewiany.menusy.data.database.entity.*
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class OrderRepositoryImpl @Inject constructor(
     private val placeDataStore: PlaceDataStore,
     private val orderedProductDao: OrderedProductDao,
-    private val orderDao: OrderDao,
+    private val orderLocalDataSource: OrderLocalDataSource,
     private val productDao: ProductDao
 ) : OrderRepository {
 
@@ -40,23 +40,17 @@ class OrderRepositoryImpl @Inject constructor(
         val orderedProductsData = getOrderedProductsData()
         val place = placeDataStore.place.first()
 
-        val orderEntity = OrderEntity(
+        val orderId = orderLocalDataSource.add(
             date = date.toString(),
             totalQuantity = orderedProductsData.totalQuantity,
             totalPrice = orderedProductsData.totalPrice.toFloat(),
             placeName = place.name,
             placeAddress = place.address
         )
-        val orderId = addOrder(orderEntity)
-
         val productEntities = orderedProductsData.products.map { it.toProductEntity(orderId) }
         addProducts(productEntities)
 
         updateOrderedProducts(emptyList())
-    }
-
-    private suspend fun addOrder(orderEntity: OrderEntity): Long {
-        return orderDao.insert(orderEntity)
     }
 
     private suspend fun addProducts(productEntities: List<ProductEntity>) {
